@@ -1,7 +1,7 @@
 ﻿Imports CoreAudio
 Imports System.Threading
 
-Public Class frmMain
+Public Class FormMain
     Private Delegate Sub DoSafeEnum()
     Private timer As Timer
 
