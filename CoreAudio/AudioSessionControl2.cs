@@ -204,6 +204,7 @@ namespace CoreAudio
             if(_AudioSessionEvents != null)
                 try {
                     Marshal.ThrowExceptionForHR(_AudioSessionControl2.UnregisterAudioSessionNotification(_AudioSessionEvents));
+                    _AudioSessionEvents = null;
                 } catch { }
         }
 
