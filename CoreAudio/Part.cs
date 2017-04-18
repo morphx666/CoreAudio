@@ -19,14 +19,12 @@
      misrepresented as being the original source code.
   3. This notice may not be removed or altered from any source distribution.
 */
-using System;
-using System.Collections.Generic;
-using System.Text;
 using CoreAudio.Interfaces;
+using System;
 using System.Runtime.InteropServices;
-using System.Reflection;
 
-namespace CoreAudio {
+namespace CoreAudio
+{
     public class Part : IDisposable {
         private IPart _Part;
 

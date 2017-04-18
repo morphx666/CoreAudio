@@ -1,8 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
+﻿using CoreAudio.Interfaces;
+using System;
 using System.Runtime.InteropServices;
-using CoreAudio.Interfaces;
 
 namespace CoreAudio
 {

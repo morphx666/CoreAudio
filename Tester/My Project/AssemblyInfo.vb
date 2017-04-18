@@ -8,10 +8,10 @@ Imports System.Runtime.InteropServices
 
 ' Review the values of the assembly attributes
 
-<Assembly: AssemblyTitle("Tester")> 
+<Assembly: AssemblyTitle("CoreAudio Tester")>
 <Assembly: AssemblyDescription("")> 
-<Assembly: AssemblyCompany("xFX JumpStart")> 
-<Assembly: AssemblyProduct("Tester")> 
+<Assembly: AssemblyCompany("xFX JumpStart")>
+<Assembly: AssemblyProduct("CoreAudio Tester")>
 <Assembly: AssemblyCopyright("Copyright © xFX JumpStart 2011")> 
 <Assembly: AssemblyTrademark("")> 
 
@@ -31,5 +31,5 @@ Imports System.Runtime.InteropServices
 ' by using the '*' as shown below:
 ' <Assembly: AssemblyVersion("1.0.*")> 
 
-<Assembly: AssemblyVersion("2016.11.28.34")>
-<Assembly: AssemblyFileVersion("2016.11.28.34")>
+<Assembly: AssemblyVersion("2017.4.18.39")>
+<Assembly: AssemblyFileVersion("2017.4.18.38")>

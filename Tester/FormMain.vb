@@ -9,8 +9,10 @@ Public Class FormMain
     Private lines As New List(Of Part)
     Private ctrls As New List(Of Part)
 
-    Private Sub frmMain_Load(sender As Object, e As EventArgs) Handles MyBase.Load
+    Private Sub FormMain_Load(sender As Object, e As EventArgs) Handles MyBase.Load
         timer = New Timer(Sub() Me.Invoke(New MethodInvoker(Sub() EnumDevices(EDataFlow.eAll))), Nothing, 10, Timeout.Infinite)
+
+        AddHandler Me.FormClosing, Sub() timer.Dispose()
     End Sub
 
     Private Sub EnumDevices(flow As EDataFlow)
