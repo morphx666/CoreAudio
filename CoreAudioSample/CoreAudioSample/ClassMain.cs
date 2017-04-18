@@ -5,7 +5,7 @@ using System.Windows.Forms;
 
 namespace CoreAudioSample
 {
-    public class Class1
+    public class ClassMain
     {
         static void Main(string[] args)
         {
