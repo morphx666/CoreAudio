@@ -10,7 +10,7 @@ namespace CoreAudioSample
         static void Main(string[] args)
         {
             Application.EnableVisualStyles();
-            Application.Run(new Form1());
+            Application.Run(new FormMain());
         }
     }
 }

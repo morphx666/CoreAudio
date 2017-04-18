@@ -9,18 +9,19 @@ using CoreAudio;
 
 namespace CoreAudioSample
 {
-    public partial class Form1 : Form
+    public partial class FormMain : Form
     {
         private MMDevice device;
 
-        public Form1()
+        public FormMain()
         {
             InitializeComponent();
             MMDeviceEnumerator DevEnum = new MMDeviceEnumerator();
             device = DevEnum.GetDefaultAudioEndpoint(EDataFlow.eRender, ERole.eMultimedia);
-            tbMaster.Value = (int)(device.AudioEndpointVolume.MasterVolumeLevelScalar * 100);
+            TrackbarMaster.Value = (int)(device.AudioEndpointVolume.MasterVolumeLevelScalar * 100);
             device.AudioEndpointVolume.OnVolumeNotification += new AudioEndpointVolumeNotificationDelegate(AudioEndpointVolume_OnVolumeNotification);
-            timer1.Enabled = true;
+            TimerUpdate.Interval = 30;
+            TimerUpdate.Enabled = true;
         }
 
         void AudioEndpointVolume_OnVolumeNotification(AudioVolumeNotificationData data)
@@ -33,20 +34,20 @@ namespace CoreAudioSample
             }
             else
             {
-                tbMaster.Value = (int)(data.MasterVolume * 100);
+                TrackbarMaster.Value = (int)(data.MasterVolume * 100);
             }
         }
 
-        private void tbMaster_Scroll(object sender, EventArgs e)
+        private void TrackbarMaster_Scroll(object sender, EventArgs e)
         {
-            device.AudioEndpointVolume.MasterVolumeLevelScalar = ((float)tbMaster.Value / 100.0f);
+            device.AudioEndpointVolume.MasterVolumeLevelScalar = ((float)TrackbarMaster.Value / 100.0f);
         }
 
-        private void timer1_Tick(object sender, EventArgs e)
+        private void TimerUpdate_Tick(object sender, EventArgs e)
         {
-            pkMaster.Value = (int)(device.AudioMeterInformation.MasterPeakValue * 100);
-            pkLeft.Value = (int)(device.AudioMeterInformation.PeakValues[0]*100);
-            pkRight.Value = (int)(device.AudioMeterInformation.PeakValues[1]* 100);
+            ProgressBarMaster.Value = (int)(device.AudioMeterInformation.MasterPeakValue * 100);
+            ProgressBarLeft.Value = (int)(device.AudioMeterInformation.PeakValues[0]*100);
+            ProgressBarRight.Value = (int)(device.AudioMeterInformation.PeakValues[1]* 100);
         }
 
         
