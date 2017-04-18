@@ -38,14 +38,12 @@ namespace CoreAudio
         {
             get
             {
-                bool muted;
-                Marshal.ThrowExceptionForHR(_AudioMute.GetMute(out muted));
+                Marshal.ThrowExceptionForHR(_AudioMute.GetMute(out bool muted));
                 return muted;
             }
             set
             {
-                Guid eventContext;
-                Marshal.ThrowExceptionForHR(_AudioMute.SetMute(value, out eventContext));
+                Marshal.ThrowExceptionForHR(_AudioMute.SetMute(value, out Guid eventContext));
             }
         }
     }

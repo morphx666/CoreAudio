@@ -38,8 +38,7 @@ namespace CoreAudio
         {
             get
             {
-                string name;
-                Marshal.ThrowExceptionForHR(_ControlInterface.GetName(out name));
+                Marshal.ThrowExceptionForHR(_ControlInterface.GetName(out string name));
                 return name;
             }
         }
@@ -48,8 +47,7 @@ namespace CoreAudio
         {
             get
             {
-                Guid id;
-                Marshal.ThrowExceptionForHR(_ControlInterface.GetID(out id));
+                Marshal.ThrowExceptionForHR(_ControlInterface.GetID(out Guid id));
                 return id;
             }
         }

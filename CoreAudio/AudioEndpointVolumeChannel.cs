@@ -41,8 +41,7 @@ namespace CoreAudio
         {
             get
             {
-                float result;
-                Marshal.ThrowExceptionForHR(_AudioEndpointVolume.GetChannelVolumeLevel(_Channel,out result));
+                Marshal.ThrowExceptionForHR(_AudioEndpointVolume.GetChannelVolumeLevel(_Channel, out float result));
                 return result;
             }
             set
@@ -55,8 +54,7 @@ namespace CoreAudio
         {
             get
             {
-                float result;
-                Marshal.ThrowExceptionForHR(_AudioEndpointVolume.GetChannelVolumeLevelScalar(_Channel, out result));
+                Marshal.ThrowExceptionForHR(_AudioEndpointVolume.GetChannelVolumeLevelScalar(_Channel, out float result));
                 return result;
             }
             set

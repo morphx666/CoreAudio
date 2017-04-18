@@ -47,15 +47,14 @@ namespace CoreAudio
 
         internal void FireSessionCreated(IAudioSessionControl2 newSession)
         {
-            if (OnSessionCreated != null) OnSessionCreated(this, newSession);
+            OnSessionCreated?.Invoke(this, newSession);
         }
 
         public void RefreshSessions()
         {
             UnregisterNotifications();
 
-            IAudioSessionEnumerator _SessionEnum;
-            Marshal.ThrowExceptionForHR(_AudioSessionManager2.GetSessionEnumerator(out _SessionEnum));
+            Marshal.ThrowExceptionForHR(_AudioSessionManager2.GetSessionEnumerator(out IAudioSessionEnumerator _SessionEnum));
             _Sessions = new SessionCollection(_SessionEnum);
 
             _AudioSessionNotification = new AudioSessionNotification(this);

@@ -61,11 +61,9 @@ namespace CoreAudio
         {
             _AudioSessionControl2 = realAudioSessionControl2;
 
-            IAudioMeterInformation _meters = _AudioSessionControl2 as IAudioMeterInformation;
-            if (_meters != null) _AudioMeterInformation = new CoreAudio.AudioMeterInformation(_meters);
+            if (_AudioSessionControl2 is IAudioMeterInformation _meters) _AudioMeterInformation = new AudioMeterInformation(_meters);
 
-            ISimpleAudioVolume _volume1 = _AudioSessionControl2 as ISimpleAudioVolume;            
-            if (_volume1 != null) _SimpleAudioVolume = new SimpleAudioVolume(_volume1);
+            if (_AudioSessionControl2 is ISimpleAudioVolume _volume1) _SimpleAudioVolume = new SimpleAudioVolume(_volume1);
 
             //IAudioVolumeLevel _volume2 = _AudioSessionControl2 as IAudioVolumeLevel;
             //if (_volume2 != null) _AudioVolumeLevel = new AudioVolumeLevel(_volume2);
@@ -76,34 +74,34 @@ namespace CoreAudio
 
         internal void FireDisplayNameChanged([MarshalAs(UnmanagedType.LPWStr)] string NewDisplayName, Guid EventContext)
         {
-            if (OnDisplayNameChanged != null) OnDisplayNameChanged(this, NewDisplayName);
+            OnDisplayNameChanged?.Invoke(this, NewDisplayName);
         }
 
         internal void FireOnIconPathChanged([MarshalAs(UnmanagedType.LPWStr)] string NewIconPath, Guid EventContext)
         {
-            if (OnIconPathChanged != null) OnIconPathChanged(this, NewIconPath);
+            OnIconPathChanged?.Invoke(this, NewIconPath);
         }
 
         internal void FireSimpleVolumeChanged(float NewVolume, bool newMute, Guid EventContext)
         {
-            if (OnSimpleVolumeChanged != null) OnSimpleVolumeChanged(this, NewVolume, newMute);
+            OnSimpleVolumeChanged?.Invoke(this, NewVolume, newMute);
         }
 
         internal void FireChannelVolumeChanged(UInt32 ChannelCount, IntPtr NewChannelVolumeArray, UInt32 ChangedChannel, Guid EventContext)
         {
             float[] volume = new float[ChannelCount];
             Marshal.Copy(NewChannelVolumeArray, volume, 0, (int)ChannelCount);
-            if (OnChannelVolumeChanged != null) OnChannelVolumeChanged(this, (int)ChannelCount, (Single[])volume, (int)ChangedChannel);
+            OnChannelVolumeChanged?.Invoke(this, (int)ChannelCount, (Single[])volume, (int)ChangedChannel);
         }
 
         internal void FireStateChanged(AudioSessionState NewState)
         {
-            if (OnStateChanged != null) OnStateChanged(this, NewState);
+            OnStateChanged?.Invoke(this, NewState);
         }
 
         internal void FireSessionDisconnected(AudioSessionDisconnectReason DisconnectReason)
         {
-            if (OnSessionDisconnected != null) OnSessionDisconnected(this, DisconnectReason);
+            OnSessionDisconnected?.Invoke(this, DisconnectReason);
         }
 
         public AudioMeterInformation AudioMeterInformation
@@ -132,8 +130,7 @@ namespace CoreAudio
         {
             get
             {
-                AudioSessionState res;
-                Marshal.ThrowExceptionForHR(_AudioSessionControl2.GetState(out res));
+                Marshal.ThrowExceptionForHR(_AudioSessionControl2.GetState(out AudioSessionState res));
                 return res;
             }
         }
@@ -142,8 +139,7 @@ namespace CoreAudio
         {
             get
             {
-                string str;
-                Marshal.ThrowExceptionForHR(_AudioSessionControl2.GetDisplayName(out str));
+                Marshal.ThrowExceptionForHR(_AudioSessionControl2.GetDisplayName(out string str));
                 return str;
             }
         }
@@ -152,8 +148,7 @@ namespace CoreAudio
         {
             get
             {
-                string str;
-                Marshal.ThrowExceptionForHR(_AudioSessionControl2.GetIconPath(out str));
+                Marshal.ThrowExceptionForHR(_AudioSessionControl2.GetIconPath(out string str));
                 return str;
             }
         }
@@ -162,8 +157,7 @@ namespace CoreAudio
         {
             get
             {
-                string str;
-                Marshal.ThrowExceptionForHR(_AudioSessionControl2.GetSessionIdentifier(out str));
+                Marshal.ThrowExceptionForHR(_AudioSessionControl2.GetSessionIdentifier(out string str));
                 return str;
             }
         }
@@ -172,8 +166,7 @@ namespace CoreAudio
         {
             get
             {
-                string str;
-                Marshal.ThrowExceptionForHR(_AudioSessionControl2.GetSessionInstanceIdentifier(out str));
+                Marshal.ThrowExceptionForHR(_AudioSessionControl2.GetSessionInstanceIdentifier(out string str));
                 return str;
             }
         }
@@ -182,8 +175,7 @@ namespace CoreAudio
         {
             get
             {
-                uint pid;
-                Marshal.ThrowExceptionForHR(_AudioSessionControl2.GetProcessId(out pid));
+                Marshal.ThrowExceptionForHR(_AudioSessionControl2.GetProcessId(out uint pid));
                 return pid;
             }
         }

@@ -33,8 +33,7 @@ namespace CoreAudio
         {
             get
             {
-                int result;
-                Marshal.ThrowExceptionForHR(_AudioMeterInformation.GetMeteringChannelCount(out result));
+                Marshal.ThrowExceptionForHR(_AudioMeterInformation.GetMeteringChannelCount(out int result));
                 return result;
             }
         }

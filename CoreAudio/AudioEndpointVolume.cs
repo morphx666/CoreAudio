@@ -26,7 +26,6 @@ using System.Runtime.InteropServices;
 
 namespace CoreAudio
 {
-
     public class AudioEndpointVolume : IDisposable
     {
         private IAudioEndpointVolume _AudioEndPointVolume;
@@ -73,8 +72,7 @@ namespace CoreAudio
         {
             get
             {
-                float result;
-                Marshal.ThrowExceptionForHR(_AudioEndPointVolume.GetMasterVolumeLevel(out result));
+                Marshal.ThrowExceptionForHR(_AudioEndPointVolume.GetMasterVolumeLevel(out float result));
                 return result;
             }
             set
@@ -87,8 +85,7 @@ namespace CoreAudio
         {
             get
             {
-                float result;
-                Marshal.ThrowExceptionForHR(_AudioEndPointVolume.GetMasterVolumeLevelScalar(out result));
+                Marshal.ThrowExceptionForHR(_AudioEndPointVolume.GetMasterVolumeLevelScalar(out float result));
                 return result;
             }
             set
@@ -101,8 +98,7 @@ namespace CoreAudio
         {
             get
             {
-                bool result;
-                Marshal.ThrowExceptionForHR(_AudioEndPointVolume.GetMute(out result));
+                Marshal.ThrowExceptionForHR(_AudioEndPointVolume.GetMute(out bool result));
                 return result;
             }
             set
@@ -123,12 +119,10 @@ namespace CoreAudio
 
         internal AudioEndpointVolume(IAudioEndpointVolume realEndpointVolume)
         {
-            uint HardwareSupp;
-
             _AudioEndPointVolume = realEndpointVolume;
             _Channels = new AudioEndpointVolumeChannels(_AudioEndPointVolume);
             _StepInformation = new AudioEndpointVolumeStepInformation(_AudioEndPointVolume);
-            Marshal.ThrowExceptionForHR(_AudioEndPointVolume.QueryHardwareSupport(out HardwareSupp));
+            Marshal.ThrowExceptionForHR(_AudioEndPointVolume.QueryHardwareSupport(out uint HardwareSupp));
             _HardwareSupport = (EEndpointHardwareSupport)HardwareSupp;
             _VolumeRange = new AudioEndPointVolumeVolumeRange(_AudioEndPointVolume);
             _CallBack = new AudioEndpointVolumeCallback(this);
@@ -137,11 +131,7 @@ namespace CoreAudio
 
         internal void FireNotification(AudioVolumeNotificationData NotificationData)
         {
-            AudioEndpointVolumeNotificationDelegate del = OnVolumeNotification;
-            if (del != null)
-            {
-                del(NotificationData);
-            }
+            OnVolumeNotification?.Invoke(NotificationData);
         }
 
         #region IDisposable Members
@@ -161,7 +151,6 @@ namespace CoreAudio
             Dispose();
         }
 
-        #endregion
-       
+        #endregion       
     }
 }

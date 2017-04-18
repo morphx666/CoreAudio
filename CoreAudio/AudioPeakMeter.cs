@@ -37,16 +37,14 @@ namespace CoreAudio
         {
             get
             {
-                int count;
-                Marshal.ThrowExceptionForHR(_AudioPeakMeter.GetChannelCount(out count));
+                Marshal.ThrowExceptionForHR(_AudioPeakMeter.GetChannelCount(out int count));
                 return count;
             }
         }
 
         public float GetLevel(int channel)
         {
-            float level = 0;
-            Marshal.ThrowExceptionForHR(_AudioPeakMeter.GetLevel((uint)channel, out level));
+            Marshal.ThrowExceptionForHR(_AudioPeakMeter.GetLevel((uint)channel, out float level));
             return level;
         }
     }

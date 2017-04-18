@@ -40,8 +40,7 @@ namespace CoreAudio
         {
             get
             {
-                IAudioSessionControl2 _Result;
-                Marshal.ThrowExceptionForHR(_AudioSessionEnumerator.GetSession(index, out _Result));
+                Marshal.ThrowExceptionForHR(_AudioSessionEnumerator.GetSession(index, out IAudioSessionControl2 _Result));
                 return new AudioSessionControl2(_Result);
             }
         }
@@ -50,8 +49,7 @@ namespace CoreAudio
         {
             get
             {
-                int result;
-                Marshal.ThrowExceptionForHR(_AudioSessionEnumerator.GetCount(out result));
+                Marshal.ThrowExceptionForHR(_AudioSessionEnumerator.GetCount(out int result));
                 return (int)result;
             }
         }

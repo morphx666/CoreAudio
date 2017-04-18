@@ -39,14 +39,12 @@ namespace CoreAudio
         {
             get
             {
-                bool enabled;
-                Marshal.ThrowExceptionForHR(_AudioLoudness.GetEnabled(out enabled));
+                Marshal.ThrowExceptionForHR(_AudioLoudness.GetEnabled(out bool enabled));
                 return enabled;
             }
             set
             {
-                Guid eventContext;
-                Marshal.ThrowExceptionForHR(_AudioLoudness.SetEnabled(value, out eventContext));
+                Marshal.ThrowExceptionForHR(_AudioLoudness.SetEnabled(value, out Guid eventContext));
             }
         }
     }

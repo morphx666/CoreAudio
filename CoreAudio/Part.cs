@@ -49,13 +49,12 @@ namespace CoreAudio
         }
 
         internal void FireNotification(UInt32 dwSenderProcessId, ref Guid pguidEventContext) {
-            if(OnPartNotification != null) OnPartNotification(this);
+            OnPartNotification?.Invoke(this);
         }
 
         private void GetAudioVolumeLevel() {
-            object result = null;
-            _Part.Activate(CLSCTX.ALL, ref IIDs.IID_IAudioVolumeLevel, out result);
-            if(result != null) {
+            _Part.Activate(CLSCTX.ALL, ref IIDs.IID_IAudioVolumeLevel, out object result);
+            if (result != null) {
                 _AudioVolumeLevel = new AudioVolumeLevel(result as IAudioVolumeLevel);
                 _AudioVolumeLevelChangeNotification = new ControlChangeNotify(this);
                 Marshal.ThrowExceptionForHR(_Part.RegisterControlChangeCallback(ref IIDs.IID_IAudioVolumeLevel, _AudioVolumeLevelChangeNotification));
@@ -63,9 +62,8 @@ namespace CoreAudio
         }
 
         private void GetAudioMute() {
-            object result = null;
-            _Part.Activate(CLSCTX.ALL, ref IIDs.IID_IAudioMute, out result);
-            if(result != null) {
+            _Part.Activate(CLSCTX.ALL, ref IIDs.IID_IAudioMute, out object result);
+            if (result != null) {
                 _AudioMute = new AudioMute(result as IAudioMute);
                 _AudioMuteChangeNotification = new ControlChangeNotify(this);
                 Marshal.ThrowExceptionForHR(_Part.RegisterControlChangeCallback(ref IIDs.IID_IAudioMute, _AudioMuteChangeNotification));
@@ -73,9 +71,8 @@ namespace CoreAudio
         }
 
         private void GetAudioPeakMeter() {
-            object result = null;
-            _Part.Activate(CLSCTX.ALL, ref IIDs.IID_IAudioPeakMeter, out result);
-            if(result != null) {
+            _Part.Activate(CLSCTX.ALL, ref IIDs.IID_IAudioPeakMeter, out object result);
+            if (result != null) {
                 _AudioPeakMeter = new AudioPeakMeter(result as IAudioPeakMeter);
                 _AudioPeakMeterChangeNotification = new ControlChangeNotify(this);
                 Marshal.ThrowExceptionForHR(_Part.RegisterControlChangeCallback(ref IIDs.IID_IAudioPeakMeter, _AudioPeakMeterChangeNotification));
@@ -83,9 +80,8 @@ namespace CoreAudio
         }
 
         private void GetAudioLoudness() {
-            object result = null;
-            _Part.Activate(CLSCTX.ALL, ref IIDs.IID_IAudioLoudness, out result);
-            if(result != null) {
+            _Part.Activate(CLSCTX.ALL, ref IIDs.IID_IAudioLoudness, out object result);
+            if (result != null) {
                 _AudioLoudness = new AudioLoudness(result as IAudioLoudness);
                 _AudioLoudnessChangeNotification = new ControlChangeNotify(this);
                 Marshal.ThrowExceptionForHR(_Part.RegisterControlChangeCallback(ref IIDs.IID_IAudioLoudness, _AudioLoudnessChangeNotification));
@@ -94,40 +90,35 @@ namespace CoreAudio
 
         public string GetName {
             get {
-                string name;
-                Marshal.ThrowExceptionForHR(_Part.GetName(out name));
+                Marshal.ThrowExceptionForHR(_Part.GetName(out string name));
                 return name;
             }
         }
 
         public int GetLocalId {
             get {
-                int id;
-                Marshal.ThrowExceptionForHR(_Part.GetLocalId(out id));
+                Marshal.ThrowExceptionForHR(_Part.GetLocalId(out int id));
                 return id;
             }
         }
 
         public string GetGlobalId {
             get {
-                string id;
-                Marshal.ThrowExceptionForHR(_Part.GetGlobalId(out id));
+                Marshal.ThrowExceptionForHR(_Part.GetGlobalId(out string id));
                 return id;
             }
         }
 
         public PartType GetPartType {
             get {
-                PartType type;
-                Marshal.ThrowExceptionForHR(_Part.GetPartType(out type));
+                Marshal.ThrowExceptionForHR(_Part.GetPartType(out PartType type));
                 return type;
             }
         }
 
         public Guid GetSubType {
             get {
-                Guid type;
-                Marshal.ThrowExceptionForHR(_Part.GetSubType(out type));
+                Marshal.ThrowExceptionForHR(_Part.GetSubType(out Guid type));
                 return type;
             }
         }
@@ -160,24 +151,21 @@ namespace CoreAudio
 
         public int GetControlInterfaceCount {
             get {
-                int count = 0;
-                Marshal.ThrowExceptionForHR(_Part.GetControlInterfaceCount(out count));
+                Marshal.ThrowExceptionForHR(_Part.GetControlInterfaceCount(out int count));
                 return count;
             }
         }
 
         public ControlInterface GetControlInterface(int index) {
-            IControlInterface controlInterface;
-            Marshal.ThrowExceptionForHR(_Part.GetControlInterface(index, out controlInterface));
+            Marshal.ThrowExceptionForHR(_Part.GetControlInterface(index, out IControlInterface controlInterface));
             return new ControlInterface(controlInterface);
         }
 
         public PartsList EnumPartsIncoming {
             get {
                 if(partsListIncoming == null) {
-                    IPartsList partsList = null;
-                    _Part.EnumPartsIncoming(out partsList);
-                    if(partsList != null) partsListIncoming = new PartsList(partsList);
+                    _Part.EnumPartsIncoming(out IPartsList partsList);
+                    if (partsList != null) partsListIncoming = new PartsList(partsList);
                 }
                 return partsListIncoming;
             }
@@ -186,9 +174,8 @@ namespace CoreAudio
         public PartsList EnumPartsOutgoing {
             get {
                 if(partsListOutgoing == null) {
-                    IPartsList partsList = null;
-                    _Part.EnumPartsOutgoing(out partsList);
-                    if(partsList != null) partsListOutgoing = new PartsList(partsList);
+                    _Part.EnumPartsOutgoing(out IPartsList partsList);
+                    if (partsList != null) partsListOutgoing = new PartsList(partsList);
                 }
                 return partsListOutgoing;
             }
@@ -196,8 +183,7 @@ namespace CoreAudio
 
         public DeviceTopology GetTopologyObject {
             get {
-                IDeviceTopology deviceTopology;
-                Marshal.ThrowExceptionForHR(_Part.GetTopologyObject(out deviceTopology));
+                Marshal.ThrowExceptionForHR(_Part.GetTopologyObject(out IDeviceTopology deviceTopology));
                 return new DeviceTopology(deviceTopology);
             }
         }

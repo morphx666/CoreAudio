@@ -35,8 +35,7 @@ namespace CoreAudio
         {
             get
             {
-                int Result;
-                Marshal.ThrowExceptionForHR(_Store.GetCount(out Result));
+                Marshal.ThrowExceptionForHR(_Store.GetCount(out int Result));
                 return Result;
             }
         }
@@ -45,9 +44,8 @@ namespace CoreAudio
         {
             get
             {
-                PropVariant result;
                 PROPERTYKEY key = Get(index);
-                Marshal.ThrowExceptionForHR(_Store.GetValue(ref key, out result));
+                Marshal.ThrowExceptionForHR(_Store.GetValue(ref key, out PropVariant result));
                 return new PropertyStoreProperty(key, result);
             }
         }
@@ -67,13 +65,12 @@ namespace CoreAudio
         {
             get
             {
-                PropVariant result;
                 for (int i = 0; i < Count; i++)
                 {
                     PROPERTYKEY key = Get(i);
                     if (key.fmtid == testKey.fmtid && key.pid == testKey.pid)
                     {
-                        Marshal.ThrowExceptionForHR(_Store.GetValue(ref key, out result));
+                        Marshal.ThrowExceptionForHR(_Store.GetValue(ref key, out PropVariant result));
                         return new PropertyStoreProperty(key, result);
                     }
                 }
@@ -83,16 +80,14 @@ namespace CoreAudio
 
         public PROPERTYKEY Get(int index)
         {
-            PROPERTYKEY key;
-            Marshal.ThrowExceptionForHR( _Store.GetAt(index, out key));
+            Marshal.ThrowExceptionForHR(_Store.GetAt(index, out PROPERTYKEY key));
             return key;
         }
 
         public PropVariant GetValue(int index)
         {
-            PropVariant result;
             PROPERTYKEY key = Get(index);
-            Marshal.ThrowExceptionForHR(_Store.GetValue(ref key, out result));
+            Marshal.ThrowExceptionForHR(_Store.GetValue(ref key, out PropVariant result));
             return result;
         }
 

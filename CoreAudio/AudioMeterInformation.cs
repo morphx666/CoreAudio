@@ -33,10 +33,9 @@ namespace CoreAudio
 
         internal AudioMeterInformation(IAudioMeterInformation realInterface)
         {
-            int HardwareSupp;
 
             _AudioMeterInformation = realInterface;
-            Marshal.ThrowExceptionForHR(_AudioMeterInformation.QueryHardwareSupport(out HardwareSupp));
+            Marshal.ThrowExceptionForHR(_AudioMeterInformation.QueryHardwareSupport(out int HardwareSupp));
             _HardwareSupport = (EEndpointHardwareSupport)HardwareSupp;
             _Channels = new AudioMeterInformationChannels(_AudioMeterInformation);
 
@@ -62,8 +61,7 @@ namespace CoreAudio
         {
             get
             {
-                float result;
-                Marshal.ThrowExceptionForHR(_AudioMeterInformation.GetPeakValue(out result));
+                Marshal.ThrowExceptionForHR(_AudioMeterInformation.GetPeakValue(out float result));
                 return result;
             }
         }

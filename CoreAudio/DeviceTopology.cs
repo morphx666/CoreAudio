@@ -38,16 +38,14 @@ namespace CoreAudio
         {
             get
             {
-                int count = 0;
-                Marshal.ThrowExceptionForHR(_DeviceTopology.GetConnectorCount(out count));
+                Marshal.ThrowExceptionForHR(_DeviceTopology.GetConnectorCount(out int count));
                 return count;
             }
         }
 
         public Connector GetConnector(int index)
         {
-            IConnector connector;
-            Marshal.ThrowExceptionForHR(_DeviceTopology.GetConnector(index, out connector));
+            Marshal.ThrowExceptionForHR(_DeviceTopology.GetConnector(index, out IConnector connector));
             return new Connector(connector);
         }
 
@@ -55,23 +53,20 @@ namespace CoreAudio
         {
             get
             {
-                int count = 0;
-                Marshal.ThrowExceptionForHR(_DeviceTopology.GetSubunitCount(out count));
+                Marshal.ThrowExceptionForHR(_DeviceTopology.GetSubunitCount(out int count));
                 return count;
             }
         }
 
         public Subunit GetSubunit(int index)
         {
-            ISubunit subUnit;
-            Marshal.ThrowExceptionForHR(_DeviceTopology.GetSubunit(index, out subUnit));
+            Marshal.ThrowExceptionForHR(_DeviceTopology.GetSubunit(index, out ISubunit subUnit));
             return new Subunit(subUnit);
         }
 
         public Part GetPartById(int id)
         {
-            IPart part;
-            Marshal.ThrowExceptionForHR(_DeviceTopology.GetPartById(id, out part));
+            Marshal.ThrowExceptionForHR(_DeviceTopology.GetPartById(id, out IPart part));
             return new Part(part);
         }
 
@@ -79,16 +74,14 @@ namespace CoreAudio
         {
             get
             {
-                string id;
-                Marshal.ThrowExceptionForHR(_DeviceTopology.GetDeviceId(out id));
+                Marshal.ThrowExceptionForHR(_DeviceTopology.GetDeviceId(out string id));
                 return id;
             }
         }
 
         public PartsList GetSignalPath(Part from, Part to, bool rejectMixedPaths)
         {
-            IPartsList partList;
-            Marshal.ThrowExceptionForHR(_DeviceTopology.GetSignalPath((IPart)from, (IPart)to, rejectMixedPaths, out partList));
+            Marshal.ThrowExceptionForHR(_DeviceTopology.GetSignalPath((IPart)from, (IPart)to, rejectMixedPaths, out IPartsList partList));
             return new PartsList(partList);
         }
     }

@@ -52,8 +52,7 @@ namespace CoreAudio
         {
             get
             {
-                uint count;
-                Marshal.ThrowExceptionForHR(_PerChannelDbLevel.GetChannelCount(out count));
+                Marshal.ThrowExceptionForHR(_PerChannelDbLevel.GetChannelCount(out uint count));
                 return (int)count;
             }
         }
@@ -86,16 +85,14 @@ namespace CoreAudio
 
         public void SetLevel(int channel, float level)
         {
-            Guid eventContext;
-            Marshal.ThrowExceptionForHR(_PerChannelDbLevel.SetLevel((uint)channel, level, out eventContext));
+            Marshal.ThrowExceptionForHR(_PerChannelDbLevel.SetLevel((uint)channel, level, out Guid eventContext));
         }
 
         public void SetLevelUniform(float level)
         {
-            Guid eventContext;
             System.Threading.Thread.Sleep(5);
             try {
-                Marshal.ThrowExceptionForHR(_PerChannelDbLevel.SetLevelUniform(level, out eventContext));
+                Marshal.ThrowExceptionForHR(_PerChannelDbLevel.SetLevelUniform(level, out Guid eventContext));
             } catch(Exception) {
                 System.Threading.Thread.Sleep(100);
             } 

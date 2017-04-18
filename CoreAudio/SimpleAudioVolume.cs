@@ -41,8 +41,7 @@ namespace CoreAudio
         {
             get
             {
-                float ret;
-                Marshal.ThrowExceptionForHR(_SimpleAudioVolume.GetMasterVolume(out ret));
+                Marshal.ThrowExceptionForHR(_SimpleAudioVolume.GetMasterVolume(out float ret));
                 return ret;
             }
             set
@@ -56,8 +55,7 @@ namespace CoreAudio
         {
             get
             {
-                bool ret;
-                Marshal.ThrowExceptionForHR(_SimpleAudioVolume.GetMute(out ret));
+                Marshal.ThrowExceptionForHR(_SimpleAudioVolume.GetMute(out bool ret));
                 return ret;
             }
             set

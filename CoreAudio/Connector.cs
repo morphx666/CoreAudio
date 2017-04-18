@@ -39,8 +39,7 @@ namespace CoreAudio
         {
             get
             {
-                ConnectorType type;
-                Marshal.ThrowExceptionForHR(_Connector.GetType(out type));
+                Marshal.ThrowExceptionForHR(_Connector.GetType(out ConnectorType type));
                 return type;
             }
         }
@@ -49,8 +48,7 @@ namespace CoreAudio
         {
             get
             {
-                EDataFlow flow;
-                Marshal.ThrowExceptionForHR(_Connector.GetDataFlow(out flow));
+                Marshal.ThrowExceptionForHR(_Connector.GetDataFlow(out EDataFlow flow));
                 return flow;
             }
         }
@@ -69,8 +67,7 @@ namespace CoreAudio
         {
             get
             {
-                bool result;
-                Marshal.ThrowExceptionForHR(_Connector.IsConnected(out result));
+                Marshal.ThrowExceptionForHR(_Connector.IsConnected(out bool result));
                 return result;
             }
         }
@@ -79,8 +76,7 @@ namespace CoreAudio
         {
             get
             {
-                IConnector connectedTo;
-                Marshal.ThrowExceptionForHR(_Connector.GetConnectedTo(out connectedTo));
+                Marshal.ThrowExceptionForHR(_Connector.GetConnectedTo(out IConnector connectedTo));
                 return new Connector(connectedTo);
             }
         }
@@ -89,8 +85,7 @@ namespace CoreAudio
         {
             get
             {
-                string id;
-                Marshal.ThrowExceptionForHR(_Connector.GetConnectorIdConnectedTo(out id));
+                Marshal.ThrowExceptionForHR(_Connector.GetConnectorIdConnectedTo(out string id));
                 return id;
             }
         }
@@ -99,8 +94,7 @@ namespace CoreAudio
         {
             get
             {
-                string id;
-                Marshal.ThrowExceptionForHR(_Connector.GetDeviceIdConnectedTo(out id));
+                Marshal.ThrowExceptionForHR(_Connector.GetDeviceIdConnectedTo(out string id));
                 return id;
             }
         }
@@ -112,9 +106,8 @@ namespace CoreAudio
                 if (_Part == null)
                 {
                     IntPtr pUnk = Marshal.GetIUnknownForObject(_Connector);
-                    IntPtr ppv;
 
-                    int res = Marshal.QueryInterface(pUnk, ref IIDs.IID_IPart, out ppv);
+                    int res = Marshal.QueryInterface(pUnk, ref IIDs.IID_IPart, out IntPtr ppv);
                     if (ppv != IntPtr.Zero)
                         _Part = new Part((IPart)Marshal.GetObjectForIUnknown(ppv));
                     else

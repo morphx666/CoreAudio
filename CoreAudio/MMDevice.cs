@@ -40,36 +40,31 @@ namespace CoreAudio
         #region Init
         private void GetPropertyInformation()
         {
-            IPropertyStore propstore;
-            Marshal.ThrowExceptionForHR(_RealDevice.OpenPropertyStore(EStgmAccess.STGM_READ, out propstore));
+            Marshal.ThrowExceptionForHR(_RealDevice.OpenPropertyStore(EStgmAccess.STGM_READ, out IPropertyStore propstore));
             _PropertyStore = new PropertyStore(propstore);
         }
 
         private void GetAudioSessionManager2()
         {
-            object result;
-            Marshal.ThrowExceptionForHR(_RealDevice.Activate(ref IIDs.IID_IAudioSessionManager2, CLSCTX.ALL, IntPtr.Zero, out result));
+            Marshal.ThrowExceptionForHR(_RealDevice.Activate(ref IIDs.IID_IAudioSessionManager2, CLSCTX.ALL, IntPtr.Zero, out object result));
             _AudioSessionManager2 = new AudioSessionManager2(result as IAudioSessionManager2);
         }
 
         private void GetAudioMeterInformation()
         {
-            object result;
-            Marshal.ThrowExceptionForHR(_RealDevice.Activate(ref IIDs.IID_IAudioMeterInformation, CLSCTX.ALL, IntPtr.Zero, out result));
+            Marshal.ThrowExceptionForHR(_RealDevice.Activate(ref IIDs.IID_IAudioMeterInformation, CLSCTX.ALL, IntPtr.Zero, out object result));
             _AudioMeterInformation = new AudioMeterInformation( result as IAudioMeterInformation);
         }
 
         private void GetAudioEndpointVolume()
         {
-            object result;
-            Marshal.ThrowExceptionForHR(_RealDevice.Activate(ref IIDs.IID_IAudioEndpointVolume, CLSCTX.ALL, IntPtr.Zero, out result));
+            Marshal.ThrowExceptionForHR(_RealDevice.Activate(ref IIDs.IID_IAudioEndpointVolume, CLSCTX.ALL, IntPtr.Zero, out object result));
             _AudioEndpointVolume = new AudioEndpointVolume(result as IAudioEndpointVolume);
         }
 
         private void GetDeviceTopology()
         {
-            object result;
-            Marshal.ThrowExceptionForHR(_RealDevice.Activate(ref IIDs.IID_IDeviceTopology, CLSCTX.ALL, IntPtr.Zero, out result));
+            Marshal.ThrowExceptionForHR(_RealDevice.Activate(ref IIDs.IID_IDeviceTopology, CLSCTX.ALL, IntPtr.Zero, out object result));
             _DeviceTopology = new DeviceTopology(result as IDeviceTopology);
         }
 
@@ -140,8 +135,7 @@ namespace CoreAudio
         {
             get
             {
-                string Result;
-                Marshal.ThrowExceptionForHR(_RealDevice.GetId(out Result));
+                Marshal.ThrowExceptionForHR(_RealDevice.GetId(out string Result));
                 return Result;
             }
         }
@@ -150,9 +144,8 @@ namespace CoreAudio
         {
             get
             {
-                EDataFlow Result;
-                IMMEndpoint ep =  _RealDevice as IMMEndpoint ;
-                ep.GetDataFlow(out Result);
+                IMMEndpoint ep = _RealDevice as IMMEndpoint;
+                ep.GetDataFlow(out EDataFlow Result);
                 return Result;
             }
         }
@@ -161,8 +154,7 @@ namespace CoreAudio
         {
             get
             {
-                DEVICE_STATE Result;
-                Marshal.ThrowExceptionForHR(_RealDevice.GetState(out Result));
+                Marshal.ThrowExceptionForHR(_RealDevice.GetState(out DEVICE_STATE Result));
                 return Result;
 
             }

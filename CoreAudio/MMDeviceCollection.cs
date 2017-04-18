@@ -32,8 +32,7 @@ namespace CoreAudio
         {
             get
             {
-                uint result;
-                Marshal.ThrowExceptionForHR(_MMDeviceCollection.GetCount(out result));
+                Marshal.ThrowExceptionForHR(_MMDeviceCollection.GetCount(out uint result));
                 return (int)result;
             }
         }
@@ -42,8 +41,7 @@ namespace CoreAudio
         {
             get
             {
-                IMMDevice result;
-                _MMDeviceCollection.Item((uint)index, out result);
+                _MMDeviceCollection.Item((uint)index, out IMMDevice result);
                 return new MMDevice(result);
             }
         }

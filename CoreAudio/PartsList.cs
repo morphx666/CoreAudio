@@ -40,8 +40,7 @@ namespace CoreAudio
         {
             get
             {
-                int count = 0;
-                Marshal.ThrowExceptionForHR(_PartsList.GetCount(out count));
+                Marshal.ThrowExceptionForHR(_PartsList.GetCount(out int count));
                 return count;
             }
         }
@@ -54,8 +53,7 @@ namespace CoreAudio
             }
             else
             {
-                IPart ipart;
-                Marshal.ThrowExceptionForHR(_PartsList.GetPart(index, out ipart));
+                Marshal.ThrowExceptionForHR(_PartsList.GetPart(index, out IPart ipart));
                 Part part = new Part(ipart);
                 partsCache.Add(index, part);
                 return part;
