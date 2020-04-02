@@ -19,18 +19,20 @@
      misrepresented as being the original source code.
   3. This notice may not be removed or altered from any source distribution.
 */
+/* Updated by John de Jong (2020/04/02) */
 
-#if (NET40) 
-using System.Linq;
-#endif
 using CoreAudio.Interfaces;
+using System.Collections;
+using System.Collections.Generic;
 using System.Runtime.InteropServices;
 
 namespace CoreAudio
 {
     public class SessionCollection
+        : IEnumerable<AudioSessionControl2>
     {
-        IAudioSessionEnumerator _AudioSessionEnumerator;
+        private readonly IAudioSessionEnumerator _AudioSessionEnumerator;
+
         internal SessionCollection(IAudioSessionEnumerator realEnumerator)
         {
             _AudioSessionEnumerator = realEnumerator;
@@ -50,8 +52,21 @@ namespace CoreAudio
             get
             {
                 Marshal.ThrowExceptionForHR(_AudioSessionEnumerator.GetCount(out int result));
-                return (int)result;
+                return result;
             }
+        }
+
+        public IEnumerator<AudioSessionControl2> GetEnumerator()
+        {
+            for (int index = 0; index < Count; index++)
+            {
+                yield return this[index];
+            }
+        }
+
+        IEnumerator IEnumerable.GetEnumerator()
+        {
+            return GetEnumerator();
         }
     }
 }

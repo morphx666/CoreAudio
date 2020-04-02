@@ -12,12 +12,10 @@ namespace CoreAudioConsole.Core.Sample
             MMDevice device = DevEnum.GetDefaultAudioEndpoint(EDataFlow.eRender, ERole.eMultimedia);
             // Note the AudioSession manager did not have a method to enumerate all sessions in windows Vista
             // this will only work on Win7 and newer.
-            for (int i = 0; i < device.AudioSessionManager2.Sessions.Count; i++)
+            foreach (var session in device.AudioSessionManager2.Sessions)
             {
-                AudioSessionControl2 session = device.AudioSessionManager2.Sessions[i];
                 if (session.State == AudioSessionState.AudioSessionStateActive)
                 {
-                    Console.WriteLine("Session :{0}", i);
                     Console.WriteLine("DisplayName: {0}", session.DisplayName);
                     Console.WriteLine("State: {0}", session.State);
                     Console.WriteLine("IconPath: {0}", session.IconPath);

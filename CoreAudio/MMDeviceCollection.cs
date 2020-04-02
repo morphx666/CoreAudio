@@ -19,14 +19,19 @@
      misrepresented as being the original source code.
   3. This notice may not be removed or altered from any source distribution.
 */
+/* Updated by John de Jong (2020/04/02) */
+
 using CoreAudio.Interfaces;
+using System.Collections;
+using System.Collections.Generic;
 using System.Runtime.InteropServices;
 
 namespace CoreAudio
 {
     public class MMDeviceCollection
+        : IEnumerable<MMDevice>
     {
-        private IMMDeviceCollection _MMDeviceCollection;
+        private readonly IMMDeviceCollection _MMDeviceCollection;
 
         public int Count
         {
@@ -49,6 +54,19 @@ namespace CoreAudio
         internal MMDeviceCollection(IMMDeviceCollection parent)
         {
             _MMDeviceCollection = parent;
+        }
+
+        public IEnumerator<MMDevice> GetEnumerator()
+        {
+            for (int index = 0; index < Count; index++)
+            {
+                yield return this[index];
+            }
+        }
+
+        IEnumerator IEnumerable.GetEnumerator()
+        {
+            return GetEnumerator();
         }
     }
 }
