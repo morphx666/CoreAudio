@@ -19,16 +19,16 @@
      misrepresented as being the original source code.
   3. This notice may not be removed or altered from any source distribution.
 */
+/* Updated by John de Jong (2020/04/02) */
+
 using System;
-#if (NET40) 
-using System.Linq;
-#endif
 using CoreAudio.Interfaces;
 using System.Runtime.InteropServices;
 
 namespace CoreAudio
 {
     public class AudioSessionControl2 
+        : _IAudioSessionControl
     {
         IAudioSessionControl2 _AudioSessionControl2;
         internal AudioMeterInformation _AudioMeterInformation;
@@ -72,34 +72,34 @@ namespace CoreAudio
             Marshal.ThrowExceptionForHR(_AudioSessionControl2.RegisterAudioSessionNotification(_AudioSessionEvents));
         }
 
-        internal void FireDisplayNameChanged([MarshalAs(UnmanagedType.LPWStr)] string NewDisplayName, Guid EventContext)
+        public void FireDisplayNameChanged([MarshalAs(UnmanagedType.LPWStr)] string NewDisplayName, Guid EventContext)
         {
             OnDisplayNameChanged?.Invoke(this, NewDisplayName);
         }
 
-        internal void FireOnIconPathChanged([MarshalAs(UnmanagedType.LPWStr)] string NewIconPath, Guid EventContext)
+        public void FireOnIconPathChanged([MarshalAs(UnmanagedType.LPWStr)] string NewIconPath, Guid EventContext)
         {
             OnIconPathChanged?.Invoke(this, NewIconPath);
         }
 
-        internal void FireSimpleVolumeChanged(float NewVolume, bool newMute, Guid EventContext)
+        public void FireSimpleVolumeChanged(float NewVolume, bool newMute, Guid EventContext)
         {
             OnSimpleVolumeChanged?.Invoke(this, NewVolume, newMute);
         }
 
-        internal void FireChannelVolumeChanged(UInt32 ChannelCount, IntPtr NewChannelVolumeArray, UInt32 ChangedChannel, Guid EventContext)
+        public void FireChannelVolumeChanged(UInt32 ChannelCount, IntPtr NewChannelVolumeArray, UInt32 ChangedChannel, Guid EventContext)
         {
             float[] volume = new float[ChannelCount];
             Marshal.Copy(NewChannelVolumeArray, volume, 0, (int)ChannelCount);
             OnChannelVolumeChanged?.Invoke(this, (int)ChannelCount, (Single[])volume, (int)ChangedChannel);
         }
 
-        internal void FireStateChanged(AudioSessionState NewState)
+        public void FireStateChanged(AudioSessionState NewState)
         {
             OnStateChanged?.Invoke(this, NewState);
         }
 
-        internal void FireSessionDisconnected(AudioSessionDisconnectReason DisconnectReason)
+        public void FireSessionDisconnected(AudioSessionDisconnectReason DisconnectReason)
         {
             OnSessionDisconnected?.Invoke(this, DisconnectReason);
         }

@@ -19,16 +19,31 @@
      misrepresented as being the original source code.
   3. This notice may not be removed or altered from any source distribution.
 */
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
+/* Updated by John de Jong (2020/04/02) */
+
 using CoreAudio.Interfaces;
+using System;
 using System.Runtime.InteropServices;
 
 namespace CoreAudio
 {
-    public class AudioSessionControl : IDisposable
+    public interface _IAudioSessionControl
+    {
+        void FireDisplayNameChanged([MarshalAs(UnmanagedType.LPWStr)] string NewDisplayName, Guid EventContext);
+
+        void FireOnIconPathChanged([MarshalAs(UnmanagedType.LPWStr)] string NewIconPath, Guid EventContext);
+
+        void FireSimpleVolumeChanged(float NewVolume, bool newMute, Guid EventContext);
+
+        void FireChannelVolumeChanged(uint ChannelCount, IntPtr NewChannelVolumeArray, uint ChangedChannel, Guid EventContext);
+
+        void FireStateChanged(AudioSessionState NewState);
+
+        void FireSessionDisconnected(AudioSessionDisconnectReason DisconnectReason);
+    }
+
+    public class AudioSessionControl
+        : _IAudioSessionControl, IDisposable
     {
         internal IAudioSessionControl _AudioSessionControl;
         internal AudioMeterInformation _AudioMeterInformation;
@@ -70,34 +85,34 @@ namespace CoreAudio
             Marshal.ThrowExceptionForHR(_AudioSessionControl.RegisterAudioSessionNotification(_AudioSessionEvents));
         }
 
-        internal void FireDisplayNameChanged([MarshalAs(UnmanagedType.LPWStr)] string NewDisplayName, Guid EventContext)
+        public void FireDisplayNameChanged([MarshalAs(UnmanagedType.LPWStr)] string NewDisplayName, Guid EventContext)
         {
             if (OnDisplayNameChanged != null) OnDisplayNameChanged(this, NewDisplayName);
         }
 
-        internal void FireOnIconPathChanged([MarshalAs(UnmanagedType.LPWStr)] string NewIconPath, Guid EventContext)
+        public void FireOnIconPathChanged([MarshalAs(UnmanagedType.LPWStr)] string NewIconPath, Guid EventContext)
         {
             if (OnIconPathChanged != null) OnIconPathChanged(this, NewIconPath);
         }
 
-        internal void FireSimpleVolumeChanged(float NewVolume, bool newMute, Guid EventContext)
+        public void FireSimpleVolumeChanged(float NewVolume, bool newMute, Guid EventContext)
         {
             if (OnSimpleVolumeChanged != null) OnSimpleVolumeChanged(this, NewVolume, newMute);
         }
 
-        internal void FireChannelVolumeChanged(UInt32 ChannelCount, IntPtr NewChannelVolumeArray, UInt32 ChangedChannel, Guid EventContext)
+        public void FireChannelVolumeChanged(UInt32 ChannelCount, IntPtr NewChannelVolumeArray, UInt32 ChangedChannel, Guid EventContext)
         {
             float[] volume = new float[ChannelCount - 1];
             Marshal.Copy(NewChannelVolumeArray, volume, 0, (int)ChannelCount);
             if (OnChannelVolumeChanged != null) OnChannelVolumeChanged(this, (int)ChannelCount, (Single[])volume, (int)ChangedChannel);
         }
 
-        internal void FireStateChanged(AudioSessionState NewState)
+        public void FireStateChanged(AudioSessionState NewState)
         {
             if (OnStateChanged != null) OnStateChanged(this, NewState);
         }
 
-        internal void FireSessionDisconnected(AudioSessionDisconnectReason DisconnectReason)
+        public void FireSessionDisconnected(AudioSessionDisconnectReason DisconnectReason)
         {
             if (OnSessionDisconnected != null) OnSessionDisconnected(this, DisconnectReason);
         }
