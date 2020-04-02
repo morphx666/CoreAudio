@@ -20,12 +20,15 @@
   3. This notice may not be removed or altered from any source distribution.
 */
 
-using CoreAudio.Interfaces;
 using System;
+using System.Collections.Generic;
+using System.Text;
+using CoreAudio.Interfaces;
 using System.Runtime.InteropServices;
 
 namespace CoreAudio
 {
+
     public class AudioEndpointVolume : IDisposable
     {
         private IAudioEndpointVolume _AudioEndPointVolume;
@@ -72,7 +75,8 @@ namespace CoreAudio
         {
             get
             {
-                Marshal.ThrowExceptionForHR(_AudioEndPointVolume.GetMasterVolumeLevel(out float result));
+                float result;
+                Marshal.ThrowExceptionForHR(_AudioEndPointVolume.GetMasterVolumeLevel(out result));
                 return result;
             }
             set
@@ -85,7 +89,8 @@ namespace CoreAudio
         {
             get
             {
-                Marshal.ThrowExceptionForHR(_AudioEndPointVolume.GetMasterVolumeLevelScalar(out float result));
+                float result;
+                Marshal.ThrowExceptionForHR(_AudioEndPointVolume.GetMasterVolumeLevelScalar(out result));
                 return result;
             }
             set
@@ -98,7 +103,8 @@ namespace CoreAudio
         {
             get
             {
-                Marshal.ThrowExceptionForHR(_AudioEndPointVolume.GetMute(out bool result));
+                bool result;
+                Marshal.ThrowExceptionForHR(_AudioEndPointVolume.GetMute(out result));
                 return result;
             }
             set
@@ -119,19 +125,24 @@ namespace CoreAudio
 
         internal AudioEndpointVolume(IAudioEndpointVolume realEndpointVolume)
         {
+            uint HardwareSupp;
+
             _AudioEndPointVolume = realEndpointVolume;
             _Channels = new AudioEndpointVolumeChannels(_AudioEndPointVolume);
             _StepInformation = new AudioEndpointVolumeStepInformation(_AudioEndPointVolume);
-            Marshal.ThrowExceptionForHR(_AudioEndPointVolume.QueryHardwareSupport(out uint HardwareSupp));
+            Marshal.ThrowExceptionForHR(_AudioEndPointVolume.QueryHardwareSupport(out HardwareSupp));
             _HardwareSupport = (EEndpointHardwareSupport)HardwareSupp;
             _VolumeRange = new AudioEndPointVolumeVolumeRange(_AudioEndPointVolume);
             _CallBack = new AudioEndpointVolumeCallback(this);
             Marshal.ThrowExceptionForHR(_AudioEndPointVolume.RegisterControlChangeNotify(_CallBack));
         }
-
         internal void FireNotification(AudioVolumeNotificationData NotificationData)
         {
-            OnVolumeNotification?.Invoke(NotificationData);
+            AudioEndpointVolumeNotificationDelegate del = OnVolumeNotification;
+            if (del != null)
+            {
+                del(NotificationData);
+            }
         }
 
         #region IDisposable Members
@@ -142,7 +153,6 @@ namespace CoreAudio
             {
                 Marshal.ThrowExceptionForHR(_AudioEndPointVolume.UnregisterControlChangeNotify( _CallBack ));
                 _CallBack = null;
-                OnVolumeNotification = null;
             }
         }
 
@@ -151,6 +161,7 @@ namespace CoreAudio
             Dispose();
         }
 
-        #endregion       
+        #endregion
+       
     }
 }

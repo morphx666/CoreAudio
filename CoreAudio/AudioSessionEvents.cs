@@ -19,6 +19,7 @@
      misrepresented as being the original source code.
   3. This notice may not be removed or altered from any source distribution.
 */
+/* Updated by John de Jong (2020/04/02) */
 
 using CoreAudio.Interfaces;
 using System;
@@ -28,9 +29,9 @@ namespace CoreAudio
 {
     internal class AudioSessionEvents : IAudioSessionEvents
     {
-        private AudioSessionControl2 _Parent;
+        private _IAudioSessionControl _Parent;
 
-        internal AudioSessionEvents(AudioSessionControl2 parent)
+        internal AudioSessionEvents(_IAudioSessionControl parent)
         {
             _Parent = parent;
         }
