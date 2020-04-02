@@ -34,6 +34,7 @@ namespace CoreAudioConsole.Framework.Sample
                     Console.WriteLine(",  Lower volume");
                     Console.WriteLine(",  Raise volume");
                     Console.WriteLine("Q  Quit");
+                    Console.CursorVisible = false;
                     int start = Console.CursorTop;
                     while (true)
                     {
@@ -49,13 +50,14 @@ namespace CoreAudioConsole.Framework.Sample
                         Console.WriteLine("Master : {0:0.00}    ", vol.MasterVolume * 100);
                         if (Console.KeyAvailable)
                         {
-                            ConsoleKeyInfo key = Console.ReadKey();
+                            ConsoleKeyInfo key = Console.ReadKey(true);
                             switch (key.Key)
                             {
                                 case ConsoleKey.M:
                                     vol.Mute = !vol.Mute;
                                     break;
                                 case ConsoleKey.Q:
+                                    Console.CursorVisible = true;
                                     return;
                                 case ConsoleKey.OemComma:
                                     float curvol = vol.MasterVolume - 0.1f;
