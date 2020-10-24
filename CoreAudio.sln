@@ -13,6 +13,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CoreAudioConsole.Framework.
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CoreAudioForms.Framework.Sample", "samples\CoreAudioForms.Framework.Sample\CoreAudioForms.Framework.Sample.csproj", "{3C36B004-A097-4640-BFCA-EA810434FEF5}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CoreAudioForms.Core.Sample", "samples\CoreAudioForms.Core.Sample\CoreAudioForms.Core.Sample.csproj", "{F123A876-C490-405B-9C1C-04C96A59195B}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -35,6 +37,10 @@ Global
 		{3C36B004-A097-4640-BFCA-EA810434FEF5}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{3C36B004-A097-4640-BFCA-EA810434FEF5}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{3C36B004-A097-4640-BFCA-EA810434FEF5}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F123A876-C490-405B-9C1C-04C96A59195B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F123A876-C490-405B-9C1C-04C96A59195B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F123A876-C490-405B-9C1C-04C96A59195B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F123A876-C490-405B-9C1C-04C96A59195B}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -43,6 +49,7 @@ Global
 		{DA6A679D-FF19-463C-BA92-37F05AB95CC6} = {B6A37155-713D-444D-A8F4-C0E5292AA5FF}
 		{D269CDEE-2D69-471E-8436-48DC89BCF7CF} = {B6A37155-713D-444D-A8F4-C0E5292AA5FF}
 		{3C36B004-A097-4640-BFCA-EA810434FEF5} = {B6A37155-713D-444D-A8F4-C0E5292AA5FF}
+		{F123A876-C490-405B-9C1C-04C96A59195B} = {B6A37155-713D-444D-A8F4-C0E5292AA5FF}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {C0A07563-12D9-4913-AD6F-89492A0952A9}
