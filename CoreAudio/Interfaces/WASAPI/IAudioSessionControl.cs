@@ -20,12 +20,9 @@
   3. This notice may not be removed or altered from any source distribution.
 */
 using System;
-using System.Collections.Generic;
-using System.Text;
 using System.Runtime.InteropServices;
 
-namespace CoreAudio.Interfaces
-{
+namespace CoreAudio.Interfaces {
     [Guid("F4B1A599-7266-4319-A8CA-E70ACB11E8CD"),
      InterfaceType(ComInterfaceType.InterfaceIsIUnknown)]
     public interface IAudioSessionControl

@@ -1,47 +1,47 @@
 ﻿using System;
+using System.Threading;
+using System.Threading.Tasks;
 using System.Windows.Forms;
 using CoreAudio;
 
-namespace CoreAudioForms.Core.Sample
-{
-    public partial class FormMain : Form
-    {
-        private readonly MMDevice _device;
+// Original code provided by bferdinandus
+// https://github.com/bferdinandus
 
-        public FormMain()
-        {
+namespace CoreAudioForms.Core.Sample {
+    public partial class FormMain : Form {
+        private readonly MMDevice device;
+
+        public FormMain() {
             InitializeComponent();
 
             MMDeviceEnumerator devEnum = new MMDeviceEnumerator();
-            _device = devEnum.GetDefaultAudioEndpoint(EDataFlow.eRender, ERole.eMultimedia);
-            tbMaster.Value = (int) (_device.AudioEndpointVolume.MasterVolumeLevelScalar * 100);
-            _device.AudioEndpointVolume.OnVolumeNotification += AudioEndpointVolume_OnVolumeNotification;
-        }
+            device = devEnum.GetDefaultAudioEndpoint(EDataFlow.eRender, ERole.eMultimedia);
+            device.AudioEndpointVolume.OnVolumeNotification += (AudioVolumeNotificationData data) =>
+                this.Invoke((MethodInvoker)delegate { TrackBarMaster.Value = (int)(data.MasterVolume * 100); });
 
-        private void AudioEndpointVolume_OnVolumeNotification(AudioVolumeNotificationData data)
-        {
-            if (InvokeRequired)
-            {
-                object[] Params = new object[1];
-                Params[0] = data;
-                Invoke(new AudioEndpointVolumeNotificationDelegate(AudioEndpointVolume_OnVolumeNotification), Params);
-            }
-            else
-            {
-                tbMaster.Value = (int) (data.MasterVolume * 100);
-            }
-        }
+            TrackBarMaster.Value = (int)(device.AudioEndpointVolume.MasterVolumeLevelScalar * 100);
 
-        private void Update_Timer_Tick(object sender, EventArgs e)
-        {
-            pbMaster.Value = (int) (_device.AudioMeterInformation.MasterPeakValue * 100);
-            pbLeft.Value = (int) (_device.AudioMeterInformation.PeakValues[0] * 100);
-            pbRight.Value = (int) (_device.AudioMeterInformation.PeakValues[1] * 100);
-        }
+            TrackBarMaster.Scroll += (object ss, EventArgs e) =>
+                device.AudioEndpointVolume.MasterVolumeLevelScalar = (TrackBarMaster.Value / 100.0f);
 
-        private void Master_Scroll(object sender, EventArgs e)
-        {
-            _device.AudioEndpointVolume.MasterVolumeLevelScalar = (tbMaster.Value / 100.0f);
+            Task.Run(() => {
+                var UpdateUI = new MethodInvoker(() => {
+                    int v;
+                    v = (int)(device.AudioMeterInformation.MasterPeakValue * 100);
+                    if(v != ProgressBarMaster.Value) ProgressBarMaster.Value = v;
+
+                    v = (int)(device.AudioMeterInformation.PeakValues[0] * 100);
+                    if(v != ProgressBarLeft.Value) ProgressBarLeft.Value = v;
+
+                    v = (int)(device.AudioMeterInformation.PeakValues[1] * 100);
+                    if(v != ProgressBarRight.Value) ProgressBarRight.Value = v;
+                });
+
+                while(true) {
+                    Thread.Sleep(33);
+                    this.BeginInvoke(UpdateUI);
+                }
+            });
         }
     }
 }
