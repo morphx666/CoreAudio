@@ -133,7 +133,9 @@
             this.Controls.Add(this.pbMaster);
             this.Controls.Add(this.lblVolume);
             this.Controls.Add(this.tbMaster);
+            this.MaximizeBox = false;
             this.Name = "FormMain";
+            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "CoreAudio Volume Sample";
             ((System.ComponentModel.ISupportInitialize)(this.tbMaster)).EndInit();
             this.ResumeLayout(false);

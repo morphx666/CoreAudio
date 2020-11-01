@@ -2,21 +2,16 @@
 using System;
 using System.Diagnostics;
 
-namespace CoreAudioConsole.Framework.Sample
-{
-    class Program
-    {
-        static void Main(string[] args)
-        {
+namespace CoreAudioConsole.Framework.Sample {
+    class Program {
+        static void Main(string[] args) {
             MMDeviceEnumerator DevEnum = new MMDeviceEnumerator();
             MMDevice device = DevEnum.GetDefaultAudioEndpoint(EDataFlow.eRender, ERole.eMultimedia);
             // Note the AudioSession manager did not have a method to enumerate all sessions in windows Vista
             // this will only work on Win7 and newer.
 
-            foreach (var session in device.AudioSessionManager2.Sessions)
-            {
-                if (session.State == AudioSessionState.AudioSessionStateActive)
-                {
+            foreach(var session in device.AudioSessionManager2.Sessions) {
+                if(session.State == AudioSessionState.AudioSessionStateActive) {
                     Console.WriteLine("DisplayName: {0}", session.DisplayName);
                     Console.WriteLine("State: {0}", session.State);
                     Console.WriteLine("IconPath: {0}", session.IconPath);
@@ -36,23 +31,20 @@ namespace CoreAudioConsole.Framework.Sample
                     Console.WriteLine("Q  Quit");
                     Console.CursorVisible = false;
                     int start = Console.CursorTop;
-                    while (true)
-                    {
+                    while(true) {
                         //Draw a VU meter
                         int len = (int)(mi.MasterPeakValue * 79);
                         Console.SetCursorPosition(0, start);
-                        for (int j = 0; j < len; j++)
+                        for(int j = 0; j < len; j++)
                             Console.Write("*");
-                        for (int j = 0; j < 79 - len; j++)
+                        for(int j = 0; j < 79 - len; j++)
                             Console.Write(" ");
                         Console.SetCursorPosition(0, start + 1);
                         Console.WriteLine("Mute   : {0}    ", vol.Mute);
                         Console.WriteLine("Master : {0:0.00}    ", vol.MasterVolume * 100);
-                        if (Console.KeyAvailable)
-                        {
+                        if(Console.KeyAvailable) {
                             ConsoleKeyInfo key = Console.ReadKey(true);
-                            switch (key.Key)
-                            {
+                            switch(key.Key) {
                                 case ConsoleKey.M:
                                     vol.Mute = !vol.Mute;
                                     break;
@@ -61,12 +53,12 @@ namespace CoreAudioConsole.Framework.Sample
                                     return;
                                 case ConsoleKey.OemComma:
                                     float curvol = vol.MasterVolume - 0.1f;
-                                    if (curvol < 0) curvol = 0;
+                                    if(curvol < 0) curvol = 0;
                                     vol.MasterVolume = curvol;
                                     break;
                                 case ConsoleKey.OemPeriod:
                                     float curvold = vol.MasterVolume + 0.1f;
-                                    if (curvold > 1) curvold = 1;
+                                    if(curvold > 1) curvold = 1;
                                     vol.MasterVolume = curvold;
                                     break;
                             }

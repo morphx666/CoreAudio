@@ -3,8 +3,16 @@
   <PropertyGroup>
     <OutputType>Exe</OutputType>
     <TargetFramework>netcoreapp3.1</TargetFramework>
-    <AssemblyVersion>2020.10.25.3</AssemblyVersion>
-    <FileVersion>2020.10.25.3</FileVersion>
+    <AssemblyVersion>2020.11.1.9</AssemblyVersion>
+    <FileVersion>2020.11.1.9</FileVersion>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
+    <OutputPath>..\..\Release\samples\NetCore\Sessions</OutputPath>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
+    <OutputPath>..\..\Release\samples\NetCore\Sessions</OutputPath>
   </PropertyGroup>
 
   <ItemGroup>
