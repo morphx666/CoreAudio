@@ -14,9 +14,6 @@ jobs:
     steps:
     - uses: actions/checkout@v2
     
-    - name: Setup MSBuild
-      uses: microsoft/setup-msbuild@v1
-    
     - name: Setup .NET
       uses: actions/setup-dotnet@v1
       with:
@@ -41,4 +38,4 @@ jobs:
         VERSION_STATIC: 1.${{ github.run_number }}.0
         TAG_COMMIT: true
         NUGET_KEY: ${{ secrets.NUGET_KEY }}
-        INCLUDE_SYMBOLS: true
+        INCLUDE_SYMBOLS: false
