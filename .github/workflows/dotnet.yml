@@ -1,0 +1,43 @@
+name: .NET
+
+on:
+  push:
+    branches: [ master ]
+  pull_request:
+    branches: [ master ]
+
+jobs:
+  build:
+
+    runs-on: windows-latest
+
+    steps:
+    - uses: actions/checkout@v2
+    
+    - name: Setup .NET
+      uses: actions/setup-dotnet@v1
+      with:
+        dotnet-version: 5.0.x
+        
+    - name: Restore dependencies
+      run: dotnet restore
+      
+    - name: Build
+      run: dotnet build --no-restore
+      
+    - name: Test
+      run: dotnet test --no-build --verbosity normal
+      
+    - name: Set version in project file
+      uses: roryprimrose/set-vs-sdk-project-version@v1
+      with:
+        version: 1.${{ github.run_number }}.0
+
+    - name: Publish NuGet
+      uses: rohith/publish-nuget@v2
+      with:
+        PROJECT_FILE_PATH: ./CoreAudio/CoreAudio.csproj
+        VERSION_STATIC: 1.${{ github.run_number }}.0
+        TAG_COMMIT: true
+        NUGET_KEY: ${{ secrets.NUGET_KEY }}
+        INCLUDE_SYMBOLS: true
