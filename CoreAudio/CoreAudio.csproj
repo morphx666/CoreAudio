@@ -4,19 +4,14 @@
     <TargetFramework>netstandard2.0</TargetFramework>
     <AssemblyVersion>2020.11.2.36</AssemblyVersion>
     <FileVersion>2020.11.2.36</FileVersion>
+    <LangVersion>9</LangVersion>
+    <Nullable>enable</Nullable>
+    <Title>CoreAudio</Title>
+    <Authors>morphx666</Authors>
+    <Description>Windows CoreAudio wrapper for .NET</Description>
+    <PackageProjectUrl>https://github.com/morphx666/CoreAudio</PackageProjectUrl>
+    <RepositoryUrl>https://github.com/morphx666/CoreAudio</RepositoryUrl>
   </PropertyGroup>
-
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
-    <OutputPath>..\Release\</OutputPath>
-  </PropertyGroup>
-
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
-    <OutputPath>..\Release\</OutputPath>
-  </PropertyGroup>
-
-  <ItemGroup>
-    <Folder Include="Properties\" />
-  </ItemGroup>
 
   <ItemGroup>
     <PackageReference Include="System.Runtime.InteropServices" Version="4.3.0" />
