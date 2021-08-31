@@ -20,16 +20,16 @@
   3. This notice may not be removed or altered from any source distribution.
 */
 
-using CoreAudio.Interfaces;
 using System;
 using System.Runtime.InteropServices;
+using CoreAudio.Interfaces;
 
 namespace CoreAudio
 {
     public class AudioEndpointVolumeChannel
     {
-        private uint _Channel;
-        private IAudioEndpointVolume _AudioEndpointVolume;
+        uint _Channel;
+        IAudioEndpointVolume _AudioEndpointVolume;
 
         internal AudioEndpointVolumeChannel(IAudioEndpointVolume parent, int channel)
         {
@@ -41,26 +41,20 @@ namespace CoreAudio
         {
             get
             {
-                Marshal.ThrowExceptionForHR(_AudioEndpointVolume.GetChannelVolumeLevel(_Channel, out float result));
+                Marshal.ThrowExceptionForHR(_AudioEndpointVolume.GetChannelVolumeLevel(_Channel, out var result));
                 return result;
             }
-            set
-            {
-                Marshal.ThrowExceptionForHR(_AudioEndpointVolume.SetChannelVolumeLevel(_Channel, value,Guid.Empty));
-            }
+            set => Marshal.ThrowExceptionForHR(_AudioEndpointVolume.SetChannelVolumeLevel(_Channel, value,Guid.Empty));
         }
 
         public float VolumeLevelScalar
         {
             get
             {
-                Marshal.ThrowExceptionForHR(_AudioEndpointVolume.GetChannelVolumeLevelScalar(_Channel, out float result));
+                Marshal.ThrowExceptionForHR(_AudioEndpointVolume.GetChannelVolumeLevelScalar(_Channel, out var result));
                 return result;
             }
-            set
-            {
-                Marshal.ThrowExceptionForHR(_AudioEndpointVolume.SetChannelVolumeLevelScalar(_Channel, value, Guid.Empty));
-            }
+            set => Marshal.ThrowExceptionForHR(_AudioEndpointVolume.SetChannelVolumeLevelScalar(_Channel, value, Guid.Empty));
         }
 
     }

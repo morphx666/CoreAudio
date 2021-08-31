@@ -19,6 +19,7 @@
      misrepresented as being the original source code.
   3. This notice may not be removed or altered from any source distribution.
 */
+
 using System;
 using System.Runtime.InteropServices;
 
@@ -29,6 +30,6 @@ namespace CoreAudio.Interfaces
     internal interface IControlChangeNotify
     {
         [PreserveSig]
-        int OnNotify(UInt32 dwSenderProcessId, ref Guid pguidEventContext);
+        int OnNotify(uint dwSenderProcessId, ref Guid pguidEventContext);
     }
 }

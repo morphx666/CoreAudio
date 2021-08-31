@@ -21,9 +21,9 @@
 */
 /* Updated by John de Jong (2020/04/02) */
 
-using CoreAudio.Interfaces;
 using System;
 using System.Runtime.InteropServices;
+using CoreAudio.Interfaces;
 
 namespace CoreAudio
 {
@@ -33,7 +33,7 @@ namespace CoreAudio
     // to show up in the public API. 
     internal class AudioEndpointVolumeCallback : IAudioEndpointVolumeCallback    
     {
-        private AudioEndpointVolume _Parent;
+        AudioEndpointVolume _Parent;
         
         internal AudioEndpointVolumeCallback(AudioEndpointVolume parent)
         {
@@ -48,17 +48,17 @@ namespace CoreAudio
             //data is marshalled into the data structure, then with some IntPtr math the
             //remaining floats are read from memory.
             //
-            AUDIO_VOLUME_NOTIFICATION_DATA data = Marshal.PtrToStructure<AUDIO_VOLUME_NOTIFICATION_DATA>(NotifyData);
+            var data = Marshal.PtrToStructure<AUDIO_VOLUME_NOTIFICATION_DATA>(NotifyData);
 
             //Determine offset in structure of the first float
-            IntPtr Offset = Marshal.OffsetOf<AUDIO_VOLUME_NOTIFICATION_DATA>("ChannelVolume");
+            var Offset = Marshal.OffsetOf<AUDIO_VOLUME_NOTIFICATION_DATA>("ChannelVolume");
             //Determine offset in memory of the first float
-            IntPtr FirstFloatPtr = (IntPtr)((long)NotifyData + (long)Offset);
+            var FirstFloatPtr = (IntPtr)((long)NotifyData + (long)Offset);
 
             float[] voldata = new float[data.nChannels];
             
             //Read all floats from memory.
-            for (int i = 0; i < data.nChannels; i++)
+            for (var i = 0; i < data.nChannels; i++)
             {
                 voldata[i] = Marshal.PtrToStructure<float>(FirstFloatPtr);
             }

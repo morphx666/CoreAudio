@@ -29,12 +29,12 @@ namespace CoreAudio.Interfaces
 {
     [Guid("1CB9AD4C-DBFA-4c32-B178-C2F568A703B2"),
     InterfaceType(ComInterfaceType.InterfaceIsIUnknown)]
-    interface IAudioClient 
+    internal interface IAudioClient 
     {
         [PreserveSig]
         AUDCLNT_RETURNFLAGS Initialize(AUDCLNT_SHAREMODE ShareMode, AUDCLNT_STREAMFLAGS StreamFlags, long hnsBufferDuration, long hnsPeriodicity, WAVEFORMATEX pFormat, Guid AudioSessionGuid);
         [PreserveSig]
-        AUDCLNT_RETURNFLAGS GetBufferSize(out UInt32 pNumBufferFrames);
+        AUDCLNT_RETURNFLAGS GetBufferSize(out uint pNumBufferFrames);
         [PreserveSig]
         AUDCLNT_RETURNFLAGS GetStreamLatency(out long phnsLatency);
         [PreserveSig]

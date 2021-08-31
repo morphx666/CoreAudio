@@ -20,14 +20,14 @@
   3. This notice may not be removed or altered from any source distribution.
 */
 
-using CoreAudio.Interfaces;
 using System.Runtime.InteropServices;
+using CoreAudio.Interfaces;
 
 namespace CoreAudio
 {
     internal class AudioSessionNotification : IAudioSessionNotification
     {
-        private AudioSessionManager2 _Parent;
+        AudioSessionManager2 _Parent;
 
         internal AudioSessionNotification(AudioSessionManager2 parent)
         {

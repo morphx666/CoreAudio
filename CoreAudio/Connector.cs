@@ -19,16 +19,17 @@
      misrepresented as being the original source code.
   3. This notice may not be removed or altered from any source distribution.
 */
-using CoreAudio.Interfaces;
+
 using System;
 using System.Runtime.InteropServices;
+using CoreAudio.Interfaces;
 
 namespace CoreAudio
 {
     public class Connector
     {
-        private IConnector _Connector;
-        private Part _Part;
+        IConnector _Connector;
+        Part? _Part;
 
         internal Connector(IConnector connector)
         {
@@ -39,7 +40,7 @@ namespace CoreAudio
         {
             get
             {
-                Marshal.ThrowExceptionForHR(_Connector.GetType(out ConnectorType type));
+                Marshal.ThrowExceptionForHR(_Connector.GetType(out var type));
                 return type;
             }
         }
@@ -48,12 +49,12 @@ namespace CoreAudio
         {
             get
             {
-                Marshal.ThrowExceptionForHR(_Connector.GetDataFlow(out EDataFlow flow));
+                Marshal.ThrowExceptionForHR(_Connector.GetDataFlow(out var flow));
                 return flow;
             }
         }
 
-        public void ConnecTo(Connector connectTo)
+        public void ConnectTo(Connector connectTo)
         {
             Marshal.ThrowExceptionForHR(_Connector.ConnectTo((IConnector)connectTo));
         }
@@ -67,7 +68,7 @@ namespace CoreAudio
         {
             get
             {
-                Marshal.ThrowExceptionForHR(_Connector.IsConnected(out bool result));
+                Marshal.ThrowExceptionForHR(_Connector.IsConnected(out var result));
                 return result;
             }
         }
@@ -99,15 +100,15 @@ namespace CoreAudio
             }
         }
 
-        public Part GetPart
+        public Part? GetPart
         {
             get
             {
                 if (_Part == null)
                 {
-                    IntPtr pUnk = Marshal.GetIUnknownForObject(_Connector);
+                    var pUnk = Marshal.GetIUnknownForObject(_Connector);
 
-                    int res = Marshal.QueryInterface(pUnk, ref IIDs.IID_IPart, out IntPtr ppv);
+                    var res = Marshal.QueryInterface(pUnk, ref IIDs.IID_IPart, out var ppv);
                     if (ppv != IntPtr.Zero)
                         _Part = new Part((IPart)Marshal.GetObjectForIUnknown(ppv));
                     else

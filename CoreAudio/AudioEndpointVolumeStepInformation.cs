@@ -20,35 +20,22 @@
   3. This notice may not be removed or altered from any source distribution.
 */
 
-using CoreAudio.Interfaces;
 using System.Runtime.InteropServices;
+using CoreAudio.Interfaces;
 
 namespace CoreAudio
 {
     public class AudioEndpointVolumeStepInformation
     {
-        private uint _Step;
-        private uint _StepCount;
+        uint _Step;
+        uint _StepCount;
         internal AudioEndpointVolumeStepInformation(IAudioEndpointVolume parent)
         {
             Marshal.ThrowExceptionForHR(parent.GetVolumeStepInfo(out _Step, out _StepCount));
         }
 
-        public uint Step
-        {
-            get
-            {
-                return _Step;
-            }
-        }
+        public uint Step => _Step;
 
-        public uint StepCount
-        {
-            get
-            {
-                return _StepCount;
-            }
-        }
-
+        public uint StepCount => _StepCount;
     }
 }

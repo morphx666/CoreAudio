@@ -21,23 +21,23 @@
 */
 /* Updated by John de Jong (2020/04/02) */
 
-using CoreAudio.Interfaces;
 using System.Collections;
 using System.Collections.Generic;
 using System.Runtime.InteropServices;
+using CoreAudio.Interfaces;
 
 namespace CoreAudio
 {
     public class MMDeviceCollection
         : IEnumerable<MMDevice>
     {
-        private readonly IMMDeviceCollection _MMDeviceCollection;
+        readonly IMMDeviceCollection _MMDeviceCollection;
 
         public int Count
         {
             get
             {
-                Marshal.ThrowExceptionForHR(_MMDeviceCollection.GetCount(out uint result));
+                Marshal.ThrowExceptionForHR(_MMDeviceCollection.GetCount(out var result));
                 return (int)result;
             }
         }
@@ -58,7 +58,7 @@ namespace CoreAudio
 
         public IEnumerator<MMDevice> GetEnumerator()
         {
-            for (int index = 0; index < Count; index++)
+            for (var index = 0; index < Count; index++)
             {
                 yield return this[index];
             }

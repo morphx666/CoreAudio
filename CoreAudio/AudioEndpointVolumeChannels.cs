@@ -20,8 +20,8 @@
   3. This notice may not be removed or altered from any source distribution.
 */
 
-using CoreAudio.Interfaces;
 using System.Runtime.InteropServices;
+using CoreAudio.Interfaces;
 
 namespace CoreAudio
 {
@@ -33,18 +33,12 @@ namespace CoreAudio
         {
             get
             {
-                Marshal.ThrowExceptionForHR(_AudioEndPointVolume.GetChannelCount(out int result));
+                Marshal.ThrowExceptionForHR(_AudioEndPointVolume.GetChannelCount(out var result));
                 return result;
             }
         }
 
-        public AudioEndpointVolumeChannel this[int index]
-        {
-            get
-            {
-                return _Channels[index];
-            }
-        }
+        public AudioEndpointVolumeChannel this[int index] => _Channels[index];
 
         internal AudioEndpointVolumeChannels(IAudioEndpointVolume parent)
         {
@@ -53,7 +47,7 @@ namespace CoreAudio
 
             ChannelCount = Count;
             _Channels = new AudioEndpointVolumeChannel[ChannelCount];
-            for (int i = 0; i < ChannelCount; i++)
+            for (var i = 0; i < ChannelCount; i++)
             {
                 _Channels[i] = new AudioEndpointVolumeChannel(_AudioEndPointVolume, i);
             }

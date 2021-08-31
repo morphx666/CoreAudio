@@ -20,8 +20,8 @@
   3. This notice may not be removed or altered from any source distribution.
 */
 
-using CoreAudio.Interfaces;
 using System.Runtime.InteropServices;
+using CoreAudio.Interfaces;
 
 namespace CoreAudio
 {
@@ -33,7 +33,7 @@ namespace CoreAudio
         {
             get
             {
-                Marshal.ThrowExceptionForHR(_AudioMeterInformation.GetMeteringChannelCount(out int result));
+                Marshal.ThrowExceptionForHR(_AudioMeterInformation.GetMeteringChannelCount(out var result));
                 return result;
             }
         }
@@ -43,7 +43,7 @@ namespace CoreAudio
             get
             {
                 float[] peakValues = new float[Count];
-                GCHandle Params = GCHandle.Alloc(peakValues, GCHandleType.Pinned);
+                var Params = GCHandle.Alloc(peakValues, GCHandleType.Pinned);
                 Marshal.ThrowExceptionForHR(_AudioMeterInformation.GetChannelsPeakValues(peakValues.Length, Params.AddrOfPinnedObject()));
                 Params.Free();
                 return peakValues[index];

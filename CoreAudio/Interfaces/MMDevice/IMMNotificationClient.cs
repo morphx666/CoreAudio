@@ -22,7 +22,6 @@
 
 /* Created by Xavier Flix (2010/11/18) */
 
-using System;
 using System.Runtime.InteropServices;
 
 namespace CoreAudio.Interfaces
@@ -41,5 +40,5 @@ namespace CoreAudio.Interfaces
         void OnDefaultDeviceChanged(EDataFlow flow, ERole role, [In, MarshalAs(UnmanagedType.LPWStr)] string pwstrDeviceId);
         [PreserveSig]
         void OnPropertyValueChanged([In, MarshalAs(UnmanagedType.LPWStr)] string pwstrDeviceId, PROPERTYKEY key);
-    }; 
+    } 
 }

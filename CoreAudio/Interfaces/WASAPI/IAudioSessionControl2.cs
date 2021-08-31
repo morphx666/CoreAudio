@@ -19,6 +19,7 @@
      misrepresented as being the original source code.
   3. This notice may not be removed or altered from any source distribution.
 */
+
 using System;
 using System.Runtime.InteropServices;
 
@@ -31,11 +32,11 @@ namespace CoreAudio.Interfaces
         [PreserveSig]
         int GetState(out AudioSessionState state);
         [PreserveSig]
-        int GetDisplayName([Out(), MarshalAs(UnmanagedType.LPWStr)] out string name);
+        int GetDisplayName([Out, MarshalAs(UnmanagedType.LPWStr)] out string name);
         [PreserveSig]
         int SetDisplayName([MarshalAs(UnmanagedType.LPWStr)] string value, ref Guid EventContext);
         [PreserveSig]
-        int GetIconPath([Out(), MarshalAs(UnmanagedType.LPWStr)] out string Path);
+        int GetIconPath([Out, MarshalAs(UnmanagedType.LPWStr)] out string Path);
         [PreserveSig]
         int SetIconPath([MarshalAs(UnmanagedType.LPWStr)] string Value, ref Guid EventContext);
         [PreserveSig]
@@ -47,11 +48,11 @@ namespace CoreAudio.Interfaces
         [PreserveSig]
         int UnregisterAudioSessionNotification(IAudioSessionEvents NewNotifications);
         [PreserveSig]
-        int GetSessionIdentifier([Out(), MarshalAs(UnmanagedType.LPWStr)] out string retVal);
+        int GetSessionIdentifier([Out, MarshalAs(UnmanagedType.LPWStr)] out string retVal);
         [PreserveSig]
-        int GetSessionInstanceIdentifier([Out(), MarshalAs(UnmanagedType.LPWStr)] out string retVal);
+        int GetSessionInstanceIdentifier([Out, MarshalAs(UnmanagedType.LPWStr)] out string retVal);
         [PreserveSig]
-        int GetProcessId(out UInt32 retvVal);
+        int GetProcessId(out uint retvVal);
         [PreserveSig]
         int IsSystemSoundsSession();
         [PreserveSig]

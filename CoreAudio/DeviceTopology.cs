@@ -19,14 +19,15 @@
      misrepresented as being the original source code.
   3. This notice may not be removed or altered from any source distribution.
 */
-using CoreAudio.Interfaces;
+
 using System.Runtime.InteropServices;
+using CoreAudio.Interfaces;
 
 namespace CoreAudio
 {
     public class DeviceTopology
     {
-        private IDeviceTopology _DeviceTopology;
+        IDeviceTopology _DeviceTopology;
 
         internal DeviceTopology(IDeviceTopology realInterface)
         {
@@ -38,7 +39,7 @@ namespace CoreAudio
         {
             get
             {
-                Marshal.ThrowExceptionForHR(_DeviceTopology.GetConnectorCount(out int count));
+                Marshal.ThrowExceptionForHR(_DeviceTopology.GetConnectorCount(out var count));
                 return count;
             }
         }
@@ -53,7 +54,7 @@ namespace CoreAudio
         {
             get
             {
-                Marshal.ThrowExceptionForHR(_DeviceTopology.GetSubunitCount(out int count));
+                Marshal.ThrowExceptionForHR(_DeviceTopology.GetSubunitCount(out var count));
                 return count;
             }
         }

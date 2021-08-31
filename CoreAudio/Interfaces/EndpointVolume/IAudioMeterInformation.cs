@@ -19,6 +19,7 @@
      misrepresented as being the original source code.
   3. This notice may not be removed or altered from any source distribution.
 */
+
 using System;
 using System.Runtime.InteropServices;
 
@@ -36,5 +37,5 @@ namespace CoreAudio.Interfaces
         int GetChannelsPeakValues( int u32ChannelCount,[In]   IntPtr afPeakValues);
         [PreserveSig]
         int QueryHardwareSupport( out int pdwHardwareSupportMask);
-    };
+    }
 }

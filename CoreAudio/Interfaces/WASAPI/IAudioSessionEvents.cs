@@ -19,6 +19,7 @@
      misrepresented as being the original source code.
   3. This notice may not be removed or altered from any source distribution.
 */
+
 using System;
 using System.Runtime.InteropServices;
 
@@ -35,7 +36,7 @@ namespace CoreAudio.Interfaces
         [PreserveSig]
         int OnSimpleVolumeChanged(float NewVolume, bool newMute, ref  Guid EventContext);
         [PreserveSig]
-        int OnChannelVolumeChanged(UInt32 ChannelCount, IntPtr NewChannelVolumeArray, UInt32 ChangedChannel, ref Guid EventContext);
+        int OnChannelVolumeChanged(uint ChannelCount, IntPtr NewChannelVolumeArray, uint ChangedChannel, ref Guid EventContext);
         [PreserveSig]
         int OnGroupingParamChanged(ref Guid NewGroupingParam, ref Guid EventContext);
         [PreserveSig] 

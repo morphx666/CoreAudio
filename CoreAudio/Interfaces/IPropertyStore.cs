@@ -19,7 +19,7 @@
      misrepresented as being the original source code.
   3. This notice may not be removed or altered from any source distribution.
 */
-using System;
+
 using System.Runtime.InteropServices;
 
 namespace CoreAudio.Interfaces
@@ -29,7 +29,7 @@ namespace CoreAudio.Interfaces
     internal interface IPropertyStore  
     {
         [PreserveSig]
-        int GetCount( out Int32 count);
+        int GetCount( out int count);
         [PreserveSig]
         int GetAt(int iProp, out PROPERTYKEY pkey);
         [PreserveSig]
@@ -38,5 +38,5 @@ namespace CoreAudio.Interfaces
         int SetValue(ref PROPERTYKEY key, ref PropVariant propvar);
         [PreserveSig]
         int Commit( );
-    };
+    }
 }

@@ -25,7 +25,7 @@ using CoreAudio.Interfaces;
 namespace CoreAudio {
     public class AudioSessionManager 
     {
-        private IAudioSessionManager _AudioSessionManager;
+        IAudioSessionManager _AudioSessionManager;
         
         internal AudioSessionManager(IAudioSessionManager realAudioSessionManager)
         {

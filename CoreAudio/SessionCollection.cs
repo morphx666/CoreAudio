@@ -21,17 +21,17 @@
 */
 /* Updated by John de Jong (2020/04/02) */
 
-using CoreAudio.Interfaces;
 using System.Collections;
 using System.Collections.Generic;
 using System.Runtime.InteropServices;
+using CoreAudio.Interfaces;
 
 namespace CoreAudio
 {
     public class SessionCollection
         : IEnumerable<AudioSessionControl2>
     {
-        private readonly IAudioSessionEnumerator _AudioSessionEnumerator;
+        readonly IAudioSessionEnumerator _AudioSessionEnumerator;
 
         internal SessionCollection(IAudioSessionEnumerator realEnumerator)
         {
@@ -51,14 +51,14 @@ namespace CoreAudio
         {
             get
             {
-                Marshal.ThrowExceptionForHR(_AudioSessionEnumerator.GetCount(out int result));
+                Marshal.ThrowExceptionForHR(_AudioSessionEnumerator.GetCount(out var result));
                 return result;
             }
         }
 
         public IEnumerator<AudioSessionControl2> GetEnumerator()
         {
-            for (int index = 0; index < Count; index++)
+            for (var index = 0; index < Count; index++)
             {
                 yield return this[index];
             }

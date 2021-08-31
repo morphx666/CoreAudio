@@ -20,9 +20,10 @@
   3. This notice may not be removed or altered from any source distribution.
 */
 
-using CoreAudio.Interfaces;
 using System;
 using System.Runtime.InteropServices;
+using System.Runtime.InteropServices.ComTypes;
+using CoreAudio.Interfaces;
 
 namespace CoreAudio
 {
@@ -47,14 +48,14 @@ namespace CoreAudio
         [FieldOffset(8)] DateTime date;
         [FieldOffset(8)] bool boolVal;
         [FieldOffset(8)] int scode;
-        [FieldOffset(8)] System.Runtime.InteropServices.ComTypes.FILETIME filetime;
+        [FieldOffset(8)] FILETIME filetime;
         [FieldOffset(8)] IntPtr everything_else;
 
         //I'm sure there is a more efficient way to do this but this works ..for now..
         internal byte[] GetBlob()
         {
             byte[] Result = new byte[blobVal.Length];
-            for (int i = 0; i < blobVal.Length; i++)
+            for (var i = 0; i < blobVal.Length; i++)
             {
                 Result[i] = Marshal.ReadByte((IntPtr) ((long)(blobVal.Data) + i));
             }
@@ -65,7 +66,7 @@ namespace CoreAudio
         {
             get
             {
-                VarEnum ve = (VarEnum)vt;
+                var ve = (VarEnum)vt;
                 switch (ve)
                 {
                     case VarEnum.VT_I1:
@@ -85,7 +86,7 @@ namespace CoreAudio
                     case VarEnum.VT_BLOB:
                         return GetBlob();
                 }
-                return "FIXME Type = " + ve.ToString();
+                return "FIXME Type = " + ve;
             }
         }
         
