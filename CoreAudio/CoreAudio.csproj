@@ -1,19 +1,22 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
-  <PropertyGroup>
-    <TargetFramework>netstandard2.0</TargetFramework>
-    <AssemblyVersion>2020.11.2.36</AssemblyVersion>
-    <FileVersion>2020.11.2.36</FileVersion>
-    <LangVersion>9</LangVersion>
-    <Nullable>enable</Nullable>
-    <Title>CoreAudio</Title>
-    <Authors>morphx666</Authors>
-    <Description>Windows CoreAudio wrapper for .NET</Description>
-    <PackageProjectUrl>https://github.com/morphx666/CoreAudio</PackageProjectUrl>
-    <RepositoryUrl>https://github.com/morphx666/CoreAudio</RepositoryUrl>
-  </PropertyGroup>
-
-  <ItemGroup>
-    <PackageReference Include="System.Runtime.InteropServices" Version="4.3.0" />
-  </ItemGroup>
+    <PropertyGroup>
+        <TargetFramework>netstandard2.0</TargetFramework>
+        <AssemblyVersion>2020.11.2.36</AssemblyVersion>
+        <FileVersion>2020.11.2.36</FileVersion>
+        <LangVersion>9</LangVersion>
+        <Nullable>enable</Nullable>
+        <Title>CoreAudio</Title>
+        <Authors>morphx666</Authors>
+        <Description>Windows CoreAudio wrapper for .NET</Description>
+        <PackageProjectUrl>https://github.com/morphx666/CoreAudio</PackageProjectUrl>
+        <RepositoryUrl>https://github.com/morphx666/CoreAudio</RepositoryUrl>
+        <PackageIcon>coreaudio.png</PackageIcon>
+    </PropertyGroup>
+    <ItemGroup>
+        <None Include="coreaudio.png" Pack="true" PackagePath=""/>
+    </ItemGroup>
+    <ItemGroup>
+        <PackageReference Include="System.Runtime.InteropServices" Version="4.3.0"/>
+    </ItemGroup>
 </Project>
