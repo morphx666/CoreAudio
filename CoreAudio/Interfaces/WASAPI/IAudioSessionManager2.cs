@@ -19,22 +19,23 @@
      misrepresented as being the original source code.
   3. This notice may not be removed or altered from any source distribution.
 */
+
 using System;
+using System.Runtime.InteropServices;
 #if (NET40) 
 using System.Linq;
 #endif
-using System.Runtime.InteropServices;
 
 namespace CoreAudio.Interfaces
 {
     [Guid("77AA99A0-1BD6-484F-8BC7-2C654C9A9B6F"),
     InterfaceType(ComInterfaceType.InterfaceIsIUnknown)]
-    interface IAudioSessionManager2
+    internal interface IAudioSessionManager2
     {
         [PreserveSig]
-        int GetAudioSessionControl(ref Guid AudioSessionGuid, UInt32 StreamFlags, out IAudioSessionControl2 ISessionControl);
+        int GetAudioSessionControl(ref Guid AudioSessionGuid, uint StreamFlags, out IAudioSessionControl2 ISessionControl);
         [PreserveSig]
-        int GetSimpleAudioVolume(ref Guid AudioSessionGuid, UInt32 StreamFlags, out ISimpleAudioVolume SimpleAudioVolume);
+        int GetSimpleAudioVolume(ref Guid AudioSessionGuid, uint StreamFlags, out ISimpleAudioVolume SimpleAudioVolume);
         [PreserveSig]
         int GetSessionEnumerator(out IAudioSessionEnumerator SessionEnum);
         [PreserveSig]
@@ -45,5 +46,5 @@ namespace CoreAudio.Interfaces
         int RegisterDuckNotification(string sessionID, IAudioSessionNotification IAudioVolumeDuckNotification);
         [PreserveSig]
         int UnregisterDuckNotification(IntPtr IAudioVolumeDuckNotification);
-    };
+    }
 }

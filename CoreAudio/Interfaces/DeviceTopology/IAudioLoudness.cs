@@ -19,9 +19,9 @@
      misrepresented as being the original source code.
   3. This notice may not be removed or altered from any source distribution.
 */
+
 using System;
 using System.Runtime.InteropServices;
-
 
 namespace CoreAudio.Interfaces
 {
@@ -29,7 +29,7 @@ namespace CoreAudio.Interfaces
      InterfaceType(ComInterfaceType.InterfaceIsIUnknown)]
     internal interface IAudioLoudness
     {
-        int GetEnabled([Out(), MarshalAs(UnmanagedType.Bool)] out bool enabled);
+        int GetEnabled([Out, MarshalAs(UnmanagedType.Bool)] out bool enabled);
         int SetEnabled([MarshalAs(UnmanagedType.Bool)] bool enabled, out Guid eventContext);
     }
 }

@@ -21,93 +21,57 @@
 */
 
 using System;
-using CoreAudio.Interfaces;
 using System.Runtime.InteropServices;
+using CoreAudio.Interfaces;
 
 namespace CoreAudio {
 
     public class AudioEndpointVolume : IDisposable
     {
-        private IAudioEndpointVolume _AudioEndPointVolume;
-        private AudioEndpointVolumeChannels _Channels;
-        private AudioEndpointVolumeStepInformation _StepInformation;
-        private AudioEndPointVolumeVolumeRange _VolumeRange;
-        private EEndpointHardwareSupport _HardwareSupport;
-        private AudioEndpointVolumeCallback _CallBack;
-        public event AudioEndpointVolumeNotificationDelegate OnVolumeNotification;
+        IAudioEndpointVolume _AudioEndPointVolume;
+        AudioEndpointVolumeChannels _Channels;
+        AudioEndpointVolumeStepInformation _StepInformation;
+        AudioEndPointVolumeVolumeRange _VolumeRange;
+        EEndpointHardwareSupport _HardwareSupport;
+        AudioEndpointVolumeCallback? _CallBack;
+        public event AudioEndpointVolumeNotificationDelegate? OnVolumeNotification;
 
-        public AudioEndPointVolumeVolumeRange VolumeRange
-        {
-            get
-            {
-                return _VolumeRange;
-            }
-        }
+        public AudioEndPointVolumeVolumeRange VolumeRange => _VolumeRange;
 
-        public EEndpointHardwareSupport HardwareSupport
-        {
-            get
-            {
-                return _HardwareSupport;
-            }
-        }
+        public EEndpointHardwareSupport HardwareSupport => _HardwareSupport;
 
-        public AudioEndpointVolumeStepInformation StepInformation
-        {
-            get
-            {
-                return _StepInformation;
-            }
-        }
+        public AudioEndpointVolumeStepInformation StepInformation => _StepInformation;
 
-        public AudioEndpointVolumeChannels Channels
-        {
-            get
-            {
-                return _Channels;
-            }
-        }
+        public AudioEndpointVolumeChannels Channels => _Channels;
 
         public float MasterVolumeLevel
         {
             get
             {
-                float result;
-                Marshal.ThrowExceptionForHR(_AudioEndPointVolume.GetMasterVolumeLevel(out result));
+                Marshal.ThrowExceptionForHR(_AudioEndPointVolume.GetMasterVolumeLevel(out var result));
                 return result;
             }
-            set
-            {
-                Marshal.ThrowExceptionForHR(_AudioEndPointVolume.SetMasterVolumeLevel(value, Guid.Empty));
-            }
+            set => Marshal.ThrowExceptionForHR(_AudioEndPointVolume.SetMasterVolumeLevel(value, Guid.Empty));
         }
 
         public float MasterVolumeLevelScalar
         {
             get
             {
-                float result;
-                Marshal.ThrowExceptionForHR(_AudioEndPointVolume.GetMasterVolumeLevelScalar(out result));
+                Marshal.ThrowExceptionForHR(_AudioEndPointVolume.GetMasterVolumeLevelScalar(out var result));
                 return result;
             }
-            set
-            {
-                Marshal.ThrowExceptionForHR(_AudioEndPointVolume.SetMasterVolumeLevelScalar(value, Guid.Empty));
-            }
+            set => Marshal.ThrowExceptionForHR(_AudioEndPointVolume.SetMasterVolumeLevelScalar(value, Guid.Empty));
         }
 
         public bool Mute
         {
             get
             {
-                bool result;
-                Marshal.ThrowExceptionForHR(_AudioEndPointVolume.GetMute(out result));
+                Marshal.ThrowExceptionForHR(_AudioEndPointVolume.GetMute(out var result));
                 return result;
             }
-            set
-            {
-                Marshal.ThrowExceptionForHR(_AudioEndPointVolume.SetMute(value, Guid.Empty));
-            }
+            set => Marshal.ThrowExceptionForHR(_AudioEndPointVolume.SetMute(value, Guid.Empty));
         }
 
         public void VolumeStepUp()
@@ -122,24 +86,18 @@ namespace CoreAudio {
 
         internal AudioEndpointVolume(IAudioEndpointVolume realEndpointVolume)
         {
-            uint HardwareSupp;
-
             _AudioEndPointVolume = realEndpointVolume;
             _Channels = new AudioEndpointVolumeChannels(_AudioEndPointVolume);
             _StepInformation = new AudioEndpointVolumeStepInformation(_AudioEndPointVolume);
-            Marshal.ThrowExceptionForHR(_AudioEndPointVolume.QueryHardwareSupport(out HardwareSupp));
-            _HardwareSupport = (EEndpointHardwareSupport)HardwareSupp;
+            Marshal.ThrowExceptionForHR(_AudioEndPointVolume.QueryHardwareSupport(out var hardwareSupp));
+            _HardwareSupport = (EEndpointHardwareSupport)hardwareSupp;
             _VolumeRange = new AudioEndPointVolumeVolumeRange(_AudioEndPointVolume);
             _CallBack = new AudioEndpointVolumeCallback(this);
             Marshal.ThrowExceptionForHR(_AudioEndPointVolume.RegisterControlChangeNotify(_CallBack));
         }
-        internal void FireNotification(AudioVolumeNotificationData NotificationData)
+        internal void FireNotification(AudioVolumeNotificationData notificationData)
         {
-            AudioEndpointVolumeNotificationDelegate del = OnVolumeNotification;
-            if (del != null)
-            {
-                del(NotificationData);
-            }
+            OnVolumeNotification?.Invoke(notificationData);
         }
 
         #region IDisposable Members

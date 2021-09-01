@@ -19,6 +19,7 @@
      misrepresented as being the original source code.
   3. This notice may not be removed or altered from any source distribution.
 */
+
 using System;
 using System.Runtime.InteropServices;
 
@@ -51,7 +52,7 @@ namespace CoreAudio.Interfaces
         [PreserveSig]
         int GetChannelVolumeLevelScalar(uint nChannel, out float pfLevel);
         [PreserveSig]
-        int SetMute([MarshalAs(UnmanagedType.Bool)] Boolean bMute, Guid pguidEventContext);
+        int SetMute([MarshalAs(UnmanagedType.Bool)] bool bMute, Guid pguidEventContext);
         [PreserveSig]
         int GetMute(out bool pbMute);
         [PreserveSig]

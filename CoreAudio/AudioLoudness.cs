@@ -20,15 +20,14 @@
   3. This notice may not be removed or altered from any source distribution.
 */
 
-using CoreAudio.Interfaces;
-using System;
 using System.Runtime.InteropServices;
+using CoreAudio.Interfaces;
 
 namespace CoreAudio
 {
     public class AudioLoudness
     {
-        private IAudioLoudness _AudioLoudness;
+        IAudioLoudness _AudioLoudness;
 
         internal AudioLoudness(IAudioLoudness audioLoudness)
         {
@@ -39,13 +38,10 @@ namespace CoreAudio
         {
             get
             {
-                Marshal.ThrowExceptionForHR(_AudioLoudness.GetEnabled(out bool enabled));
+                Marshal.ThrowExceptionForHR(_AudioLoudness.GetEnabled(out var enabled));
                 return enabled;
             }
-            set
-            {
-                Marshal.ThrowExceptionForHR(_AudioLoudness.SetEnabled(value, out Guid eventContext));
-            }
+            set => Marshal.ThrowExceptionForHR(_AudioLoudness.SetEnabled(value, out var eventContext));
         }
     }
 }

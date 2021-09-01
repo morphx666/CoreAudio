@@ -21,11 +21,11 @@
 */
 
 using System;
+using System.Runtime.InteropServices;
+using CoreAudio.Interfaces;
 #if (NET40) 
 using System.Linq;
 #endif
-using CoreAudio.Interfaces;
-using System.Runtime.InteropServices;
 
 namespace CoreAudio
 {
@@ -41,12 +41,12 @@ namespace CoreAudio
         {
             get
             {
-                Marshal.ThrowExceptionForHR(_SimpleAudioVolume.GetMasterVolume(out float ret));
+                Marshal.ThrowExceptionForHR(_SimpleAudioVolume.GetMasterVolume(out var ret));
                 return ret;
             }
             set
             {
-                Guid Empty = Guid.Empty;
+                var Empty = Guid.Empty;
                 Marshal.ThrowExceptionForHR(_SimpleAudioVolume.SetMasterVolume(value, ref Empty));
             }
         }
@@ -55,12 +55,12 @@ namespace CoreAudio
         {
             get
             {
-                Marshal.ThrowExceptionForHR(_SimpleAudioVolume.GetMute(out bool ret));
+                Marshal.ThrowExceptionForHR(_SimpleAudioVolume.GetMute(out var ret));
                 return ret;
             }
             set
             {
-                Guid Empty = Guid.Empty;
+                var Empty = Guid.Empty;
                 Marshal.ThrowExceptionForHR(_SimpleAudioVolume.SetMute(value, ref Empty));
             }
         }

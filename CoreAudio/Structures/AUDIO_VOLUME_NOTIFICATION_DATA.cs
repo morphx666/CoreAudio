@@ -39,7 +39,7 @@ namespace CoreAudio.Interfaces
         //the warning for the whole project, it's a nice warning and we do want 
         //it in other places so we make a nice dummy function to keep the compiler
         //happy.
-        private void FixCS0649()
+        void FixCS0649()
         {
             guidEventContext = Guid.Empty;
             bMuted = false;

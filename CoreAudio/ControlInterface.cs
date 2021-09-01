@@ -19,15 +19,16 @@
      misrepresented as being the original source code.
   3. This notice may not be removed or altered from any source distribution.
 */
-using CoreAudio.Interfaces;
+
 using System;
 using System.Runtime.InteropServices;
+using CoreAudio.Interfaces;
 
 namespace CoreAudio
 {
     public class ControlInterface
     {
-        private IControlInterface _ControlInterface;
+        IControlInterface _ControlInterface;
 
         internal ControlInterface(IControlInterface controlInterface)
         {
@@ -47,7 +48,7 @@ namespace CoreAudio
         {
             get
             {
-                Marshal.ThrowExceptionForHR(_ControlInterface.GetID(out Guid id));
+                Marshal.ThrowExceptionForHR(_ControlInterface.GetID(out var id));
                 return id;
             }
         }

@@ -20,16 +20,17 @@
   3. This notice may not be removed or altered from any source distribution.
 */
 
-using CoreAudio.Interfaces;
 using System;
+using System.Diagnostics;
 using System.Runtime.InteropServices;
+using CoreAudio.Interfaces;
 
 namespace CoreAudio
 {
     internal class ControlChangeNotify : IControlChangeNotify, IDisposable
     {
-        private Part _Parent;
-        private GCHandle rcwHandle;
+        Part _Parent;
+        GCHandle rcwHandle;
 
         internal ControlChangeNotify(Part parent)
         {
@@ -37,15 +38,12 @@ namespace CoreAudio
             rcwHandle = GCHandle.Alloc(this, GCHandleType.Normal);
         }
 
-        public bool IsAllocated
-        {
-            get { return rcwHandle.IsAllocated; }
-        }
+        public bool IsAllocated => rcwHandle.IsAllocated;
 
         [PreserveSig]
-        public int OnNotify(UInt32 dwSenderProcessId, ref Guid pguidEventContext)
+        public int OnNotify(uint dwSenderProcessId, ref Guid pguidEventContext)
         {
-            if(System.Diagnostics.Process.GetCurrentProcess().Id != dwSenderProcessId)
+            if(Process.GetCurrentProcess().Id != dwSenderProcessId)
                 _Parent.FireNotification(dwSenderProcessId, ref pguidEventContext);
             return 0;
         }

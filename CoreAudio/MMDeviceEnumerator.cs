@@ -19,9 +19,10 @@
      misrepresented as being the original source code.
   3. This notice may not be removed or altered from any source distribution.
 */
-using CoreAudio.Interfaces;
+
 using System;
 using System.Runtime.InteropServices;
+using CoreAudio.Interfaces;
 
 namespace CoreAudio
 {
@@ -34,18 +35,18 @@ namespace CoreAudio
     //Small wrapper class
     public class MMDeviceEnumerator 
     {
-        private IMMDeviceEnumerator _realEnumerator = new _MMDeviceEnumerator() as IMMDeviceEnumerator;
+        IMMDeviceEnumerator _realEnumerator = (IMMDeviceEnumerator)new _MMDeviceEnumerator();
 
         public MMDeviceCollection EnumerateAudioEndPoints(EDataFlow dataFlow, DEVICE_STATE dwStateMask)
         {
-            Marshal.ThrowExceptionForHR(_realEnumerator.EnumAudioEndpoints(dataFlow, dwStateMask, out IMMDeviceCollection result));
+            Marshal.ThrowExceptionForHR(_realEnumerator.EnumAudioEndpoints(dataFlow, dwStateMask, out var result));
             return new MMDeviceCollection(result);
         }
 
         public MMDevice GetDefaultAudioEndpoint(EDataFlow dataFlow, ERole role)
         {
-            Marshal.ThrowExceptionForHR(((IMMDeviceEnumerator)_realEnumerator).GetDefaultAudioEndpoint(dataFlow, role, out IMMDevice _Device));
-            return new MMDevice(_Device);
+            Marshal.ThrowExceptionForHR(_realEnumerator.GetDefaultAudioEndpoint(dataFlow, role, out var device));
+            return new MMDevice(device);
         }
 
         public void SetDefaultAudioEndpoint(MMDevice device)
@@ -56,13 +57,13 @@ namespace CoreAudio
 
         public MMDevice GetDevice(string ID)
         {
-            Marshal.ThrowExceptionForHR(((IMMDeviceEnumerator)_realEnumerator).GetDevice(ID, out IMMDevice _Device));
-            return new MMDevice(_Device);
+            Marshal.ThrowExceptionForHR(_realEnumerator.GetDevice(ID, out var device));
+            return new MMDevice(device);
         }
 
         public MMDeviceEnumerator()
         {
-            if (System.Environment.OSVersion.Version.Major < 6)
+            if (Environment.OSVersion.Version.Major < 6)
             {
                 throw new NotSupportedException("This functionality is only supported on Windows Vista or newer.");
             }

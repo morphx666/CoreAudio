@@ -19,17 +19,18 @@
      misrepresented as being the original source code.
   3. This notice may not be removed or altered from any source distribution.
 */
+
 using System;
 using System.Runtime.InteropServices;
 
 namespace CoreAudio.Interfaces {
     [Guid("BFA971F1-4D5E-40BB-935E-967039BFBEE4"),
     InterfaceType(ComInterfaceType.InterfaceIsIUnknown)]
-    interface IAudioSessionManager
+    internal interface IAudioSessionManager
     {
         [PreserveSig]
-        int GetAudioSessionControl(ref Guid AudioSessionGuid, UInt32 StreamFlags, out IAudioSessionControl ISessionControl);
+        int GetAudioSessionControl(ref Guid AudioSessionGuid, uint StreamFlags, out IAudioSessionControl ISessionControl);
         [PreserveSig]
-        int GetSimpleAudioVolume(ref Guid AudioSessionGuid, UInt32 StreamFlags, out ISimpleAudioVolume SimpleAudioVolume);
-    };
+        int GetSimpleAudioVolume(ref Guid AudioSessionGuid, uint StreamFlags, out ISimpleAudioVolume SimpleAudioVolume);
+    }
 }

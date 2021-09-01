@@ -19,6 +19,7 @@
      misrepresented as being the original source code.
   3. This notice may not be removed or altered from any source distribution.
 */
+
 using System;
 
 namespace CoreAudio.Interfaces
@@ -35,7 +36,7 @@ namespace CoreAudio.Interfaces
         //the warning for the whole project, it's a nice warning and we do want 
         //it in other places so we make a nice dummy function to keep the compiler
         //happy.
-        private void FixCS0649()
+        void FixCS0649()
         {
             Length = 0;
             Data = IntPtr.Zero;

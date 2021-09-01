@@ -20,8 +20,8 @@
   3. This notice may not be removed or altered from any source distribution.
 */
 
-using CoreAudio.Interfaces;
 using System.Runtime.InteropServices;
+using CoreAudio.Interfaces;
 
 namespace CoreAudio
 {
@@ -36,28 +36,10 @@ namespace CoreAudio
             Marshal.ThrowExceptionForHR(parent.GetVolumeRange(out _VolumeMindB,out _VolumeMaxdB,out _VolumeIncrementdB));
         }
 
-        public float MindB
-        {
-            get
-            {
-                return _VolumeMindB;
-            }
-        }
+        public float MindB => _VolumeMindB;
 
-        public float MaxdB
-        {
-            get
-            {
-                return _VolumeMaxdB;
-            }
-        }
+        public float MaxdB => _VolumeMaxdB;
 
-        public float IncrementdB
-        {
-            get
-            {
-                return _VolumeIncrementdB;
-            }
-        }
+        public float IncrementdB => _VolumeIncrementdB;
     }
 }

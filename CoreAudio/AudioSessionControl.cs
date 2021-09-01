@@ -21,9 +21,9 @@
 */
 /* Updated by John de Jong (2020/04/02) */
 
-using CoreAudio.Interfaces;
 using System;
 using System.Runtime.InteropServices;
+using CoreAudio.Interfaces;
 
 namespace CoreAudio
 {
@@ -46,38 +46,36 @@ namespace CoreAudio
         : _IAudioSessionControl, IDisposable
     {
         internal IAudioSessionControl _AudioSessionControl;
-        internal AudioMeterInformation _AudioMeterInformation;
-        internal SimpleAudioVolume _SimpleAudioVolume;
+        internal AudioMeterInformation? _AudioMeterInformation;
+        internal SimpleAudioVolume? _SimpleAudioVolume;
 
         #region events
         public delegate void DisplayNameChangedDelegate(object sender, string newDisplayName);
-        public event DisplayNameChangedDelegate OnDisplayNameChanged;
+        public event DisplayNameChangedDelegate? OnDisplayNameChanged;
 
         public delegate void IconPathChangedDelegate(object sender, string newIconPath);
-        public event IconPathChangedDelegate OnIconPathChanged;
+        public event IconPathChangedDelegate? OnIconPathChanged;
 
-        public delegate void SimpleVolumeChangedDelegate(object sender, Single newVolume, Boolean newMute);
-        public event SimpleVolumeChangedDelegate OnSimpleVolumeChanged;
+        public delegate void SimpleVolumeChangedDelegate(object sender, float newVolume, bool newMute);
+        public event SimpleVolumeChangedDelegate? OnSimpleVolumeChanged;
 
-        public delegate void ChannelVolumeChangedDelegate(object sender, int channelCount, Single[] newVolume, int changedChannel);
-        public event ChannelVolumeChangedDelegate OnChannelVolumeChanged;
+        public delegate void ChannelVolumeChangedDelegate(object sender, int channelCount, float[] newVolume, int changedChannel);
+        public event ChannelVolumeChangedDelegate? OnChannelVolumeChanged;
 
         public delegate void StateChangedDelegate(object sender, AudioSessionState newState);
-        public event StateChangedDelegate OnStateChanged;
+        public event StateChangedDelegate? OnStateChanged;
 
         public delegate void SessionDisconnectedDelegate(object sender, AudioSessionDisconnectReason disconnectReason);
-        public event SessionDisconnectedDelegate OnSessionDisconnected;
+        public event SessionDisconnectedDelegate? OnSessionDisconnected;
         #endregion
 
-        private AudioSessionEvents _AudioSessionEvents;
+        AudioSessionEvents? _AudioSessionEvents;
 
         internal AudioSessionControl(IAudioSessionControl realAudioSessionControl)
         {
-            IAudioMeterInformation _meters = realAudioSessionControl as IAudioMeterInformation;
-            ISimpleAudioVolume _volume = realAudioSessionControl as ISimpleAudioVolume;
-            if (_meters != null)
-                _AudioMeterInformation = new CoreAudio.AudioMeterInformation(_meters);
-            if (_volume != null)
+            if (realAudioSessionControl is IAudioMeterInformation _meters)
+                _AudioMeterInformation = new AudioMeterInformation(_meters);
+            if (realAudioSessionControl is ISimpleAudioVolume _volume)
                 _SimpleAudioVolume = new SimpleAudioVolume(_volume);
             _AudioSessionControl = realAudioSessionControl;
 
@@ -87,58 +85,45 @@ namespace CoreAudio
 
         public void FireDisplayNameChanged([MarshalAs(UnmanagedType.LPWStr)] string NewDisplayName, Guid EventContext)
         {
-            if (OnDisplayNameChanged != null) OnDisplayNameChanged(this, NewDisplayName);
+            OnDisplayNameChanged?.Invoke(this, NewDisplayName);
         }
 
         public void FireOnIconPathChanged([MarshalAs(UnmanagedType.LPWStr)] string NewIconPath, Guid EventContext)
         {
-            if (OnIconPathChanged != null) OnIconPathChanged(this, NewIconPath);
+            OnIconPathChanged?.Invoke(this, NewIconPath);
         }
 
         public void FireSimpleVolumeChanged(float NewVolume, bool newMute, Guid EventContext)
         {
-            if (OnSimpleVolumeChanged != null) OnSimpleVolumeChanged(this, NewVolume, newMute);
+            OnSimpleVolumeChanged?.Invoke(this, NewVolume, newMute);
         }
 
-        public void FireChannelVolumeChanged(UInt32 ChannelCount, IntPtr NewChannelVolumeArray, UInt32 ChangedChannel, Guid EventContext)
+        public void FireChannelVolumeChanged(uint ChannelCount, IntPtr NewChannelVolumeArray, uint ChangedChannel, Guid EventContext)
         {
             float[] volume = new float[ChannelCount - 1];
             Marshal.Copy(NewChannelVolumeArray, volume, 0, (int)ChannelCount);
-            if (OnChannelVolumeChanged != null) OnChannelVolumeChanged(this, (int)ChannelCount, (Single[])volume, (int)ChangedChannel);
+            OnChannelVolumeChanged?.Invoke(this, (int)ChannelCount, volume, (int)ChangedChannel);
         }
 
         public void FireStateChanged(AudioSessionState NewState)
         {
-            if (OnStateChanged != null) OnStateChanged(this, NewState);
+            OnStateChanged?.Invoke(this, NewState);
         }
 
         public void FireSessionDisconnected(AudioSessionDisconnectReason DisconnectReason)
         {
-            if (OnSessionDisconnected != null) OnSessionDisconnected(this, DisconnectReason);
+            OnSessionDisconnected?.Invoke(this, DisconnectReason);
         }
 
-        public AudioMeterInformation AudioMeterInformation
-        {
-            get
-            {
-                return _AudioMeterInformation;
-            }
-        }
+        public AudioMeterInformation? AudioMeterInformation => _AudioMeterInformation;
 
-        public SimpleAudioVolume SimpleAudioVolume
-        {
-            get
-            {
-                return _SimpleAudioVolume;
-            }
-        }
+        public SimpleAudioVolume? SimpleAudioVolume => _SimpleAudioVolume;
 
         public AudioSessionState State
         {
             get
             {
-                AudioSessionState res;
-                Marshal.ThrowExceptionForHR(_AudioSessionControl.GetState(out res));
+                Marshal.ThrowExceptionForHR(_AudioSessionControl.GetState(out var res));
                 return res;
             }
         }
@@ -147,8 +132,7 @@ namespace CoreAudio
         {
             get
             {
-                string str;
-                Marshal.ThrowExceptionForHR(_AudioSessionControl.GetDisplayName(out str));
+                Marshal.ThrowExceptionForHR(_AudioSessionControl.GetDisplayName(out string str));
                 return str;
             }
         }
@@ -157,8 +141,7 @@ namespace CoreAudio
         {
             get
             {
-                string str;
-                Marshal.ThrowExceptionForHR(_AudioSessionControl.GetIconPath(out str));
+                Marshal.ThrowExceptionForHR(_AudioSessionControl.GetIconPath(out string str));
                 return str;
             }
         }

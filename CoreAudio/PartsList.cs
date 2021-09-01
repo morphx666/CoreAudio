@@ -19,16 +19,17 @@
      misrepresented as being the original source code.
   3. This notice may not be removed or altered from any source distribution.
 */
-using CoreAudio.Interfaces;
+
 using System.Collections.Generic;
 using System.Runtime.InteropServices;
+using CoreAudio.Interfaces;
 
 namespace CoreAudio
 {
     public class PartsList
     {
-        private IPartsList _PartsList;
-        private Dictionary<int, Part> partsCache;
+        IPartsList _PartsList;
+        Dictionary<int, Part> partsCache;
 
         internal PartsList(IPartsList partsList)
         {
@@ -40,7 +41,7 @@ namespace CoreAudio
         {
             get
             {
-                Marshal.ThrowExceptionForHR(_PartsList.GetCount(out int count));
+                Marshal.ThrowExceptionForHR(_PartsList.GetCount(out var count));
                 return count;
             }
         }
@@ -51,14 +52,12 @@ namespace CoreAudio
             {
                 return partsCache[index];
             }
-            else
-            {
-                Marshal.ThrowExceptionForHR(_PartsList.GetPart(index, out IPart ipart));
-                Part part = new Part(ipart);
-                partsCache.Add(index, part);
-                return part;
-            }
-            
+
+            Marshal.ThrowExceptionForHR(_PartsList.GetPart(index, out IPart ipart));
+            Part part = new Part(ipart);
+            partsCache.Add(index, part);
+            return part;
+
         }
     }
 }

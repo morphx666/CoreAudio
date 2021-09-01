@@ -1,5 +1,4 @@
 ﻿using CoreAudio;
-using System.Diagnostics;
 using System.Windows.Forms;
 
 namespace CoreAudioForms.Framework.Sessions {

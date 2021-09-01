@@ -19,15 +19,15 @@
      misrepresented as being the original source code.
   3. This notice may not be removed or altered from any source distribution.
 */
-using CoreAudio.Interfaces;
-using System;
+
 using System.Runtime.InteropServices;
+using CoreAudio.Interfaces;
 
 namespace CoreAudio
 {
     public class AudioMute
     {
-        private IAudioMute _AudioMute;
+        IAudioMute _AudioMute;
 
         internal AudioMute(IAudioMute audioMute)
         {
@@ -38,13 +38,10 @@ namespace CoreAudio
         {
             get
             {
-                Marshal.ThrowExceptionForHR(_AudioMute.GetMute(out bool muted));
+                Marshal.ThrowExceptionForHR(_AudioMute.GetMute(out var muted));
                 return muted;
             }
-            set
-            {
-                Marshal.ThrowExceptionForHR(_AudioMute.SetMute(value, out Guid eventContext));
-            }
+            set => Marshal.ThrowExceptionForHR(_AudioMute.SetMute(value, out var eventContext));
         }
     }
 }
