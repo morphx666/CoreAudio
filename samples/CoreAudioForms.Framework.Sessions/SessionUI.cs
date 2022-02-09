@@ -8,6 +8,7 @@ using static CoreAudio.AudioSessionControl2;
 using System.Diagnostics;
 using System.IO;
 using System.Collections.Concurrent;
+using System;
 
 namespace CoreAudioForms.Framework.Sessions {
     public partial class SessionUI : UserControl {
@@ -26,6 +27,10 @@ namespace CoreAudioForms.Framework.Sessions {
 
         private void SetSessionNameFont() {
             LabelName.Font = new Font(this.Font, FontStyle.Bold);
+        }
+
+        public AudioSessionControl2 Session {
+            get => session;
         }
 
         public void SetSession(AudioSessionControl2 session) {
@@ -71,7 +76,7 @@ namespace CoreAudioForms.Framework.Sessions {
                         while(!this.IsDisposed) {
                             Thread.Sleep(30);
 
-                            newValue = (int)(volPeakHistory.Average() * 100);
+                            newValue = Math.Min((int)(volPeakHistory.Average() * 100), 100);
 
                             if(newValue != lastValue) {
                                 this.Invoke((MethodInvoker)delegate {

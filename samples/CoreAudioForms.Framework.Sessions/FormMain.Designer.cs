@@ -33,7 +33,7 @@
             this.Label1.AutoSize = true;
             this.Label1.Location = new System.Drawing.Point(12, 17);
             this.Label1.Name = "Label1";
-            this.Label1.Size = new System.Drawing.Size(46, 17);
+            this.Label1.Size = new System.Drawing.Size(60, 23);
             this.Label1.TabIndex = 0;
             this.Label1.Text = "Device";
             // 
@@ -45,7 +45,7 @@
             this.ComboBoxDevices.FormattingEnabled = true;
             this.ComboBoxDevices.Location = new System.Drawing.Point(76, 14);
             this.ComboBoxDevices.Name = "ComboBoxDevices";
-            this.ComboBoxDevices.Size = new System.Drawing.Size(479, 25);
+            this.ComboBoxDevices.Size = new System.Drawing.Size(479, 29);
             this.ComboBoxDevices.TabIndex = 1;
             // 
             // TableLayoutPanelSessions
@@ -65,7 +65,7 @@
             // 
             // FormMain
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 17F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(9F, 21F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(567, 550);
             this.Controls.Add(this.TableLayoutPanelSessions);

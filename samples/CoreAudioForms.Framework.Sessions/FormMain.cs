@@ -1,5 +1,10 @@
 ﻿using CoreAudio;
+using CoreAudio.Interfaces;
+using System;
+using System.Diagnostics;
+using System.Linq;
 using System.Windows.Forms;
+using static System.Collections.Specialized.BitVector32;
 
 namespace CoreAudioForms.Framework.Sessions {
     public partial class FormMain : Form {
@@ -23,15 +28,18 @@ namespace CoreAudioForms.Framework.Sessions {
             ComboBoxDevices.SelectedIndexChanged += (_, __) => EnumerateSessions();
 
             MMDeviceEnumerator deviceEnumerator = new MMDeviceEnumerator();
-            var devCol = deviceEnumerator.EnumerateAudioEndPoints(EDataFlow.eRender, DEVICE_STATE.DEVICE_STATE_ACTIVE);
+            MMDeviceCollection devCol = deviceEnumerator.EnumerateAudioEndPoints(EDataFlow.eRender, DEVICE_STATE.DEVICE_STATE_ACTIVE);
+            int selectedIndex = 0;
             for(int i = 0; i < devCol.Count; i++) {
-                ComboBoxDevices.Items.Add(new RenderDevice(devCol[i]));
+                RenderDevice rdev = new RenderDevice(devCol[i]);
+                rdev.Device.AudioSessionManager2.OnSessionCreated += HandleSessionCreated;
+                if(rdev.Device.Selected) selectedIndex = i;
+                ComboBoxDevices.Items.Add(rdev);
             }
 
-            if(ComboBoxDevices.Items.Count > 0) ComboBoxDevices.SelectedIndex = 0;
+            if(ComboBoxDevices.Items.Count > 0) ComboBoxDevices.SelectedIndex = selectedIndex;
         }
 
-        // TODO: Handle Sessions' changes (creation and expiration) and adjust UI accordingly
         private void EnumerateSessions() {
             MMDevice selDevice = ((RenderDevice)ComboBoxDevices.SelectedItem).Device;
             SessionCollection sessions = selDevice.AudioSessionManager2.Sessions;
@@ -43,12 +51,47 @@ namespace CoreAudioForms.Framework.Sessions {
             TableLayoutPanelSessions.RowStyles[0].SizeType = SizeType.AutoSize;
 
             foreach(AudioSessionControl2 session in sessions) {
-                if(session.State != AudioSessionState.AudioSessionStateExpired) {
-                    SessionUI sui = new SessionUI();
-                    sui.Width = TableLayoutPanelSessions.Width - TableLayoutPanelSessions.Padding.Horizontal - sui.Margin.Horizontal;
-                    sui.SetSession(session);
-                    sui.Anchor = AnchorStyles.Left | AnchorStyles.Right | AnchorStyles.Top;
-                    TableLayoutPanelSessions.Controls.Add(sui);
+                AddSeesion(session);
+            }
+        }
+
+        private void AddSeesion(AudioSessionControl2 session) {
+            if(session.State != AudioSessionState.AudioSessionStateExpired) {
+                session.OnStateChanged += HandleSessionStateChanged;
+
+                SessionUI sui = new SessionUI();
+                sui.Width = TableLayoutPanelSessions.Width - TableLayoutPanelSessions.Padding.Horizontal - sui.Margin.Horizontal;
+                sui.SetSession(session);
+                sui.Anchor = AnchorStyles.Left | AnchorStyles.Right | AnchorStyles.Top;
+                TableLayoutPanelSessions.Controls.Add(sui);
+            }
+        }
+
+        private void HandleSessionStateChanged(object sender, AudioSessionState newState) {
+            if(newState == AudioSessionState.AudioSessionStateExpired) {
+                AudioSessionControl2 session = (AudioSessionControl2)sender;
+                foreach(SessionUI sui in TableLayoutPanelSessions.Controls) {
+                    if(sui.Session.GetProcessID == session.GetProcessID) {
+                        this.Invoke((MethodInvoker)delegate {
+                            TableLayoutPanelSessions.Controls.Remove(sui);
+                        });
+                        break;
+                    }
+                }
+            }
+        }
+
+        private void HandleSessionCreated(object sender, IAudioSessionControl2 newSession) {
+            AudioSessionManager2 asm = (AudioSessionManager2)sender;
+            newSession.GetProcessId(out uint newSessionId);
+
+            asm.RefreshSessions();
+            foreach(var session in asm.Sessions) {
+                if(session.GetProcessID == newSessionId) {
+                    this.Invoke((MethodInvoker)delegate {
+                        AddSeesion(session);
+                    });
+                    break;
                 }
             }
         }
