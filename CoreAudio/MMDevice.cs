@@ -26,7 +26,7 @@ using CoreAudio.Interfaces;
 
 namespace CoreAudio
 {
-    public class MMDevice
+    public class MMDevice : IDisposable
     {
         #region Variables
 
@@ -69,6 +69,15 @@ namespace CoreAudio
         {
             Marshal.ThrowExceptionForHR(_RealDevice.Activate(ref IIDs.IID_IDeviceTopology, CLSCTX.ALL, IntPtr.Zero, out var result));
             _DeviceTopology = new DeviceTopology((IDeviceTopology)result);
+        }
+
+        public void Dispose() {
+            _AudioEndpointVolume?.Dispose();
+            _AudioSessionManager2?.Dispose();
+        }
+
+        ~MMDevice() {
+            Dispose();
         }
 
         #endregion

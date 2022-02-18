@@ -27,8 +27,7 @@ using CoreAudio.Interfaces;
 
 namespace CoreAudio
 {
-    public class AudioSessionControl2
-        : _IAudioSessionControl
+    public class AudioSessionControl2 : _IAudioSessionControl
     {
         IAudioSessionControl2 _AudioSessionControl2;
         AudioMeterInformation? _AudioMeterInformation;

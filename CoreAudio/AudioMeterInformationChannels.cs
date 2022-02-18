@@ -43,7 +43,7 @@ namespace CoreAudio
             get
             {
                 float[] peakValues = new float[Count];
-                var Params = GCHandle.Alloc(peakValues, GCHandleType.Pinned);
+                GCHandle Params = GCHandle.Alloc(peakValues, GCHandleType.Pinned);
                 Marshal.ThrowExceptionForHR(_AudioMeterInformation.GetChannelsPeakValues(peakValues.Length, Params.AddrOfPinnedObject()));
                 Params.Free();
                 return peakValues[index];

@@ -67,8 +67,12 @@ namespace CoreAudio
         {
             _Sessions = null;
 
-            if (_AudioSessionNotification != null)
-                Marshal.ThrowExceptionForHR(_AudioSessionManager2.UnregisterSessionNotification(_AudioSessionNotification));
+            if(_AudioSessionNotification != null)
+            {
+                try {
+                    Marshal.ThrowExceptionForHR(_AudioSessionManager2.UnregisterSessionNotification(_AudioSessionNotification));
+                } catch { }
+            }
         }
 
         public void Dispose()
