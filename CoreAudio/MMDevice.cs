@@ -129,7 +129,7 @@ namespace CoreAudio
             }
         }
 
-        public string FriendlyName
+        public string DeviceInterfaceFriendlyName
         {
             get
             {
@@ -137,6 +137,21 @@ namespace CoreAudio
                     GetPropertyInformation();
                 if (_PropertyStore?.Contains(PKEY.PKEY_DeviceInterface_FriendlyName) ?? false) {
                     return (string?)_PropertyStore?[PKEY.PKEY_DeviceInterface_FriendlyName]?.Value ?? "";
+                }
+
+                return "Unknown";
+            }
+        }
+
+        public string DeviceFriendlyName
+        {
+            get
+            {
+                if (_PropertyStore == null)
+                    GetPropertyInformation();
+                if (_PropertyStore?.Contains(PKEY.PKEY_Device_FriendlyName) ?? false)
+                {
+                    return (string?)_PropertyStore?[PKEY.PKEY_Device_FriendlyName]?.Value ?? "";
                 }
 
                 return "Unknown";
