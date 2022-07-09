@@ -129,6 +129,13 @@ namespace CoreAudio
             }
         }
 
+        [Obsolete(nameof(FriendlyName) + " is deprecated, please use " + nameof(DeviceFriendlyName) + " instead.")]
+        public string FriendlyName {
+            get {
+                return DeviceFriendlyName;
+            }
+        }
+
         public string DeviceInterfaceFriendlyName
         {
             get
