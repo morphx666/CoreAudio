@@ -37,7 +37,7 @@ namespace CoreAudio
     {
         IMMDeviceEnumerator _realEnumerator = (IMMDeviceEnumerator)new _MMDeviceEnumerator();
 
-        public MMDeviceCollection EnumerateAudioEndPoints(EDataFlow dataFlow, DEVICE_STATE dwStateMask)
+        public MMDeviceCollection EnumerateAudioEndPoints(EDataFlow dataFlow, DeviceState dwStateMask)
         {
             Marshal.ThrowExceptionForHR(_realEnumerator.EnumAudioEndpoints(dataFlow, dwStateMask, out var result));
             return new MMDeviceCollection(result);
@@ -59,6 +59,18 @@ namespace CoreAudio
         {
             Marshal.ThrowExceptionForHR(_realEnumerator.GetDevice(ID, out var device));
             return new MMDevice(device);
+        }
+
+        internal int RegisterEndpointNotificationCallback(IMMNotificationClient client) {
+            int result = _realEnumerator.RegisterEndpointNotificationCallback(client);
+            Marshal.ThrowExceptionForHR(result);
+            return result;
+        }
+
+        internal int UnregisterEndpointNotificationCallback(IMMNotificationClient client) {
+            int result = _realEnumerator.UnregisterEndpointNotificationCallback(client);
+            Marshal.ThrowExceptionForHR(result);
+            return result;
         }
 
         public MMDeviceEnumerator()

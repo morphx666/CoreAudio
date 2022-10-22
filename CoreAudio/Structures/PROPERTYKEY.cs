@@ -24,23 +24,23 @@ using System;
 
 namespace CoreAudio
 {
-    public struct PROPERTYKEY
+    public struct PropertyKey
     {
         public Guid fmtid;
         public int pid;
 
-        public PROPERTYKEY(Guid fmtid, int pid)
+        public PropertyKey(Guid fmtid, int pid)
         {
             this.fmtid = fmtid;
             this.pid = pid;
         }
 
-        public static bool operator ==(PROPERTYKEY pk1, PROPERTYKEY pk2)
+        public static bool operator ==(PropertyKey pk1, PropertyKey pk2)
         {
             return (pk1.fmtid == pk2.fmtid) && (pk1.pid == pk2.pid);
         }
 
-        public static bool operator !=(PROPERTYKEY pk1, PROPERTYKEY pk2)
+        public static bool operator !=(PropertyKey pk1, PropertyKey pk2)
         {
             return !(pk1 == pk2);
         }

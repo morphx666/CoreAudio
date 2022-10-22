@@ -31,11 +31,11 @@ namespace CoreAudio.Interfaces
         [PreserveSig]
         int GetCount( out int count);
         [PreserveSig]
-        int GetAt(int iProp, out PROPERTYKEY pkey);
+        int GetAt(int iProp, out PropertyKey pkey);
         [PreserveSig]
-        int GetValue(ref PROPERTYKEY key, out PropVariant pv);
+        int GetValue(ref PropertyKey key, out PropVariant pv);
         [PreserveSig]
-        int SetValue(ref PROPERTYKEY key, ref PropVariant propvar);
+        int SetValue(ref PropertyKey key, ref PropVariant propvar);
         [PreserveSig]
         int Commit( );
     }

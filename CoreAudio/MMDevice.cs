@@ -129,7 +129,7 @@ namespace CoreAudio
             }
         }
 
-        [Obsolete(nameof(FriendlyName) + " is deprecated, please use " + nameof(DeviceFriendlyName) + " instead.")]
+        [Obsolete("FriendlyName is deprecated, please use " + nameof(DeviceFriendlyName) + " instead.")]
         public string FriendlyName {
             get {
                 return DeviceFriendlyName;
@@ -195,7 +195,7 @@ namespace CoreAudio
             }
         }
 
-        public DEVICE_STATE State
+        public DeviceState State
         {
             get
             {

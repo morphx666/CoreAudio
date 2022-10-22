@@ -51,7 +51,7 @@ namespace CoreAudio
             }
         }
 
-        public bool Contains(PROPERTYKEY testKey)
+        public bool Contains(PropertyKey testKey)
         {
             for (var i = 0; i < Count; i++)
             {
@@ -62,7 +62,7 @@ namespace CoreAudio
             return false;
         }
 
-        public PropertyStoreProperty? this[PROPERTYKEY testKey]
+        public PropertyStoreProperty? this[PropertyKey testKey]
         {
             get
             {
@@ -79,7 +79,7 @@ namespace CoreAudio
             }
         }
 
-        public PROPERTYKEY Get(int index)
+        public PropertyKey Get(int index)
         {
             Marshal.ThrowExceptionForHR(_Store.GetAt(index, out var key));
             return key;

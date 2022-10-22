@@ -1,10 +1,6 @@
 ﻿using CoreAudio;
 using CoreAudio.Interfaces;
-using System;
-using System.Diagnostics;
-using System.Linq;
 using System.Windows.Forms;
-using static System.Collections.Specialized.BitVector32;
 
 namespace CoreAudioForms.Framework.Sessions {
     public partial class FormMain : Form {
@@ -14,7 +10,7 @@ namespace CoreAudioForms.Framework.Sessions {
 
             public RenderDevice(MMDevice device) {
                 Device = device;
-                Name = $"{device.Properties[PKEY.PKEY_Device_DeviceDesc].Value} ({device.FriendlyName})";
+                Name = $"{device.Properties[PKEY.PKEY_Device_DeviceDesc].Value} ({device.DeviceInterfaceFriendlyName})";
             }
 
             public override string ToString() {
@@ -28,7 +24,7 @@ namespace CoreAudioForms.Framework.Sessions {
             ComboBoxDevices.SelectedIndexChanged += (_, __) => EnumerateSessions();
 
             MMDeviceEnumerator deviceEnumerator = new MMDeviceEnumerator();
-            MMDeviceCollection devCol = deviceEnumerator.EnumerateAudioEndPoints(EDataFlow.eRender, DEVICE_STATE.DEVICE_STATE_ACTIVE);
+            MMDeviceCollection devCol = deviceEnumerator.EnumerateAudioEndPoints(EDataFlow.eRender, DeviceState.Active);
             int selectedIndex = 0;
             for(int i = 0; i < devCol.Count; i++) {
                 RenderDevice rdev = new RenderDevice(devCol[i]);

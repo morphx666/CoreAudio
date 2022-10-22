@@ -2,8 +2,8 @@
 
     <PropertyGroup>
         <TargetFramework>netstandard2.0</TargetFramework>
-        <AssemblyVersion>2021.9.1.37</AssemblyVersion>
-        <FileVersion>2021.9.1.37</FileVersion>
+        <AssemblyVersion>2022.10.22.39</AssemblyVersion>
+        <FileVersion>2022.10.22.39</FileVersion>
         <LangVersion>9</LangVersion>
         <Nullable>enable</Nullable>
         <Title>CoreAudio</Title>

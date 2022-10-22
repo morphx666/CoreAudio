@@ -25,16 +25,16 @@ namespace CoreAudio
 {
     public class PropertyStoreProperty
     {
-        PROPERTYKEY _PropertyKey;
+        PropertyKey _PropertyKey;
         PropVariant _PropValue;
 
-        internal PropertyStoreProperty(PROPERTYKEY key, PropVariant value)
+        internal PropertyStoreProperty(PropertyKey key, PropVariant value)
         {
             _PropertyKey = key;
             _PropValue = value;
         }
 
-        public PROPERTYKEY Key => _PropertyKey;
+        public PropertyKey Key => _PropertyKey;
 
         public object Value => _PropValue.Value;
     }

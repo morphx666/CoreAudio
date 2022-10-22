@@ -36,6 +36,6 @@ namespace CoreAudio.Interfaces
         [PreserveSig]
         int GetId([Out, MarshalAs(UnmanagedType.LPWStr)] out string ppstrId);
         [PreserveSig]
-        int GetState(out DEVICE_STATE pdwState);
+        int GetState(out DeviceState pdwState);
     }
 }
