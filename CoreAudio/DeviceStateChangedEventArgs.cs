@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace CoreAudio {
+﻿namespace CoreAudio {
     public class DeviceStateChangedEventArgs : DeviceNotificationEventArgs {
         public DeviceState DeviceState { get; private set; }
 

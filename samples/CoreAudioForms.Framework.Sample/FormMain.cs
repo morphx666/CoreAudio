@@ -16,11 +16,6 @@ namespace CoreAudioForms.Framework.Sample
             _device = devEnum.GetDefaultAudioEndpoint(EDataFlow.eRender, ERole.eMultimedia);
             tbMaster.Value = (int)(_device.AudioEndpointVolume.MasterVolumeLevelScalar * 100);
             _device.AudioEndpointVolume.OnVolumeNotification += new AudioEndpointVolumeNotificationDelegate(AudioEndpointVolume_OnVolumeNotification);
-
-            var client = new MMNotificationClient(devEnum);
-            client.DeviceAdded += (object o, DeviceNotificationEventArgs e) => {
-                // Handle device added...
-            };
         }
 
         void AudioEndpointVolume_OnVolumeNotification(AudioVolumeNotificationData data)

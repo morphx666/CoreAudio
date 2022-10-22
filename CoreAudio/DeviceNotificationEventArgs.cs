@@ -1,6 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Text;
 
 namespace CoreAudio {
     public class DeviceNotificationEventArgs : EventArgs {

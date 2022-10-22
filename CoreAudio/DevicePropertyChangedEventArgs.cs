@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace CoreAudio {
+﻿namespace CoreAudio {
     public class DevicePropertyChangedEventArgs : DeviceNotificationEventArgs {
         public PropertyKey PropertyKey { get; private set; }
 
