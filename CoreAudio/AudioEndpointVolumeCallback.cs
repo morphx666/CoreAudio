@@ -31,10 +31,10 @@ namespace CoreAudio {
     // (where the functionality is really wanted, would cause the OnNotify function 
     // to show up in the public API. 
     internal class AudioEndpointVolumeCallback : IAudioEndpointVolumeCallback {
-        AudioEndpointVolume _Parent;
+        AudioEndpointVolume parent;
 
         internal AudioEndpointVolumeCallback(AudioEndpointVolume parent) {
-            _Parent = parent;
+            parent = parent;
         }
 
         [PreserveSig]
@@ -61,7 +61,7 @@ namespace CoreAudio {
 
             //Create combined structure and Fire Event in parent class.
             AudioVolumeNotificationData NotificationData = new AudioVolumeNotificationData(data.GuidEventContext, data.Muted, data.MasterVolume, voldata);
-            _Parent.FireNotification(NotificationData);
+            parent.FireNotification(NotificationData);
             return 0; //S_OK
         }
     }

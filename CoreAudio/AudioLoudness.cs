@@ -25,18 +25,18 @@ using CoreAudio.Interfaces;
 
 namespace CoreAudio {
     public class AudioLoudness {
-        IAudioLoudness _AudioLoudness;
+        IAudioLoudness audioLoudness;
 
         internal AudioLoudness(IAudioLoudness audioLoudness) {
-            _AudioLoudness = audioLoudness;
+            this.audioLoudness = audioLoudness;
         }
 
         public bool Enabled {
             get {
-                Marshal.ThrowExceptionForHR(_AudioLoudness.GetEnabled(out var enabled));
+                Marshal.ThrowExceptionForHR(audioLoudness.GetEnabled(out var enabled));
                 return enabled;
             }
-            set => Marshal.ThrowExceptionForHR(_AudioLoudness.SetEnabled(value, out var eventContext));
+            set => Marshal.ThrowExceptionForHR(audioLoudness.SetEnabled(value, out var eventContext));
         }
     }
 }

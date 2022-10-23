@@ -114,7 +114,7 @@ namespace CoreAudio {
         public static Guid DynRangeCompressor = new("08C8A6A8-601F-4af8-8793-D905FF4CA97D");
         public static Guid DevSpecific = new("941C7AC0-C559-11D0-8A2B-00A0C9255AC1");
         public static Guid PrologicEncoder = new("8074C5B2-3C66-11D2-B45A-3078302C2030");
-        public static Guid Peakmeter = new("A085651E-5F0D-4b36-A869-D195D6AB4B9E");
+        public static Guid PeakMeter = new("A085651E-5F0D-4b36-A869-D195D6AB4B9E");
         public static Guid SurroundEncoder = new("8074C5B2-3C66-11D2-B45A-3078302C2030");
         public static Guid VideoStreaming = new("DFF229E1-F70F-11D0-B917-00A0C9223196");
         public static Guid VideoInputTerminal = new("DFF229E2-F70F-11D0-B917-00A0C9223196");

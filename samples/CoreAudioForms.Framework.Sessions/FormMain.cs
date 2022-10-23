@@ -1,9 +1,12 @@
 ﻿using CoreAudio;
 using CoreAudio.Interfaces;
+using System.Diagnostics;
 using System.Windows.Forms;
 
 namespace CoreAudioForms.Framework.Sessions {
     public partial class FormMain : Form {
+        MMDevice selDevice;
+
         private class RenderDevice {
             public readonly string Name;
             public readonly MMDevice Device;
@@ -21,10 +24,12 @@ namespace CoreAudioForms.Framework.Sessions {
         public FormMain() {
             InitializeComponent();
 
+            MMDeviceEnumerator devEnum = new MMDeviceEnumerator();
+
             ComboBoxDevices.SelectedIndexChanged += (_, __) => EnumerateSessions();
 
             MMDeviceEnumerator deviceEnumerator = new MMDeviceEnumerator();
-            MMDeviceCollection devCol = deviceEnumerator.EnumerateAudioEndPoints(EDataFlow.eRender, DeviceState.Active);
+            MMDeviceCollection devCol = deviceEnumerator.EnumerateAudioEndPoints(DataFlow.eRender, DeviceState.Active);
             int selectedIndex = 0;
             for(int i = 0; i < devCol.Count; i++) {
                 RenderDevice rdev = new RenderDevice(devCol[i]);
@@ -36,8 +41,15 @@ namespace CoreAudioForms.Framework.Sessions {
             if(ComboBoxDevices.Items.Count > 0) ComboBoxDevices.SelectedIndex = selectedIndex;
         }
 
+        private void UpdateMasterVolume(AudioVolumeNotificationData data) {
+            foreach(SessionUI s in TableLayoutPanelSessions.Controls) {
+                s.MasterVolume = data.MasterVolume;
+            }
+        }
+
         private void EnumerateSessions() {
-            MMDevice selDevice = ((RenderDevice)ComboBoxDevices.SelectedItem).Device;
+            selDevice = ((RenderDevice)ComboBoxDevices.SelectedItem).Device;
+            selDevice.AudioEndpointVolume.OnVolumeNotification += new AudioEndpointVolumeNotificationDelegate(UpdateMasterVolume);
             SessionCollection sessions = selDevice.AudioSessionManager2.Sessions;
 
             while(TableLayoutPanelSessions.Controls.Count > 0) {
@@ -57,7 +69,7 @@ namespace CoreAudioForms.Framework.Sessions {
 
                 SessionUI sui = new SessionUI();
                 sui.Width = TableLayoutPanelSessions.Width - TableLayoutPanelSessions.Padding.Horizontal - sui.Margin.Horizontal;
-                sui.SetSession(session);
+                sui.SetSession(session, selDevice.AudioEndpointVolume.MasterVolumeLevelScalar);
                 sui.Anchor = AnchorStyles.Left | AnchorStyles.Right | AnchorStyles.Top;
                 TableLayoutPanelSessions.Controls.Add(sui);
             }
@@ -67,7 +79,7 @@ namespace CoreAudioForms.Framework.Sessions {
             if(newState == AudioSessionState.AudioSessionStateExpired) {
                 AudioSessionControl2 session = (AudioSessionControl2)sender;
                 foreach(SessionUI sui in TableLayoutPanelSessions.Controls) {
-                    if(sui.Session.GetProcessID == session.GetProcessID) {
+                    if(sui.Session.ProcessID == session.ProcessID) {
                         this.Invoke((MethodInvoker)delegate {
                             TableLayoutPanelSessions.Controls.Remove(sui);
                         });
@@ -83,7 +95,7 @@ namespace CoreAudioForms.Framework.Sessions {
 
             asm.RefreshSessions();
             foreach(var session in asm.Sessions) {
-                if(session.GetProcessID == newSessionId) {
+                if(session.ProcessID == newSessionId) {
                     this.Invoke((MethodInvoker)delegate {
                         AddSeesion(session);
                     });

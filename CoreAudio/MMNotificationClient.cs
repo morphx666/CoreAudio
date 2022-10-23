@@ -11,7 +11,7 @@ using System.Runtime.InteropServices;
 namespace CoreAudio {
     [Guid("7991EEC9-7E89-4D85-8390-6C703CEC60C0")]
     public class MMNotificationClient : IMMNotificationClient {
-        private readonly MMDeviceEnumerator _deviceEnumerator;
+        private readonly MMDeviceEnumerator deviceEnumerator;
 
         public event EventHandler<DeviceStateChangedEventArgs>? DeviceStateChanged;
         public event EventHandler<DeviceNotificationEventArgs>? DeviceAdded;
@@ -20,11 +20,11 @@ namespace CoreAudio {
         public event EventHandler<DevicePropertyChangedEventArgs>? DevicePropertyChanged;
 
         public MMNotificationClient(MMDeviceEnumerator enumerator) {
-            _deviceEnumerator = enumerator;
-            Marshal.ThrowExceptionForHR(_deviceEnumerator.RegisterEndpointNotificationCallback(this));
+            deviceEnumerator = enumerator;
+            Marshal.ThrowExceptionForHR(deviceEnumerator.RegisterEndpointNotificationCallback(this));
         }
 
-        public void OnDefaultDeviceChanged(EDataFlow flow, ERole role, string deviceId) {
+        public void OnDefaultDeviceChanged(DataFlow flow, Role role, string deviceId) {
             DefaultDeviceChanged?.Invoke(this, new DefaultDeviceChangedEventArgs(deviceId, flow, role));
         }
 

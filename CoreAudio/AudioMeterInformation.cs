@@ -25,24 +25,24 @@ using CoreAudio.Interfaces;
 
 namespace CoreAudio {
     public class AudioMeterInformation {
-        IAudioMeterInformation _AudioMeterInformation;
-        EEndpointHardwareSupport _HardwareSupport;
-        AudioMeterInformationChannels _Channels;
+        IAudioMeterInformation audioMeterInformation;
+        EEndpointHardwareSupport hardwareSupport;
+        AudioMeterInformationChannels channels;
 
         internal AudioMeterInformation(IAudioMeterInformation realInterface) {
-            _AudioMeterInformation = realInterface;
-            Marshal.ThrowExceptionForHR(_AudioMeterInformation.QueryHardwareSupport(out var HardwareSupp));
-            _HardwareSupport = (EEndpointHardwareSupport)HardwareSupp;
-            _Channels = new AudioMeterInformationChannels(_AudioMeterInformation);
+            audioMeterInformation = realInterface;
+            Marshal.ThrowExceptionForHR(audioMeterInformation.QueryHardwareSupport(out var HardwareSupp));
+            hardwareSupport = (EEndpointHardwareSupport)HardwareSupp;
+            channels = new AudioMeterInformationChannels(audioMeterInformation);
         }
 
-        public AudioMeterInformationChannels PeakValues => _Channels;
+        public AudioMeterInformationChannels PeakValues => channels;
 
-        public EEndpointHardwareSupport HardwareSupport => _HardwareSupport;
+        public EEndpointHardwareSupport HardwareSupport => hardwareSupport;
 
         public float MasterPeakValue {
             get {
-                Marshal.ThrowExceptionForHR(_AudioMeterInformation.GetPeakValue(out var result));
+                Marshal.ThrowExceptionForHR(audioMeterInformation.GetPeakValue(out var result));
                 return result;
             }
         }

@@ -27,6 +27,6 @@ namespace CoreAudio.Interfaces {
       InterfaceType(ComInterfaceType.InterfaceIsIUnknown)]
     internal interface IMMEndpoint {
         [PreserveSig]
-        int GetDataFlow(out EDataFlow pDataFlow);
+        int GetDataFlow(out DataFlow pDataFlow);
     }
 }

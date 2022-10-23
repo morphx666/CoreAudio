@@ -24,10 +24,10 @@ using CoreAudio.Interfaces;
 
 namespace CoreAudio {
     public class AudioSessionManager {
-        IAudioSessionManager _AudioSessionManager;
+        IAudioSessionManager audioSessionManager;
 
         internal AudioSessionManager(IAudioSessionManager realAudioSessionManager) {
-            _AudioSessionManager = realAudioSessionManager;
+            audioSessionManager = realAudioSessionManager;
         }
     }
 }

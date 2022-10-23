@@ -28,9 +28,9 @@ namespace CoreAudio.Interfaces {
     InterfaceType(ComInterfaceType.InterfaceIsIUnknown)]
     internal interface IMMDeviceEnumerator {
         [PreserveSig]
-        int EnumAudioEndpoints(EDataFlow dataFlow, DeviceState StateMask, out IMMDeviceCollection device);
+        int EnumAudioEndpoints(DataFlow dataFlow, DeviceState StateMask, out IMMDeviceCollection device);
         [PreserveSig]
-        int GetDefaultAudioEndpoint(EDataFlow dataFlow, ERole role, out IMMDevice ppEndpoint);
+        int GetDefaultAudioEndpoint(DataFlow dataFlow, Role role, out IMMDevice ppEndpoint);
         //[PreserveSig]
         //int SetDefaultAudioEndpoint(IMMDevice ppEndpoint);
         [PreserveSig]

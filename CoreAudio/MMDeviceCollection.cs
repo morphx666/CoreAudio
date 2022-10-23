@@ -29,24 +29,24 @@ using CoreAudio.Interfaces;
 namespace CoreAudio {
     public class MMDeviceCollection
         : IEnumerable<MMDevice> {
-        readonly IMMDeviceCollection _MMDeviceCollection;
+        readonly IMMDeviceCollection mMDeviceCollection;
 
         public int Count {
             get {
-                Marshal.ThrowExceptionForHR(_MMDeviceCollection.GetCount(out var result));
+                Marshal.ThrowExceptionForHR(mMDeviceCollection.GetCount(out var result));
                 return (int)result;
             }
         }
 
         public MMDevice this[int index] {
             get {
-                _MMDeviceCollection.Item((uint)index, out IMMDevice result);
+                mMDeviceCollection.Item((uint)index, out IMMDevice result);
                 return new MMDevice(result);
             }
         }
 
         internal MMDeviceCollection(IMMDeviceCollection parent) {
-            _MMDeviceCollection = parent;
+            mMDeviceCollection = parent;
         }
 
         public IEnumerator<MMDevice> GetEnumerator() {

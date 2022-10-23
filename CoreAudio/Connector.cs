@@ -26,75 +26,75 @@ using CoreAudio.Interfaces;
 
 namespace CoreAudio {
     public class Connector {
-        IConnector _Connector;
-        Part? _Part;
+        IConnector connector;
+        Part? part;
 
         internal Connector(IConnector connector) {
-            _Connector = connector;
+            this.connector = connector;
         }
 
-        public ConnectorType GetConnectorType {
+        public ConnectorType ConnectorType {
             get {
-                Marshal.ThrowExceptionForHR(_Connector.GetType(out var type));
+                Marshal.ThrowExceptionForHR(connector.GetType(out var type));
                 return type;
             }
         }
 
-        public EDataFlow GetDataFlow {
+        public DataFlow DataFlow {
             get {
-                Marshal.ThrowExceptionForHR(_Connector.GetDataFlow(out var flow));
+                Marshal.ThrowExceptionForHR(connector.GetDataFlow(out var flow));
                 return flow;
             }
         }
 
         public void ConnectTo(Connector connectTo) {
-            Marshal.ThrowExceptionForHR(_Connector.ConnectTo((IConnector)connectTo));
+            Marshal.ThrowExceptionForHR(connector.ConnectTo((IConnector)connectTo));
         }
 
         public void Disconnect() {
-            Marshal.ThrowExceptionForHR(_Connector.Disconnect());
+            Marshal.ThrowExceptionForHR(connector.Disconnect());
         }
 
         public bool IsConnected {
             get {
-                Marshal.ThrowExceptionForHR(_Connector.IsConnected(out var result));
+                Marshal.ThrowExceptionForHR(connector.IsConnected(out var result));
                 return result;
             }
         }
 
-        public Connector GetConnectedTo {
+        public Connector ConnectedTo {
             get {
-                Marshal.ThrowExceptionForHR(_Connector.GetConnectedTo(out IConnector connectedTo));
+                Marshal.ThrowExceptionForHR(connector.GetConnectedTo(out IConnector connectedTo));
                 return new Connector(connectedTo);
             }
         }
 
-        public string GetConnectorIdConnectedTo {
+        public string ConnectorIdConnectedTo {
             get {
-                Marshal.ThrowExceptionForHR(_Connector.GetConnectorIdConnectedTo(out string id));
+                Marshal.ThrowExceptionForHR(connector.GetConnectorIdConnectedTo(out string id));
                 return id;
             }
         }
 
-        public string GetDeviceIdConnectedTo {
+        public string DeviceIdConnectedTo {
             get {
-                Marshal.ThrowExceptionForHR(_Connector.GetDeviceIdConnectedTo(out string id));
+                Marshal.ThrowExceptionForHR(connector.GetDeviceIdConnectedTo(out string id));
                 return id;
             }
         }
 
-        public Part? GetPart {
+        public Part? Part {
             get {
-                if(_Part == null) {
-                    var pUnk = Marshal.GetIUnknownForObject(_Connector);
+                if(part == null) {
+                    var pUnk = Marshal.GetIUnknownForObject(connector);
 
                     var res = Marshal.QueryInterface(pUnk, ref RefIId.IIdIPart, out var ppv);
                     if(ppv != IntPtr.Zero)
-                        _Part = new Part((IPart)Marshal.GetObjectForIUnknown(ppv));
+                        part = new Part((IPart)Marshal.GetObjectForIUnknown(ppv));
                     else
-                        _Part = null;
+                        part = null;
                 }
-                return _Part;
+                return part;
             }
         }
     }

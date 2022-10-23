@@ -28,11 +28,11 @@ namespace CoreAudio {
     /// Property Store class, only supports reading properties at the moment.
     /// </summary>
     public class PropertyStore {
-        IPropertyStore _Store;
+        IPropertyStore store;
 
         public int Count {
             get {
-                Marshal.ThrowExceptionForHR(_Store.GetCount(out var result));
+                Marshal.ThrowExceptionForHR(store.GetCount(out var result));
                 return result;
             }
         }
@@ -40,7 +40,7 @@ namespace CoreAudio {
         public PropertyStoreProperty this[int index] {
             get {
                 var key = Get(index);
-                Marshal.ThrowExceptionForHR(_Store.GetValue(ref key, out var result));
+                Marshal.ThrowExceptionForHR(store.GetValue(ref key, out var result));
                 return new PropertyStoreProperty(key, result);
             }
         }
@@ -48,7 +48,7 @@ namespace CoreAudio {
         public bool Contains(PropertyKey testKey) {
             for(var i = 0; i < Count; i++) {
                 var key = Get(i);
-                if(key.fmtId == testKey.fmtId && key.pId == testKey.pId)
+                if(key.fmtId == testKey.fmtId && key.PId == testKey.PId)
                     return true;
             }
             return false;
@@ -58,8 +58,8 @@ namespace CoreAudio {
             get {
                 for(var i = 0; i < Count; i++) {
                     var key = Get(i);
-                    if(key.fmtId == testKey.fmtId && key.pId == testKey.pId) {
-                        Marshal.ThrowExceptionForHR(_Store.GetValue(ref key, out var result));
+                    if(key.fmtId == testKey.fmtId && key.PId == testKey.PId) {
+                        Marshal.ThrowExceptionForHR(store.GetValue(ref key, out var result));
                         return new PropertyStoreProperty(key, result);
                     }
                 }
@@ -68,18 +68,18 @@ namespace CoreAudio {
         }
 
         public PropertyKey Get(int index) {
-            Marshal.ThrowExceptionForHR(_Store.GetAt(index, out var key));
+            Marshal.ThrowExceptionForHR(store.GetAt(index, out var key));
             return key;
         }
 
         public PropVariant GetValue(int index) {
             var key = Get(index);
-            Marshal.ThrowExceptionForHR(_Store.GetValue(ref key, out var result));
+            Marshal.ThrowExceptionForHR(store.GetValue(ref key, out var result));
             return result;
         }
 
         internal PropertyStore(IPropertyStore store) {
-            _Store = store;
+            this.store = store;
         }
     }
 }

@@ -25,15 +25,15 @@ using CoreAudio.Interfaces;
 
 namespace CoreAudio {
     internal class AudioSessionNotification : IAudioSessionNotification {
-        AudioSessionManager2 _Parent;
+        AudioSessionManager2 parent;
 
         internal AudioSessionNotification(AudioSessionManager2 parent) {
-            _Parent = parent;
+            parent = parent;
         }
 
         [PreserveSig]
         public int OnSessionCreated(IAudioSessionControl2 NewSession) {
-            _Parent.FireSessionCreated(NewSession);
+            parent.FireSessionCreated(NewSession);
             return 0;
         }
     }

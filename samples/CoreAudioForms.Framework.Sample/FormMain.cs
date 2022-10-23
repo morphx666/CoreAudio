@@ -10,12 +10,12 @@ namespace CoreAudioForms.Framework.Sample {
             InitializeComponent();
 
             var devEnum = new MMDeviceEnumerator();
-            _device = devEnum.GetDefaultAudioEndpoint(EDataFlow.eRender, ERole.eMultimedia);
+            _device = devEnum.GetDefaultAudioEndpoint(DataFlow.eRender, Role.Multimedia);
             tbMaster.Value = (int)(_device.AudioEndpointVolume.MasterVolumeLevelScalar * 100);
             _device.AudioEndpointVolume.OnVolumeNotification += new AudioEndpointVolumeNotificationDelegate(AudioEndpointVolume_OnVolumeNotification);
         }
 
-        void AudioEndpointVolume_OnVolumeNotification(AudioVolumeNotificationData data) {
+        private void AudioEndpointVolume_OnVolumeNotification(AudioVolumeNotificationData data) {
             if(InvokeRequired) {
                 object[] Params = new object[1];
                 Params[0] = data;

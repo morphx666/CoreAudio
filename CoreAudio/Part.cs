@@ -26,12 +26,11 @@ using CoreAudio.Interfaces;
 
 namespace CoreAudio {
     public class Part : IDisposable {
-        IPart _Part;
-
-        AudioVolumeLevel? _AudioVolumeLevel;
-        AudioMute? _AudioMute;
-        AudioPeakMeter? _AudioPeakMeter;
-        AudioLoudness? _AudioLoudness;
+        IPart part;
+        readonly AudioVolumeLevel? audioVolumeLevel;
+        AudioMute? audioMute;
+        AudioPeakMeter? audioPeakMeter;
+        AudioLoudness? audioLoudness;
 
         public delegate void PartNotificationDelegate(object sender);
 
@@ -46,96 +45,100 @@ namespace CoreAudio {
         PartsList? partsListOutgoing;
 
         internal Part(IPart part) {
-            _Part = part;
+            this.part = part;
         }
 
         internal void FireNotification(uint dwSenderProcessId, ref Guid pguidEventContext) {
             OnPartNotification?.Invoke(this);
         }
 
-        void GetAudioVolumeLevel() {
-            _Part.Activate(CLSCTX.ALL, ref RefIId.IIdIAudioVolumeLevel, out var result);
+        private AudioVolumeLevel GetAudioVolumeLevel() {
+            return audioVolumeLevel;
+        }
+
+        void GetAudioVolumeLevel(AudioVolumeLevel audioVolumeLevel) {
+            part.Activate(CLSCTX.ALL, ref RefIId.IIdIAudioVolumeLevel, out var result);
             if(result is IAudioVolumeLevel level) {
-                _AudioVolumeLevel = new AudioVolumeLevel(level);
+                audioVolumeLevel = new AudioVolumeLevel(level);
                 _AudioVolumeLevelChangeNotification = new ControlChangeNotify(this);
-                Marshal.ThrowExceptionForHR(_Part.RegisterControlChangeCallback(ref RefIId.IIdIAudioVolumeLevel,
+                Marshal.ThrowExceptionForHR(part.RegisterControlChangeCallback(ref RefIId.IIdIAudioVolumeLevel,
                     _AudioVolumeLevelChangeNotification));
             }
         }
 
         void GetAudioMute() {
-            _Part.Activate(CLSCTX.ALL, ref RefIId.IIdIAudioMute, out var result);
+            part.Activate(CLSCTX.ALL, ref RefIId.IIdIAudioMute, out var result);
             if(result is IAudioMute mute) {
-                _AudioMute = new AudioMute(mute);
+                audioMute = new AudioMute(mute);
                 _AudioMuteChangeNotification = new ControlChangeNotify(this);
                 Marshal.ThrowExceptionForHR(
-                    _Part.RegisterControlChangeCallback(ref RefIId.IIdIAudioMute, _AudioMuteChangeNotification));
+                    part.RegisterControlChangeCallback(ref RefIId.IIdIAudioMute, _AudioMuteChangeNotification));
             }
         }
 
         void GetAudioPeakMeter() {
-            _Part.Activate(CLSCTX.ALL, ref RefIId.IIdIAudioPeakMeter, out var result);
+            part.Activate(CLSCTX.ALL, ref RefIId.IIdIAudioPeakMeter, out var result);
             if(result is IAudioPeakMeter meter) {
-                _AudioPeakMeter = new AudioPeakMeter(meter);
+                audioPeakMeter = new AudioPeakMeter(meter);
                 _AudioPeakMeterChangeNotification = new ControlChangeNotify(this);
-                Marshal.ThrowExceptionForHR(_Part.RegisterControlChangeCallback(ref RefIId.IIdIAudioPeakMeter,
+                Marshal.ThrowExceptionForHR(part.RegisterControlChangeCallback(ref RefIId.IIdIAudioPeakMeter,
                     _AudioPeakMeterChangeNotification));
             }
         }
 
         void GetAudioLoudness() {
-            _Part.Activate(CLSCTX.ALL, ref RefIId.IIdIAudioLoudness, out var result);
+            part.Activate(CLSCTX.ALL, ref RefIId.IIdIAudioLoudness, out var result);
             if(result is IAudioLoudness loudness) {
-                _AudioLoudness = new AudioLoudness(loudness);
+                audioLoudness = new AudioLoudness(loudness);
                 _AudioLoudnessChangeNotification = new ControlChangeNotify(this);
-                Marshal.ThrowExceptionForHR(_Part.RegisterControlChangeCallback(ref RefIId.IIdIAudioLoudness,
+                Marshal.ThrowExceptionForHR(part.RegisterControlChangeCallback(ref RefIId.IIdIAudioLoudness,
                     _AudioLoudnessChangeNotification));
             }
         }
 
-        public string GetName {
+        public string Name {
             get {
-                Marshal.ThrowExceptionForHR(_Part.GetName(out string name));
+                Marshal.ThrowExceptionForHR(part.GetName(out string name));
                 return name;
             }
         }
 
-        public int GetLocalId {
+        public int LocalId {
             get {
-                Marshal.ThrowExceptionForHR(_Part.GetLocalId(out var id));
+                Marshal.ThrowExceptionForHR(part.GetLocalId(out var id));
                 return id;
             }
         }
 
-        public string GetGlobalId {
+        public string GlobalId {
             get {
-                Marshal.ThrowExceptionForHR(_Part.GetGlobalId(out string id));
+                Marshal.ThrowExceptionForHR(part.GetGlobalId(out string id));
                 return id;
             }
         }
 
-        public PartType GetPartType {
+        public PartType PartType {
             get {
-                Marshal.ThrowExceptionForHR(_Part.GetPartType(out var type));
+                Marshal.ThrowExceptionForHR(part.GetPartType(out var type));
                 return type;
             }
         }
 
-        public Guid GetSubType {
+        public Guid SubType {
             get {
-                Marshal.ThrowExceptionForHR(_Part.GetSubType(out var type));
+                Marshal.ThrowExceptionForHR(part.GetSubType(out var type));
                 return type;
             }
         }
 
-        public string GetSubTypeName {
+        public string SubTypeName {
             get {
                 string result;
 
-                result = FindSubTypeIn(GetSubType, typeof(KsNodeType));
+                result = FindSubTypeIn(SubType, typeof(KsNodeType));
                 if(result != "") return result;
 
-                result = FindSubTypeIn(GetSubType, typeof(KsCategory));
+                result = FindSubTypeIn(SubType, typeof(KsCategory));
                 if(result != "") return result;
 
                 return "UNDEFINED";
@@ -154,22 +157,22 @@ namespace CoreAudio {
             return "";
         }
 
-        public int GetControlInterfaceCount {
+        public int ControlInterfaceCount {
             get {
-                Marshal.ThrowExceptionForHR(_Part.GetControlInterfaceCount(out var count));
+                Marshal.ThrowExceptionForHR(part.GetControlInterfaceCount(out var count));
                 return count;
             }
         }
 
-        public ControlInterface GetControlInterface(int index) {
-            Marshal.ThrowExceptionForHR(_Part.GetControlInterface(index, out IControlInterface controlInterface));
+        public ControlInterface ControlInterface(int index) {
+            Marshal.ThrowExceptionForHR(part.GetControlInterface(index, out IControlInterface controlInterface));
             return new ControlInterface(controlInterface);
         }
 
         public PartsList? EnumPartsIncoming {
             get {
                 if(partsListIncoming == null) {
-                    _Part.EnumPartsIncoming(out var partsList);
+                    part.EnumPartsIncoming(out var partsList);
                     if(partsList != null) partsListIncoming = new PartsList(partsList);
                 }
 
@@ -180,7 +183,7 @@ namespace CoreAudio {
         public PartsList? EnumPartsOutgoing {
             get {
                 if(partsListOutgoing == null) {
-                    _Part.EnumPartsOutgoing(out var partsList);
+                    part.EnumPartsOutgoing(out var partsList);
                     if(partsList != null) partsListOutgoing = new PartsList(partsList);
                 }
 
@@ -188,46 +191,46 @@ namespace CoreAudio {
             }
         }
 
-        public DeviceTopology GetTopologyObject {
+        public DeviceTopology TopologyObject {
             get {
-                Marshal.ThrowExceptionForHR(_Part.GetTopologyObject(out IDeviceTopology deviceTopology));
+                Marshal.ThrowExceptionForHR(part.GetTopologyObject(out IDeviceTopology deviceTopology));
                 return new DeviceTopology(deviceTopology);
             }
         }
 
         public AudioVolumeLevel? AudioVolumeLevel {
             get {
-                if(_AudioVolumeLevel == null)
-                    GetAudioVolumeLevel();
+                if(audioVolumeLevel == null)
+                    GetAudioVolumeLevel(GetAudioVolumeLevel());
 
-                return _AudioVolumeLevel;
+                return audioVolumeLevel;
             }
         }
 
         public AudioMute? AudioMute {
             get {
-                if(_AudioMute == null)
+                if(audioMute == null)
                     GetAudioMute();
 
-                return _AudioMute;
+                return audioMute;
             }
         }
 
         public AudioPeakMeter? AudioPeakMeter {
             get {
-                if(_AudioPeakMeter == null)
+                if(audioPeakMeter == null)
                     GetAudioPeakMeter();
 
-                return _AudioPeakMeter;
+                return audioPeakMeter;
             }
         }
 
         public AudioLoudness? AudioLoudness {
             get {
-                if(_AudioLoudness == null)
+                if(audioLoudness == null)
                     GetAudioLoudness();
 
-                return _AudioLoudness;
+                return audioLoudness;
             }
         }
 
@@ -245,7 +248,7 @@ namespace CoreAudio {
             if(obj != null) {
                 try {
                     if(obj.IsAllocated) {
-                        Marshal.ThrowExceptionForHR(_Part.UnregisterControlChangeCallback(obj));
+                        Marshal.ThrowExceptionForHR(part.UnregisterControlChangeCallback(obj));
                         obj.Dispose();
                     }
                 } catch {

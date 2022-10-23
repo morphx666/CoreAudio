@@ -25,18 +25,18 @@ using CoreAudio.Interfaces;
 
 namespace CoreAudio {
     public class AudioMute {
-        IAudioMute _AudioMute;
+        IAudioMute audioMute;
 
         internal AudioMute(IAudioMute audioMute) {
-            _AudioMute = audioMute;
+            this.audioMute = audioMute;
         }
 
         public bool Mute {
             get {
-                Marshal.ThrowExceptionForHR(_AudioMute.GetMute(out var muted));
+                Marshal.ThrowExceptionForHR(audioMute.GetMute(out var muted));
                 return muted;
             }
-            set => Marshal.ThrowExceptionForHR(_AudioMute.SetMute(value, out var eventContext));
+            set => Marshal.ThrowExceptionForHR(audioMute.SetMute(value, out var eventContext));
         }
     }
 }

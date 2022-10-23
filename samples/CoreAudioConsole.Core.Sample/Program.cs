@@ -6,7 +6,7 @@ namespace CoreAudioConsole.Core.Sample {
     class Program {
         static void Main(string[] args) {
             MMDeviceEnumerator DevEnum = new MMDeviceEnumerator();
-            MMDevice device = DevEnum.GetDefaultAudioEndpoint(EDataFlow.eRender, ERole.eMultimedia);
+            MMDevice device = DevEnum.GetDefaultAudioEndpoint(DataFlow.eRender, Role.Multimedia);
             // Note the AudioSession manager did not have a method to enumerate all sessions in windows Vista
             // this will only work on Win7 and newer.
             foreach(var session in device.AudioSessionManager2.Sessions) {
@@ -14,11 +14,11 @@ namespace CoreAudioConsole.Core.Sample {
                     Console.WriteLine("DisplayName: {0}", session.DisplayName);
                     Console.WriteLine("State: {0}", session.State);
                     Console.WriteLine("IconPath: {0}", session.IconPath);
-                    Console.WriteLine("SessionIdentifier: {0}", session.GetSessionIdentifier);
-                    Console.WriteLine("SessionInstanceIdentifier: {0}", session.GetSessionInstanceIdentifier);
-                    Console.WriteLine("ProcessID: {0}", session.GetProcessID);
+                    Console.WriteLine("SessionIdentifier: {0}", session.SessionIdentifier);
+                    Console.WriteLine("SessionInstanceIdentifier: {0}", session.SessionInstanceIdentifier);
+                    Console.WriteLine("ProcessID: {0}", session.ProcessID);
                     Console.WriteLine("IsSystemIsSystemSoundsSession: {0}", session.IsSystemSoundsSession);
-                    Process p = Process.GetProcessById((int)session.GetProcessID);
+                    Process p = Process.GetProcessById((int)session.ProcessID);
                     Console.WriteLine("ProcessName: {0}", p.ProcessName);
                     Console.WriteLine("MainWindowTitle: {0}", p.MainWindowTitle);
                     AudioMeterInformation mi = session.AudioMeterInformation;
@@ -26,7 +26,7 @@ namespace CoreAudioConsole.Core.Sample {
                     Console.WriteLine("---[Hotkeys]---");
                     Console.WriteLine("M  Toggle Mute");
                     Console.WriteLine(",  Lower volume");
-                    Console.WriteLine(",  Raise volume");
+                    Console.WriteLine(".  Raise volume");
                     Console.WriteLine("Q  Quit");
                     Console.CursorVisible = false;
                     int start = Console.CursorTop;

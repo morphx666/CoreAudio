@@ -28,45 +28,45 @@ namespace CoreAudio {
     public class MMDevice : IDisposable {
         #region Variables
 
-        readonly IMMDevice _RealDevice;
-        PropertyStore? _PropertyStore;
-        AudioMeterInformation? _AudioMeterInformation;
-        AudioEndpointVolume? _AudioEndpointVolume;
-        AudioSessionManager2? _AudioSessionManager2;
-        DeviceTopology? _DeviceTopology;
+        readonly IMMDevice realDevice;
+        PropertyStore? propertyStore;
+        AudioMeterInformation? audioMeterInformation;
+        AudioEndpointVolume? audioEndPointVolume;
+        AudioSessionManager2? audioSessionManager2;
+        DeviceTopology? deviceTopology;
 
         #endregion
 
         #region Init
 
         void GetPropertyInformation() {
-            Marshal.ThrowExceptionForHR(_RealDevice.OpenPropertyStore(EStgmAccess.STGM_READ, out IPropertyStore propertyStore));
-            _PropertyStore = new PropertyStore(propertyStore);
+            Marshal.ThrowExceptionForHR(realDevice.OpenPropertyStore(EStgmAccess.STGM_READ, out IPropertyStore propertyStore));
+            this.propertyStore = new PropertyStore(propertyStore);
         }
 
         void GetAudioSessionManager2() {
-            Marshal.ThrowExceptionForHR(_RealDevice.Activate(ref RefIId.IIdIAudioSessionManager2, CLSCTX.ALL, IntPtr.Zero, out var result));
-            _AudioSessionManager2 = new AudioSessionManager2((IAudioSessionManager2)result);
+            Marshal.ThrowExceptionForHR(realDevice.Activate(ref RefIId.IIdIAudioSessionManager2, CLSCTX.ALL, IntPtr.Zero, out var result));
+            audioSessionManager2 = new AudioSessionManager2((IAudioSessionManager2)result);
         }
 
         void GetAudioMeterInformation() {
-            Marshal.ThrowExceptionForHR(_RealDevice.Activate(ref RefIId.IIdIAudioMeterInformation, CLSCTX.ALL, IntPtr.Zero, out var result));
-            _AudioMeterInformation = new AudioMeterInformation((IAudioMeterInformation)result);
+            Marshal.ThrowExceptionForHR(realDevice.Activate(ref RefIId.IIdIAudioMeterInformation, CLSCTX.ALL, IntPtr.Zero, out var result));
+            audioMeterInformation = new AudioMeterInformation((IAudioMeterInformation)result);
         }
 
         void GetAudioEndpointVolume() {
-            Marshal.ThrowExceptionForHR(_RealDevice.Activate(ref RefIId.IIdIAudioEndpointVolume, CLSCTX.ALL, IntPtr.Zero, out var result));
-            _AudioEndpointVolume = new AudioEndpointVolume((IAudioEndpointVolume)result);
+            Marshal.ThrowExceptionForHR(realDevice.Activate(ref RefIId.IIdIAudioEndpointVolume, CLSCTX.ALL, IntPtr.Zero, out var result));
+            audioEndPointVolume = new AudioEndpointVolume((IAudioEndpointVolume)result);
         }
 
         void GetDeviceTopology() {
-            Marshal.ThrowExceptionForHR(_RealDevice.Activate(ref RefIId.IIdIDeviceTopology, CLSCTX.ALL, IntPtr.Zero, out var result));
-            _DeviceTopology = new DeviceTopology((IDeviceTopology)result);
+            Marshal.ThrowExceptionForHR(realDevice.Activate(ref RefIId.IIdIDeviceTopology, CLSCTX.ALL, IntPtr.Zero, out var result));
+            deviceTopology = new DeviceTopology((IDeviceTopology)result);
         }
 
         public void Dispose() {
-            _AudioEndpointVolume?.Dispose();
-            _AudioSessionManager2?.Dispose();
+            audioEndPointVolume?.Dispose();
+            audioSessionManager2?.Dispose();
         }
 
         ~MMDevice() {
@@ -79,36 +79,36 @@ namespace CoreAudio {
 
         public AudioSessionManager2? AudioSessionManager2 {
             get {
-                if(_AudioSessionManager2 == null) GetAudioSessionManager2();
-                return _AudioSessionManager2;
+                if(audioSessionManager2 == null) GetAudioSessionManager2();
+                return audioSessionManager2;
             }
         }
 
         public AudioMeterInformation? AudioMeterInformation {
             get {
-                if(_AudioMeterInformation == null) GetAudioMeterInformation();
-                return _AudioMeterInformation;
+                if(audioMeterInformation == null) GetAudioMeterInformation();
+                return audioMeterInformation;
             }
         }
 
         public AudioEndpointVolume? AudioEndpointVolume {
             get {
-                if(_AudioEndpointVolume == null) GetAudioEndpointVolume();
-                return _AudioEndpointVolume;
+                if(audioEndPointVolume == null) GetAudioEndpointVolume();
+                return audioEndPointVolume;
             }
         }
 
         public PropertyStore? Properties {
             get {
-                if(_PropertyStore == null) GetPropertyInformation();
-                return _PropertyStore;
+                if(propertyStore == null) GetPropertyInformation();
+                return propertyStore;
             }
         }
 
         public DeviceTopology? DeviceTopology {
             get {
-                if(_DeviceTopology == null) GetDeviceTopology();
-                return _DeviceTopology;
+                if(deviceTopology == null) GetDeviceTopology();
+                return deviceTopology;
             }
         }
 
@@ -121,10 +121,10 @@ namespace CoreAudio {
 
         public string DeviceInterfaceFriendlyName {
             get {
-                if(_PropertyStore == null)
+                if(propertyStore == null)
                     GetPropertyInformation();
-                if(_PropertyStore?.Contains(PKey.DeviceInterfaceFriendlyName) ?? false) {
-                    return (string?)_PropertyStore?[PKey.DeviceInterfaceFriendlyName]?.Value ?? "";
+                if(propertyStore?.Contains(PKey.DeviceInterfaceFriendlyName) ?? false) {
+                    return (string?)propertyStore?[PKey.DeviceInterfaceFriendlyName]?.Value ?? "";
                 }
 
                 return "Unknown";
@@ -133,10 +133,10 @@ namespace CoreAudio {
 
         public string DeviceFriendlyName {
             get {
-                if(_PropertyStore == null)
+                if(propertyStore == null)
                     GetPropertyInformation();
-                if(_PropertyStore?.Contains(PKey.DeviceFriendlyName) ?? false) {
-                    return (string?)_PropertyStore?[PKey.DeviceFriendlyName]?.Value ?? "";
+                if(propertyStore?.Contains(PKey.DeviceFriendlyName) ?? false) {
+                    return (string?)propertyStore?[PKey.DeviceFriendlyName]?.Value ?? "";
                 }
 
                 return "Unknown";
@@ -145,23 +145,23 @@ namespace CoreAudio {
 
         public string IconPath {
             get {
-                if(_PropertyStore == null) GetPropertyInformation();
-                if(_PropertyStore?.Contains(PKey.DeviceClassIconPath) ?? false)
-                    return (string?)_PropertyStore[PKey.DeviceClassIconPath]?.Value ?? "";
+                if(propertyStore == null) GetPropertyInformation();
+                if(propertyStore?.Contains(PKey.DeviceClassIconPath) ?? false)
+                    return (string?)propertyStore[PKey.DeviceClassIconPath]?.Value ?? "";
                 return "";
             }
         }
 
         public string ID {
             get {
-                Marshal.ThrowExceptionForHR(_RealDevice.GetId(out string result));
+                Marshal.ThrowExceptionForHR(realDevice.GetId(out string result));
                 return result;
             }
         }
 
-        public EDataFlow DataFlow {
+        public DataFlow DataFlow {
             get {
-                var ep = (IMMEndpoint)_RealDevice;
+                var ep = (IMMEndpoint)realDevice;
                 ep.GetDataFlow(out var result);
                 return result;
             }
@@ -169,16 +169,16 @@ namespace CoreAudio {
 
         public DeviceState State {
             get {
-                Marshal.ThrowExceptionForHR(_RealDevice.GetState(out var result));
+                Marshal.ThrowExceptionForHR(realDevice.GetState(out var result));
                 return result;
 
             }
         }
 
-        internal IMMDevice ReadDevice => _RealDevice;
+        internal IMMDevice ReadDevice => realDevice;
 
         public bool Selected {
-            get => new MMDeviceEnumerator().GetDefaultAudioEndpoint(DataFlow, ERole.eMultimedia).ID == ID;
+            get => new MMDeviceEnumerator().GetDefaultAudioEndpoint(DataFlow, Role.Multimedia).ID == ID;
             set {
                 if(value) {
                     new CPolicyConfigVistaClient().SetDefaultDevice(ID);
@@ -190,9 +190,8 @@ namespace CoreAudio {
 
         #region Constructor
         internal MMDevice(IMMDevice realDevice) {
-            _RealDevice = realDevice;
+            this.realDevice = realDevice;
         }
         #endregion
-
     }
 }

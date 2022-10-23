@@ -29,30 +29,30 @@ using System.Linq;
 
 namespace CoreAudio {
     public class SimpleAudioVolume {
-        ISimpleAudioVolume _SimpleAudioVolume;
+        ISimpleAudioVolume simpleAudioVolume;
         internal SimpleAudioVolume(ISimpleAudioVolume realSimpleVolume) {
-            _SimpleAudioVolume = realSimpleVolume;
+            simpleAudioVolume = realSimpleVolume;
         }
 
         public float MasterVolume {
             get {
-                Marshal.ThrowExceptionForHR(_SimpleAudioVolume.GetMasterVolume(out var ret));
+                Marshal.ThrowExceptionForHR(simpleAudioVolume.GetMasterVolume(out var ret));
                 return ret;
             }
             set {
                 var Empty = Guid.Empty;
-                Marshal.ThrowExceptionForHR(_SimpleAudioVolume.SetMasterVolume(value, ref Empty));
+                Marshal.ThrowExceptionForHR(simpleAudioVolume.SetMasterVolume(value, ref Empty));
             }
         }
 
         public bool Mute {
             get {
-                Marshal.ThrowExceptionForHR(_SimpleAudioVolume.GetMute(out var ret));
+                Marshal.ThrowExceptionForHR(simpleAudioVolume.GetMute(out var ret));
                 return ret;
             }
             set {
                 var Empty = Guid.Empty;
-                Marshal.ThrowExceptionForHR(_SimpleAudioVolume.SetMute(value, ref Empty));
+                Marshal.ThrowExceptionForHR(simpleAudioVolume.SetMute(value, ref Empty));
             }
         }
     }

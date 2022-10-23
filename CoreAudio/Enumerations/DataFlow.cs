@@ -21,10 +21,10 @@
 */
 
 namespace CoreAudio {
-    public enum ERole {
-        eConsole = 0,
-        eMultimedia = 1,
-        eCommunications = 2,
-        ERole_enum_count = 3
+    public enum DataFlow {
+        eRender = 0,
+        eCapture = 1,
+        eAll = 2,
+        EDataFlow_enum_count = 3
     }
 }

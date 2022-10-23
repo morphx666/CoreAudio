@@ -27,24 +27,23 @@ using System.Runtime.InteropServices;
 using CoreAudio.Interfaces;
 
 namespace CoreAudio {
-    public class SessionCollection
-        : IEnumerable<AudioSessionControl2> {
-        readonly IAudioSessionEnumerator _AudioSessionEnumerator;
+    public class SessionCollection : IEnumerable<AudioSessionControl2> {
+        readonly IAudioSessionEnumerator audioSessionEnumerator;
 
         internal SessionCollection(IAudioSessionEnumerator realEnumerator) {
-            _AudioSessionEnumerator = realEnumerator;
+            audioSessionEnumerator = realEnumerator;
         }
 
         public AudioSessionControl2 this[int index] {
             get {
-                Marshal.ThrowExceptionForHR(_AudioSessionEnumerator.GetSession(index, out IAudioSessionControl2 _Result));
+                Marshal.ThrowExceptionForHR(audioSessionEnumerator.GetSession(index, out IAudioSessionControl2 _Result));
                 return new AudioSessionControl2(_Result);
             }
         }
 
         public int Count {
             get {
-                Marshal.ThrowExceptionForHR(_AudioSessionEnumerator.GetCount(out var result));
+                Marshal.ThrowExceptionForHR(audioSessionEnumerator.GetCount(out var result));
                 return result;
             }
         }

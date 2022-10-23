@@ -7,12 +7,12 @@ namespace CoreAudio {
     }
 
     public class CPolicyConfigVistaClient {
-        IPolicyConfigVista _policyConfigVistaClient = (IPolicyConfigVista)new _CPolicyConfigVistaClient();
+        IPolicyConfigVista policyConfigVistaClient = (IPolicyConfigVista)new _CPolicyConfigVistaClient();
 
         public int SetDefaultDevice(string deviceID) {
-            _policyConfigVistaClient.SetDefaultEndpoint(deviceID, ERole.eConsole);
-            _policyConfigVistaClient.SetDefaultEndpoint(deviceID, ERole.eMultimedia);
-            _policyConfigVistaClient.SetDefaultEndpoint(deviceID, ERole.eCommunications);
+            policyConfigVistaClient.SetDefaultEndpoint(deviceID, Role.Console);
+            policyConfigVistaClient.SetDefaultEndpoint(deviceID, Role.Multimedia);
+            policyConfigVistaClient.SetDefaultEndpoint(deviceID, Role.Communications);
 
             return 0;
         }

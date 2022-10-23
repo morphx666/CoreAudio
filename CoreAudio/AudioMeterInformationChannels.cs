@@ -25,11 +25,11 @@ using CoreAudio.Interfaces;
 
 namespace CoreAudio {
     public class AudioMeterInformationChannels {
-        IAudioMeterInformation _AudioMeterInformation;
+        IAudioMeterInformation audioMeterInformation;
 
         public int Count {
             get {
-                Marshal.ThrowExceptionForHR(_AudioMeterInformation.GetMeteringChannelCount(out var result));
+                Marshal.ThrowExceptionForHR(audioMeterInformation.GetMeteringChannelCount(out var result));
                 return result;
             }
         }
@@ -38,14 +38,14 @@ namespace CoreAudio {
             get {
                 float[] peakValues = new float[Count];
                 GCHandle Params = GCHandle.Alloc(peakValues, GCHandleType.Pinned);
-                Marshal.ThrowExceptionForHR(_AudioMeterInformation.GetChannelsPeakValues(peakValues.Length, Params.AddrOfPinnedObject()));
+                Marshal.ThrowExceptionForHR(audioMeterInformation.GetChannelsPeakValues(peakValues.Length, Params.AddrOfPinnedObject()));
                 Params.Free();
                 return peakValues[index];
             }
         }
 
         internal AudioMeterInformationChannels(IAudioMeterInformation parent) {
-            _AudioMeterInformation = parent;
+            audioMeterInformation = parent;
         }
     }
 }

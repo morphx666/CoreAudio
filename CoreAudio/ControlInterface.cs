@@ -26,22 +26,22 @@ using CoreAudio.Interfaces;
 
 namespace CoreAudio {
     public class ControlInterface {
-        IControlInterface _ControlInterface;
+        IControlInterface controlInterface;
 
         internal ControlInterface(IControlInterface controlInterface) {
-            _ControlInterface = controlInterface;
+            this.controlInterface = controlInterface;
         }
 
         public string GetName {
             get {
-                Marshal.ThrowExceptionForHR(_ControlInterface.GetName(out string name));
+                Marshal.ThrowExceptionForHR(controlInterface.GetName(out string name));
                 return name;
             }
         }
 
         public Guid GetId {
             get {
-                Marshal.ThrowExceptionForHR(_ControlInterface.GetID(out var id));
+                Marshal.ThrowExceptionForHR(controlInterface.GetID(out var id));
                 return id;
             }
         }

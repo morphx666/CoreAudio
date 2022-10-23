@@ -27,11 +27,11 @@ using CoreAudio.Interfaces;
 
 namespace CoreAudio {
     internal class ControlChangeNotify : IControlChangeNotify, IDisposable {
-        Part _Parent;
+        Part parent;
         GCHandle rcwHandle;
 
         internal ControlChangeNotify(Part parent) {
-            _Parent = parent;
+            parent = parent;
             rcwHandle = GCHandle.Alloc(this, GCHandleType.Normal);
         }
 
@@ -40,7 +40,7 @@ namespace CoreAudio {
         [PreserveSig]
         public int OnNotify(uint dwSenderProcessId, ref Guid pguidEventContext) {
             if(Process.GetCurrentProcess().Id != dwSenderProcessId)
-                _Parent.FireNotification(dwSenderProcessId, ref pguidEventContext);
+                parent.FireNotification(dwSenderProcessId, ref pguidEventContext);
             return 0;
         }
 

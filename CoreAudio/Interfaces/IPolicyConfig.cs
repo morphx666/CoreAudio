@@ -26,7 +26,7 @@ namespace CoreAudio.Interfaces {
         [PreserveSig]
         int SetPropertyValue();
         [PreserveSig]
-        int SetDefaultEndpoint([MarshalAs(UnmanagedType.LPWStr)] string wszDeviceId, ERole eRole);
+        int SetDefaultEndpoint([MarshalAs(UnmanagedType.LPWStr)] string wszDeviceId, Role eRole);
         [PreserveSig]
         int SetEndpointVisibility();
     }

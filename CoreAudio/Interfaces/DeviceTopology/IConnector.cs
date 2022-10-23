@@ -29,7 +29,7 @@ namespace CoreAudio.Interfaces {
         [PreserveSig]
         int GetType(out ConnectorType type);
         [PreserveSig]
-        int GetDataFlow(out EDataFlow flow);
+        int GetDataFlow(out DataFlow flow);
         [PreserveSig]
         int ConnectTo(IConnector connectTo);
         [PreserveSig]

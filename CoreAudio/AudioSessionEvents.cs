@@ -27,33 +27,33 @@ using CoreAudio.Interfaces;
 
 namespace CoreAudio {
     internal class AudioSessionEvents : IAudioSessionEvents {
-        _IAudioSessionControl _Parent;
+        _IAudioSessionControl parent;
 
         internal AudioSessionEvents(_IAudioSessionControl parent) {
-            _Parent = parent;
+            this.parent = parent;
         }
 
         [PreserveSig]
         public int OnDisplayNameChanged([MarshalAs(UnmanagedType.LPWStr)] string NewDisplayName, ref Guid EventContext) {
-            _Parent.FireDisplayNameChanged(NewDisplayName, EventContext);
+            parent.FireDisplayNameChanged(NewDisplayName, EventContext);
             return 0;
         }
 
         [PreserveSig]
         public int OnIconPathChanged([MarshalAs(UnmanagedType.LPWStr)] string NewIconPath, ref Guid EventContext) {
-            _Parent.FireOnIconPathChanged(NewIconPath, EventContext);
+            parent.FireOnIconPathChanged(NewIconPath, EventContext);
             return 0;
         }
 
         [PreserveSig]
         public int OnSimpleVolumeChanged(float NewVolume, bool newMute, ref Guid EventContext) {
-            _Parent.FireSimpleVolumeChanged(NewVolume, newMute, EventContext);
+            parent.FireSimpleVolumeChanged(NewVolume, newMute, EventContext);
             return 0;
         }
 
         [PreserveSig]
         public int OnChannelVolumeChanged(uint ChannelCount, IntPtr NewChannelVolumeArray, uint ChangedChannel, ref Guid EventContext) {
-            _Parent.FireChannelVolumeChanged(ChannelCount, NewChannelVolumeArray, ChangedChannel, EventContext);
+            parent.FireChannelVolumeChanged(ChannelCount, NewChannelVolumeArray, ChangedChannel, EventContext);
             return 0;
         }
 
@@ -64,7 +64,7 @@ namespace CoreAudio {
 
         [PreserveSig]
         public int OnStateChanged(AudioSessionState NewState) {
-            _Parent.FireStateChanged(NewState);
+            parent.FireStateChanged(NewState);
             return 0;
         }
 

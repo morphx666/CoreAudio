@@ -28,14 +28,14 @@ using CoreAudio.Interfaces;
 namespace CoreAudio {
     public class PerChannelDbLevel {
         public struct LevelRange {
-            public float minLevel;
-            public float maxLevel;
-            public float stepping;
+            public float MinLevel;
+            public float MaxLevel;
+            public float Stepping;
 
             public LevelRange(float minLevel, float maxLevel, float stepping) {
-                this.minLevel = minLevel;
-                this.maxLevel = maxLevel;
-                this.stepping = stepping;
+                this.MinLevel = minLevel;
+                this.MaxLevel = maxLevel;
+                this.Stepping = stepping;
             }
         }
 
@@ -45,7 +45,7 @@ namespace CoreAudio {
             _PerChannelDbLevel = perChannelDbLevel;
         }
 
-        public int GetChannelCount {
+        public int ChannelCount {
             get {
                 Marshal.ThrowExceptionForHR(_PerChannelDbLevel.GetChannelCount(out var count));
                 return (int)count;
@@ -63,6 +63,10 @@ namespace CoreAudio {
             return level;
         }
 
+        public void SetLevel(int channel, float level) {
+            Marshal.ThrowExceptionForHR(_PerChannelDbLevel.SetLevel((uint)channel, level, out var eventContext));
+        }
+
         public LevelRange GetLevelRange(int channel) {
             float minLevel = 0;
             float maxLevel = 0;
@@ -74,11 +78,7 @@ namespace CoreAudio {
                 Thread.Sleep(100);
             }
             return new LevelRange(minLevel, maxLevel, stepping);
-        }
-
-        public void SetLevel(int channel, float level) {
-            Marshal.ThrowExceptionForHR(_PerChannelDbLevel.SetLevel((uint)channel, level, out var eventContext));
-        }
+        }        
 
         public void SetLevelUniform(float level) {
             Thread.Sleep(5);

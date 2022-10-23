@@ -25,15 +25,15 @@ using System;
 namespace CoreAudio {
     public struct PropertyKey {
         public Guid fmtId;
-        public int pId;
+        public int PId;
 
         public PropertyKey(Guid fmtId, int pId) {
             this.fmtId = fmtId;
-            this.pId = pId;
+            this.PId = pId;
         }
 
         public static bool operator ==(PropertyKey pk1, PropertyKey pk2) {
-            return (pk1.fmtId == pk2.fmtId) && (pk1.pId == pk2.pId);
+            return (pk1.fmtId == pk2.fmtId) && (pk1.PId == pk2.PId);
         }
 
         public static bool operator !=(PropertyKey pk1, PropertyKey pk2) {

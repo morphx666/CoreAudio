@@ -26,27 +26,27 @@ using CoreAudio.Interfaces;
 
 namespace CoreAudio {
     public class PartsList {
-        IPartsList _PartsList;
+        IPartsList partsList;
         Dictionary<int, Part> partsCache;
 
         internal PartsList(IPartsList partsList) {
-            _PartsList = partsList;
+            this.partsList = partsList;
             partsCache = new Dictionary<int, Part>();
         }
 
-        public int GetCount {
+        public int Count {
             get {
-                Marshal.ThrowExceptionForHR(_PartsList.GetCount(out var count));
+                Marshal.ThrowExceptionForHR(partsList.GetCount(out var count));
                 return count;
             }
         }
 
-        public Part GetPart(int index) {
+        public Part Part(int index) {
             if(partsCache.ContainsKey(index)) {
                 return partsCache[index];
             }
 
-            Marshal.ThrowExceptionForHR(_PartsList.GetPart(index, out IPart ipart));
+            Marshal.ThrowExceptionForHR(partsList.GetPart(index, out IPart ipart));
             Part part = new Part(ipart);
             partsCache.Add(index, part);
             return part;

@@ -25,21 +25,21 @@ using CoreAudio.Interfaces;
 
 namespace CoreAudio {
     public class AudioPeakMeter {
-        IAudioPeakMeter _AudioPeakMeter;
+        IAudioPeakMeter audioPeakMeter;
 
         internal AudioPeakMeter(IAudioPeakMeter audioPeakMeter) {
-            _AudioPeakMeter = audioPeakMeter;
+            this.audioPeakMeter = audioPeakMeter;
         }
 
-        public int GetChannelCount {
+        public int ChannelCount {
             get {
-                Marshal.ThrowExceptionForHR(_AudioPeakMeter.GetChannelCount(out var count));
+                Marshal.ThrowExceptionForHR(audioPeakMeter.GetChannelCount(out var count));
                 return count;
             }
         }
 
-        public float GetLevel(int channel) {
-            Marshal.ThrowExceptionForHR(_AudioPeakMeter.GetLevel((uint)channel, out var level));
+        public float Level(int channel) {
+            Marshal.ThrowExceptionForHR(audioPeakMeter.GetLevel((uint)channel, out var level));
             return level;
         }
     }

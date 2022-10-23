@@ -35,7 +35,7 @@ namespace CoreAudio.Interfaces {
         [PreserveSig]
         void OnDeviceRemoved([In, MarshalAs(UnmanagedType.LPWStr)] string pwstrDeviceId);
         [PreserveSig]
-        void OnDefaultDeviceChanged(EDataFlow flow, ERole role, [In, MarshalAs(UnmanagedType.LPWStr)] string pwstrDeviceId);
+        void OnDefaultDeviceChanged(DataFlow flow, Role role, [In, MarshalAs(UnmanagedType.LPWStr)] string pwstrDeviceId);
         [PreserveSig]
         void OnPropertyValueChanged([In, MarshalAs(UnmanagedType.LPWStr)] string pwstrDeviceId, PropertyKey key);
     }

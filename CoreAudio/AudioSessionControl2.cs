@@ -26,10 +26,10 @@ using System.Runtime.InteropServices;
 using CoreAudio.Interfaces;
 
 namespace CoreAudio {
-    public class AudioSessionControl2 : _IAudioSessionControl {
-        IAudioSessionControl2 _AudioSessionControl2;
-        AudioMeterInformation? _AudioMeterInformation;
-        SimpleAudioVolume? _SimpleAudioVolume;
+    public class AudioSessionControl2 : _IAudioSessionControl, IDisposable {
+        IAudioSessionControl2 audioSessionControl2;
+        AudioMeterInformation? audioMeterInformation;
+        SimpleAudioVolume? simpleAudioVolume;
 
         #region events
 
@@ -60,106 +60,107 @@ namespace CoreAudio {
 
         #endregion
 
-        AudioSessionEvents? _AudioSessionEvents;
+        AudioSessionEvents? audioSessionEvents;
 
         internal AudioSessionControl2(IAudioSessionControl2 realAudioSessionControl2) {
-            _AudioSessionControl2 = realAudioSessionControl2;
+            audioSessionControl2 = realAudioSessionControl2;
 
-            if(_AudioSessionControl2 is IAudioMeterInformation meters)
-                _AudioMeterInformation = new AudioMeterInformation(meters);
+            if(audioSessionControl2 is IAudioMeterInformation meters)
+                audioMeterInformation = new AudioMeterInformation(meters);
 
-            if(_AudioSessionControl2 is ISimpleAudioVolume volume)
-                _SimpleAudioVolume = new SimpleAudioVolume(volume);
+            if(audioSessionControl2 is ISimpleAudioVolume volume)
+                simpleAudioVolume = new SimpleAudioVolume(volume);
 
-            _AudioSessionEvents = new AudioSessionEvents(this);
-            Marshal.ThrowExceptionForHR(_AudioSessionControl2.RegisterAudioSessionNotification(_AudioSessionEvents));
+            audioSessionEvents = new AudioSessionEvents(this);
+            Marshal.ThrowExceptionForHR(audioSessionControl2.RegisterAudioSessionNotification(audioSessionEvents));
         }
 
-        public void FireDisplayNameChanged([MarshalAs(UnmanagedType.LPWStr)] string NewDisplayName, Guid EventContext) {
+        void _IAudioSessionControl.FireDisplayNameChanged([MarshalAs(UnmanagedType.LPWStr)] string NewDisplayName, Guid EventContext) {
             OnDisplayNameChanged?.Invoke(this, NewDisplayName);
         }
 
-        public void FireOnIconPathChanged([MarshalAs(UnmanagedType.LPWStr)] string NewIconPath, Guid EventContext) {
+        void _IAudioSessionControl.FireOnIconPathChanged([MarshalAs(UnmanagedType.LPWStr)] string NewIconPath, Guid EventContext) {
             OnIconPathChanged?.Invoke(this, NewIconPath);
         }
 
-        public void FireSimpleVolumeChanged(float NewVolume, bool newMute, Guid EventContext) {
+        void _IAudioSessionControl.FireSimpleVolumeChanged(float NewVolume, bool newMute, Guid EventContext) {
             OnSimpleVolumeChanged?.Invoke(this, NewVolume, newMute);
         }
 
-        public void FireChannelVolumeChanged(uint ChannelCount, IntPtr NewChannelVolumeArray, uint ChangedChannel,
+        void _IAudioSessionControl.FireChannelVolumeChanged(uint ChannelCount, IntPtr NewChannelVolumeArray, uint ChangedChannel,
             Guid EventContext) {
             float[] volume = new float[ChannelCount];
             Marshal.Copy(NewChannelVolumeArray, volume, 0, (int)ChannelCount);
             OnChannelVolumeChanged?.Invoke(this, (int)ChannelCount, volume, (int)ChangedChannel);
         }
 
-        public void FireStateChanged(AudioSessionState newState) {
+        void _IAudioSessionControl.FireStateChanged(AudioSessionState newState) {
             OnStateChanged?.Invoke(this, newState);
         }
 
-        public void FireSessionDisconnected(AudioSessionDisconnectReason disconnectReason) {
+        void _IAudioSessionControl.FireSessionDisconnected(AudioSessionDisconnectReason disconnectReason) {
             OnSessionDisconnected?.Invoke(this, disconnectReason);
         }
 
-        public AudioMeterInformation? AudioMeterInformation => _AudioMeterInformation;
+        public void Dispose() {
+            if(audioSessionEvents != null) {
+                try {
+                    Marshal.ThrowExceptionForHR(
+                        audioSessionControl2.UnregisterAudioSessionNotification(audioSessionEvents));
+                    audioSessionEvents = null;
+                } catch {
+                    // ignored
+                }
+            }
+        }
 
-        public SimpleAudioVolume? SimpleAudioVolume => _SimpleAudioVolume;
+        public AudioMeterInformation? AudioMeterInformation => audioMeterInformation;
+
+        public SimpleAudioVolume? SimpleAudioVolume => simpleAudioVolume;
 
         public AudioSessionState State {
             get {
-                Marshal.ThrowExceptionForHR(_AudioSessionControl2.GetState(out var res));
+                Marshal.ThrowExceptionForHR(audioSessionControl2.GetState(out var res));
                 return res;
             }
         }
 
         public string DisplayName {
             get {
-                Marshal.ThrowExceptionForHR(_AudioSessionControl2.GetDisplayName(out var str));
+                Marshal.ThrowExceptionForHR(audioSessionControl2.GetDisplayName(out var str));
                 return str;
             }
         }
 
         public string IconPath {
             get {
-                Marshal.ThrowExceptionForHR(_AudioSessionControl2.GetIconPath(out var str));
+                Marshal.ThrowExceptionForHR(audioSessionControl2.GetIconPath(out var str));
                 return str;
             }
         }
 
-        public string GetSessionIdentifier {
+        public string SessionIdentifier {
             get {
-                Marshal.ThrowExceptionForHR(_AudioSessionControl2.GetSessionIdentifier(out var str));
+                Marshal.ThrowExceptionForHR(audioSessionControl2.GetSessionIdentifier(out var str));
                 return str;
             }
         }
 
-        public string GetSessionInstanceIdentifier {
+        public string SessionInstanceIdentifier {
             get {
-                Marshal.ThrowExceptionForHR(_AudioSessionControl2.GetSessionInstanceIdentifier(out var str));
+                Marshal.ThrowExceptionForHR(audioSessionControl2.GetSessionInstanceIdentifier(out var str));
                 return str;
             }
         }
 
-        public uint GetProcessID {
+        public uint ProcessID {
             get {
-                Marshal.ThrowExceptionForHR(_AudioSessionControl2.GetProcessId(out var pid));
+                Marshal.ThrowExceptionForHR(audioSessionControl2.GetProcessId(out var pid));
                 return pid;
             }
         }
 
-        public bool IsSystemSoundsSession => (_AudioSessionControl2.IsSystemSoundsSession() == 0);
-
-        public void Dispose() {
-            if(_AudioSessionEvents != null)
-                try {
-                    Marshal.ThrowExceptionForHR(
-                        _AudioSessionControl2.UnregisterAudioSessionNotification(_AudioSessionEvents));
-                    _AudioSessionEvents = null;
-                } catch {
-                    // ignored
-                }
-        }
+        public bool IsSystemSoundsSession => (audioSessionControl2.IsSystemSoundsSession() == 0);
 
         ~AudioSessionControl2() {
             Dispose();

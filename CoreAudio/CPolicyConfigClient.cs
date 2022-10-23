@@ -7,12 +7,12 @@ namespace CoreAudio {
     }
 
     public class CPolicyConfigClient {
-        IPolicyConfig _policyConfigClient = (IPolicyConfig)new _CPolicyConfigClient();
+        IPolicyConfig policyConfigClient = (IPolicyConfig)new _CPolicyConfigClient();
 
         public int SetDefaultDevice(string deviceID) {
-            _policyConfigClient.SetDefaultEndpoint(deviceID, ERole.eConsole);
-            _policyConfigClient.SetDefaultEndpoint(deviceID, ERole.eMultimedia);
-            _policyConfigClient.SetDefaultEndpoint(deviceID, ERole.eCommunications);
+            policyConfigClient.SetDefaultEndpoint(deviceID, Role.Console);
+            policyConfigClient.SetDefaultEndpoint(deviceID, Role.Multimedia);
+            policyConfigClient.SetDefaultEndpoint(deviceID, Role.Communications);
 
             return 0;
         }

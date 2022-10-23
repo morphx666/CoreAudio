@@ -4,12 +4,12 @@ using System.Runtime.InteropServices;
 // General Information about an assembly is controlled through the following
 // set of attributes. Change these attribute values to modify the information
 // associated with an assembly.
-[assembly: AssemblyTitle("CoreAudioConsole.Framework.Sample")]
+[assembly: AssemblyTitle("Tester")]
 [assembly: AssemblyDescription("")]
 [assembly: AssemblyConfiguration("")]
-[assembly: AssemblyCompany("")]
-[assembly: AssemblyProduct("CoreAudioConsole.Framework.Sample")]
-[assembly: AssemblyCopyright("Copyright ©  2020")]
+[assembly: AssemblyCompany("xFX JumpStart")]
+[assembly: AssemblyProduct("Tester")]
+[assembly: AssemblyCopyright("Copyright © xFX JumpStart 2022")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
 
@@ -19,7 +19,7 @@ using System.Runtime.InteropServices;
 [assembly: ComVisible(false)]
 
 // The following GUID is for the ID of the typelib if this project is exposed to COM
-[assembly: Guid("d269cdee-2d69-471e-8436-48dc89bcf7cf")]
+[assembly: Guid("f95c6bb8-63fe-42a5-9ca8-2d5a6dbf002c")]
 
 // Version information for an assembly consists of the following four values:
 //
@@ -31,7 +31,7 @@ using System.Runtime.InteropServices;
 // You can specify all the values or you can default the Build and Revision Numbers
 // by using the '*' as shown below:
 // [assembly: AssemblyVersion("1.0.*")]
-[assembly: AssemblyVersion("2022.10.23.70")]
-[assembly: AssemblyFileVersion("2022.10.23.70")]
+[assembly: AssemblyVersion("2022.10.23.95")]
+[assembly: AssemblyFileVersion("2022.10.23.95")]
 
-[assembly: AssemblyInformationalVersion("2022.10.67")]
+[assembly: AssemblyInformationalVersion("2022.10.94")]

@@ -32,14 +32,14 @@ namespace CoreAudio {
 
     //Small wrapper class
     public class MMDeviceEnumerator {
-        IMMDeviceEnumerator _realEnumerator = (IMMDeviceEnumerator)new _MMDeviceEnumerator();
+        IMMDeviceEnumerator _realEnumerator;
 
-        public MMDeviceCollection EnumerateAudioEndPoints(EDataFlow dataFlow, DeviceState dwStateMask) {
+        public MMDeviceCollection EnumerateAudioEndPoints(DataFlow dataFlow, DeviceState dwStateMask) {
             Marshal.ThrowExceptionForHR(_realEnumerator.EnumAudioEndpoints(dataFlow, dwStateMask, out var result));
             return new MMDeviceCollection(result);
         }
 
-        public MMDevice GetDefaultAudioEndpoint(EDataFlow dataFlow, ERole role) {
+        public MMDevice GetDefaultAudioEndpoint(DataFlow dataFlow, Role role) {
             Marshal.ThrowExceptionForHR(_realEnumerator.GetDefaultAudioEndpoint(dataFlow, role, out var device));
             return new MMDevice(device);
         }
@@ -68,7 +68,9 @@ namespace CoreAudio {
 
         public MMDeviceEnumerator() {
             if(Environment.OSVersion.Version.Major < 6) {
-                throw new NotSupportedException("This functionality is only supported on Windows Vista or newer.");
+                throw new NotSupportedException("This functionality is only supported on Windows Vista or newer");
+            } else {
+                _realEnumerator = (IMMDeviceEnumerator)new _MMDeviceEnumerator();
             }
         }
     }

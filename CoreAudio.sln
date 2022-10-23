@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio Version 16
-VisualStudioVersion = 16.0.29728.190
+# Visual Studio Version 17
+VisualStudioVersion = 17.3.32929.385
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CoreAudio", "CoreAudio\CoreAudio.csproj", "{8A45AD26-C5CE-4288-BB9E-6D6807966760}"
 EndProject
@@ -20,6 +20,8 @@ EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Framework", "Framework", "{6AF2F92E-A4AD-4BAB-8082-3405946C76C7}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CoreAudioForms.Framework.Sessions", "samples\CoreAudioForms.Framework.Sessions\CoreAudioForms.Framework.Sessions.csproj", "{826914C2-0BD8-4C8E-807F-95F5853A94D3}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CoreAudioConsole.Framework.Discover", "samples\CoreAudioConsole.Framework.Discover\CoreAudioConsole.Framework.Discover.csproj", "{F95C6BB8-63FE-42A5-9CA8-2D5A6DBF002C}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -51,6 +53,10 @@ Global
 		{826914C2-0BD8-4C8E-807F-95F5853A94D3}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{826914C2-0BD8-4C8E-807F-95F5853A94D3}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{826914C2-0BD8-4C8E-807F-95F5853A94D3}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F95C6BB8-63FE-42A5-9CA8-2D5A6DBF002C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F95C6BB8-63FE-42A5-9CA8-2D5A6DBF002C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F95C6BB8-63FE-42A5-9CA8-2D5A6DBF002C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F95C6BB8-63FE-42A5-9CA8-2D5A6DBF002C}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -63,6 +69,7 @@ Global
 		{CB708189-2A8A-4CED-B5EE-EEC376071DFB} = {B6A37155-713D-444D-A8F4-C0E5292AA5FF}
 		{6AF2F92E-A4AD-4BAB-8082-3405946C76C7} = {B6A37155-713D-444D-A8F4-C0E5292AA5FF}
 		{826914C2-0BD8-4C8E-807F-95F5853A94D3} = {6AF2F92E-A4AD-4BAB-8082-3405946C76C7}
+		{F95C6BB8-63FE-42A5-9CA8-2D5A6DBF002C} = {6AF2F92E-A4AD-4BAB-8082-3405946C76C7}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {C0A07563-12D9-4913-AD6F-89492A0952A9}

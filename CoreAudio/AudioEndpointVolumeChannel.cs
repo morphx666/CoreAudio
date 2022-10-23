@@ -27,27 +27,27 @@ using CoreAudio.Interfaces;
 namespace CoreAudio {
     public class AudioEndpointVolumeChannel {
         uint _Channel;
-        IAudioEndpointVolume _AudioEndpointVolume;
+        IAudioEndpointVolume audioEndpointVolume;
 
         internal AudioEndpointVolumeChannel(IAudioEndpointVolume parent, int channel) {
             _Channel = (uint)channel;
-            _AudioEndpointVolume = parent;
+            audioEndpointVolume = parent;
         }
 
         public float VolumeLevel {
             get {
-                Marshal.ThrowExceptionForHR(_AudioEndpointVolume.GetChannelVolumeLevel(_Channel, out var result));
+                Marshal.ThrowExceptionForHR(audioEndpointVolume.GetChannelVolumeLevel(_Channel, out var result));
                 return result;
             }
-            set => Marshal.ThrowExceptionForHR(_AudioEndpointVolume.SetChannelVolumeLevel(_Channel, value, Guid.Empty));
+            set => Marshal.ThrowExceptionForHR(audioEndpointVolume.SetChannelVolumeLevel(_Channel, value, Guid.Empty));
         }
 
         public float VolumeLevelScalar {
             get {
-                Marshal.ThrowExceptionForHR(_AudioEndpointVolume.GetChannelVolumeLevelScalar(_Channel, out var result));
+                Marshal.ThrowExceptionForHR(audioEndpointVolume.GetChannelVolumeLevelScalar(_Channel, out var result));
                 return result;
             }
-            set => Marshal.ThrowExceptionForHR(_AudioEndpointVolume.SetChannelVolumeLevelScalar(_Channel, value, Guid.Empty));
+            set => Marshal.ThrowExceptionForHR(audioEndpointVolume.SetChannelVolumeLevelScalar(_Channel, value, Guid.Empty));
         }
 
     }
