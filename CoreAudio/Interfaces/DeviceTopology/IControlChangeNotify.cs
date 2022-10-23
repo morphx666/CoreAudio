@@ -23,12 +23,10 @@
 using System;
 using System.Runtime.InteropServices;
 
-namespace CoreAudio.Interfaces
-{
+namespace CoreAudio.Interfaces {
     [Guid("A09513ED-C709-4d21-BD7B-5F34C47F3947"),
      InterfaceType(ComInterfaceType.InterfaceIsIUnknown)]
-    internal interface IControlChangeNotify
-    {
+    internal interface IControlChangeNotify {
         [PreserveSig]
         int OnNotify(uint dwSenderProcessId, ref Guid pguidEventContext);
     }

@@ -24,13 +24,11 @@
 
 using System;
 
-namespace CoreAudio
-{
+namespace CoreAudio {
     [Flags]
-    public enum ENDPOINT_HARDWARE_SUPPORT : uint
-    {
-        ENDPOINT_HARDWARE_SUPPORT_VOLUME = 0x00000001,
-        ENDPOINT_HARDWARE_SUPPORT_MUTE = 0x00000002,
-        ENDPOINT_HARDWARE_SUPPORT_METER = 0x00000004
+    public enum EndpointHardwareSupport : uint {
+        Volume = 0x00000001,
+        Mute = 0x00000002,
+        Meter = 0x00000004
     }
 }

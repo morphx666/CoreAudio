@@ -23,20 +23,16 @@
 using System.Runtime.InteropServices;
 using CoreAudio.Interfaces;
 
-namespace CoreAudio
-{
-    internal class AudioSessionNotification : IAudioSessionNotification
-    {
+namespace CoreAudio {
+    internal class AudioSessionNotification : IAudioSessionNotification {
         AudioSessionManager2 _Parent;
 
-        internal AudioSessionNotification(AudioSessionManager2 parent)
-        {
+        internal AudioSessionNotification(AudioSessionManager2 parent) {
             _Parent = parent;
         }
 
         [PreserveSig]
-        public int OnSessionCreated(IAudioSessionControl2 NewSession)
-        {
+        public int OnSessionCreated(IAudioSessionControl2 NewSession) {
             _Parent.FireSessionCreated(NewSession);
             return 0;
         }

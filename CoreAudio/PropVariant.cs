@@ -25,11 +25,9 @@ using System.Runtime.InteropServices;
 using System.Runtime.InteropServices.ComTypes;
 using CoreAudio.Interfaces;
 
-namespace CoreAudio
-{
+namespace CoreAudio {
     [StructLayout(LayoutKind.Explicit)]
-    public struct PropVariant
-    {
+    public struct PropVariant {
         [FieldOffset(0)] short vt;
         [FieldOffset(2)] short wReserved1;
         [FieldOffset(4)] short wReserved2;
@@ -52,23 +50,18 @@ namespace CoreAudio
         [FieldOffset(8)] IntPtr everything_else;
 
         //I'm sure there is a more efficient way to do this but this works ..for now..
-        internal byte[] GetBlob()
-        {
+        internal byte[] GetBlob() {
             byte[] Result = new byte[blobVal.Length];
-            for (var i = 0; i < blobVal.Length; i++)
-            {
-                Result[i] = Marshal.ReadByte((IntPtr) ((long)(blobVal.Data) + i));
+            for(var i = 0; i < blobVal.Length; i++) {
+                Result[i] = Marshal.ReadByte((IntPtr)((long)(blobVal.Data) + i));
             }
             return Result;
         }
 
-        public object Value
-        {
-            get
-            {
+        public object Value {
+            get {
                 var ve = (VarEnum)vt;
-                switch (ve)
-                {
+                switch(ve) {
                     case VarEnum.VT_I1:
                         return bVal;
                     case VarEnum.VT_I2:
@@ -89,6 +82,6 @@ namespace CoreAudio
                 return "FIXME Type = " + ve;
             }
         }
-        
-    } 
+
+    }
 }

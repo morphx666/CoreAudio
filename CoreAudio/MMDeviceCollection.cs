@@ -26,46 +26,36 @@ using System.Collections.Generic;
 using System.Runtime.InteropServices;
 using CoreAudio.Interfaces;
 
-namespace CoreAudio
-{
+namespace CoreAudio {
     public class MMDeviceCollection
-        : IEnumerable<MMDevice>
-    {
+        : IEnumerable<MMDevice> {
         readonly IMMDeviceCollection _MMDeviceCollection;
 
-        public int Count
-        {
-            get
-            {
+        public int Count {
+            get {
                 Marshal.ThrowExceptionForHR(_MMDeviceCollection.GetCount(out var result));
                 return (int)result;
             }
         }
 
-        public MMDevice this[int index]
-        {
-            get
-            {
+        public MMDevice this[int index] {
+            get {
                 _MMDeviceCollection.Item((uint)index, out IMMDevice result);
                 return new MMDevice(result);
             }
         }
 
-        internal MMDeviceCollection(IMMDeviceCollection parent)
-        {
+        internal MMDeviceCollection(IMMDeviceCollection parent) {
             _MMDeviceCollection = parent;
         }
 
-        public IEnumerator<MMDevice> GetEnumerator()
-        {
-            for (var index = 0; index < Count; index++)
-            {
+        public IEnumerator<MMDevice> GetEnumerator() {
+            for(var index = 0; index < Count; index++) {
                 yield return this[index];
             }
         }
 
-        IEnumerator IEnumerable.GetEnumerator()
-        {
+        IEnumerator IEnumerable.GetEnumerator() {
             return GetEnumerator();
         }
     }

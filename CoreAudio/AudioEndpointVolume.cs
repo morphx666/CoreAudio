@@ -26,8 +26,7 @@ using CoreAudio.Interfaces;
 
 namespace CoreAudio {
 
-    public class AudioEndpointVolume : IDisposable
-    {
+    public class AudioEndpointVolume : IDisposable {
         IAudioEndpointVolume _AudioEndPointVolume;
         AudioEndpointVolumeChannels _Channels;
         AudioEndpointVolumeStepInformation _StepInformation;
@@ -44,48 +43,39 @@ namespace CoreAudio {
 
         public AudioEndpointVolumeChannels Channels => _Channels;
 
-        public float MasterVolumeLevel
-        {
-            get
-            {
+        public float MasterVolumeLevel {
+            get {
                 Marshal.ThrowExceptionForHR(_AudioEndPointVolume.GetMasterVolumeLevel(out var result));
                 return result;
             }
             set => Marshal.ThrowExceptionForHR(_AudioEndPointVolume.SetMasterVolumeLevel(value, Guid.Empty));
         }
 
-        public float MasterVolumeLevelScalar
-        {
-            get
-            {
+        public float MasterVolumeLevelScalar {
+            get {
                 Marshal.ThrowExceptionForHR(_AudioEndPointVolume.GetMasterVolumeLevelScalar(out var result));
                 return result;
             }
             set => Marshal.ThrowExceptionForHR(_AudioEndPointVolume.SetMasterVolumeLevelScalar(value, Guid.Empty));
         }
 
-        public bool Mute
-        {
-            get
-            {
+        public bool Mute {
+            get {
                 Marshal.ThrowExceptionForHR(_AudioEndPointVolume.GetMute(out var result));
                 return result;
             }
             set => Marshal.ThrowExceptionForHR(_AudioEndPointVolume.SetMute(value, Guid.Empty));
         }
 
-        public void VolumeStepUp()
-        {
+        public void VolumeStepUp() {
             Marshal.ThrowExceptionForHR(_AudioEndPointVolume.VolumeStepUp(Guid.Empty));
         }
 
-        public void VolumeStepDown()
-        {
+        public void VolumeStepDown() {
             Marshal.ThrowExceptionForHR(_AudioEndPointVolume.VolumeStepDown(Guid.Empty));
         }
 
-        internal AudioEndpointVolume(IAudioEndpointVolume realEndpointVolume)
-        {
+        internal AudioEndpointVolume(IAudioEndpointVolume realEndpointVolume) {
             _AudioEndPointVolume = realEndpointVolume;
             _Channels = new AudioEndpointVolumeChannels(_AudioEndPointVolume);
             _StepInformation = new AudioEndpointVolumeStepInformation(_AudioEndPointVolume);
@@ -95,28 +85,24 @@ namespace CoreAudio {
             _CallBack = new AudioEndpointVolumeCallback(this);
             Marshal.ThrowExceptionForHR(_AudioEndPointVolume.RegisterControlChangeNotify(_CallBack));
         }
-        internal void FireNotification(AudioVolumeNotificationData notificationData)
-        {
+        internal void FireNotification(AudioVolumeNotificationData notificationData) {
             OnVolumeNotification?.Invoke(notificationData);
         }
 
         #region IDisposable Members
 
-        public void Dispose()
-        {
-            if (_CallBack != null)
-            {
-                Marshal.ThrowExceptionForHR(_AudioEndPointVolume.UnregisterControlChangeNotify( _CallBack ));
+        public void Dispose() {
+            if(_CallBack != null) {
+                Marshal.ThrowExceptionForHR(_AudioEndPointVolume.UnregisterControlChangeNotify(_CallBack));
                 _CallBack = null;
             }
         }
 
-        ~AudioEndpointVolume()
-        {
+        ~AudioEndpointVolume() {
             Dispose();
         }
 
         #endregion
-       
+
     }
 }

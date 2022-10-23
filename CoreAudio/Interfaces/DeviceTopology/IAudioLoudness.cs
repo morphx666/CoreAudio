@@ -23,12 +23,10 @@
 using System;
 using System.Runtime.InteropServices;
 
-namespace CoreAudio.Interfaces
-{
+namespace CoreAudio.Interfaces {
     [Guid("7D8B1437-DD53-4350-9C1B-1EE2890BD938"),
      InterfaceType(ComInterfaceType.InterfaceIsIUnknown)]
-    internal interface IAudioLoudness
-    {
+    internal interface IAudioLoudness {
         int GetEnabled([Out, MarshalAs(UnmanagedType.Bool)] out bool enabled);
         int SetEnabled([MarshalAs(UnmanagedType.Bool)] bool enabled, out Guid eventContext);
     }

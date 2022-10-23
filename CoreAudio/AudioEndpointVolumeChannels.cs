@@ -23,16 +23,12 @@
 using System.Runtime.InteropServices;
 using CoreAudio.Interfaces;
 
-namespace CoreAudio
-{
-    public class AudioEndpointVolumeChannels
-    {
+namespace CoreAudio {
+    public class AudioEndpointVolumeChannels {
         IAudioEndpointVolume _AudioEndPointVolume;
         AudioEndpointVolumeChannel[] _Channels;
-        public int Count
-        {
-            get
-            {
+        public int Count {
+            get {
                 Marshal.ThrowExceptionForHR(_AudioEndPointVolume.GetChannelCount(out var result));
                 return result;
             }
@@ -40,15 +36,13 @@ namespace CoreAudio
 
         public AudioEndpointVolumeChannel this[int index] => _Channels[index];
 
-        internal AudioEndpointVolumeChannels(IAudioEndpointVolume parent)
-        {
+        internal AudioEndpointVolumeChannels(IAudioEndpointVolume parent) {
             int ChannelCount;
             _AudioEndPointVolume = parent;
 
             ChannelCount = Count;
             _Channels = new AudioEndpointVolumeChannel[ChannelCount];
-            for (var i = 0; i < ChannelCount; i++)
-            {
+            for(var i = 0; i < ChannelCount; i++) {
                 _Channels[i] = new AudioEndpointVolumeChannel(_AudioEndPointVolume, i);
             }
         }

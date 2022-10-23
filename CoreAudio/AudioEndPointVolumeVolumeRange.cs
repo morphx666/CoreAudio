@@ -23,17 +23,14 @@
 using System.Runtime.InteropServices;
 using CoreAudio.Interfaces;
 
-namespace CoreAudio
-{
-    public class AudioEndPointVolumeVolumeRange
-    {
+namespace CoreAudio {
+    public class AudioEndPointVolumeVolumeRange {
         float _VolumeMindB;
         float _VolumeMaxdB;
         float _VolumeIncrementdB;
 
-        internal AudioEndPointVolumeVolumeRange(IAudioEndpointVolume parent)
-        {
-            Marshal.ThrowExceptionForHR(parent.GetVolumeRange(out _VolumeMindB,out _VolumeMaxdB,out _VolumeIncrementdB));
+        internal AudioEndPointVolumeVolumeRange(IAudioEndpointVolume parent) {
+            Marshal.ThrowExceptionForHR(parent.GetVolumeRange(out _VolumeMindB, out _VolumeMaxdB, out _VolumeIncrementdB));
         }
 
         public float MindB => _VolumeMindB;

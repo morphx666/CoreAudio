@@ -25,35 +25,33 @@
 using System;
 using System.Runtime.InteropServices;
 
-namespace CoreAudio.Interfaces
-{
+namespace CoreAudio.Interfaces {
     [Guid("1CB9AD4C-DBFA-4c32-B178-C2F568A703B2"),
     InterfaceType(ComInterfaceType.InterfaceIsIUnknown)]
-    internal interface IAudioClient 
-    {
+    internal interface IAudioClient {
         [PreserveSig]
-        AUDCLNT_RETURNFLAGS Initialize(AUDCLNT_SHAREMODE ShareMode, AUDCLNT_STREAMFLAGS StreamFlags, long hnsBufferDuration, long hnsPeriodicity, WAVEFORMATEX pFormat, Guid AudioSessionGuid);
+        AudioClientReturnFlags Initialize(AudioClientShareMode ShareMode, AudioClientStreamFlags StreamFlags, long hnsBufferDuration, long hnsPeriodicity, WaveFormatEx pFormat, Guid AudioSessionGuid);
         [PreserveSig]
-        AUDCLNT_RETURNFLAGS GetBufferSize(out uint pNumBufferFrames);
+        AudioClientReturnFlags GetBufferSize(out uint pNumBufferFrames);
         [PreserveSig]
-        AUDCLNT_RETURNFLAGS GetStreamLatency(out long phnsLatency);
+        AudioClientReturnFlags GetStreamLatency(out long phnsLatency);
         [PreserveSig]
-        AUDCLNT_RETURNFLAGS GetCurrentPadding(out long pNumPaddingFrames);
+        AudioClientReturnFlags GetCurrentPadding(out long pNumPaddingFrames);
         [PreserveSig]
-        AUDCLNT_RETURNFLAGS IsFormatSupported(AUDCLNT_SHAREMODE ShareMode, WAVEFORMATEX pFormat, out WAVEFORMATEX ppClosestMatch);
+        AudioClientReturnFlags IsFormatSupported(AudioClientShareMode ShareMode, WaveFormatEx pFormat, out WaveFormatEx ppClosestMatch);
         [PreserveSig]
-        AUDCLNT_RETURNFLAGS GetMixFormat(out WAVEFORMATEX ppDeviceFormat);
+        AudioClientReturnFlags GetMixFormat(out WaveFormatEx ppDeviceFormat);
         [PreserveSig]
-        AUDCLNT_RETURNFLAGS GetDevicePeriod(out long phnsDefaultDevicePeriod, out long phnsMinimumDevicePeriod);
+        AudioClientReturnFlags GetDevicePeriod(out long phnsDefaultDevicePeriod, out long phnsMinimumDevicePeriod);
         [PreserveSig]
-        AUDCLNT_RETURNFLAGS Start();
+        AudioClientReturnFlags Start();
         [PreserveSig]
-        AUDCLNT_RETURNFLAGS Stop();
+        AudioClientReturnFlags Stop();
         [PreserveSig]
-        AUDCLNT_RETURNFLAGS Reset();
+        AudioClientReturnFlags Reset();
         [PreserveSig]
-        AUDCLNT_RETURNFLAGS SetEventHandle(IntPtr eventHandle);
+        AudioClientReturnFlags SetEventHandle(IntPtr eventHandle);
         [PreserveSig]
-        AUDCLNT_RETURNFLAGS GetService(ref Guid riid, [Out, MarshalAs(UnmanagedType.IUnknown)] out object ppv);
+        AudioClientReturnFlags GetService(ref Guid riid, [Out, MarshalAs(UnmanagedType.IUnknown)] out object ppv);
     }
 }

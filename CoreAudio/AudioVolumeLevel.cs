@@ -23,8 +23,7 @@
 
 using CoreAudio.Interfaces;
 
-namespace CoreAudio
-{
+namespace CoreAudio {
     public class AudioVolumeLevel : PerChannelDbLevel {
         internal AudioVolumeLevel(IAudioVolumeLevel audioVolumeLevel) : base(audioVolumeLevel) {
         }

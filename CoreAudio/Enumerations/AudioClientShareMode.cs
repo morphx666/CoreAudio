@@ -1,4 +1,4 @@
-/*
+﻿/*
   LICENSE
   -------
   Copyright (C) 2007-2010 Ray Molenkamp
@@ -22,15 +22,13 @@
 
 /* Created by Xavier Flix (2010/11/18) */
 
-using System;
+#if (NET40) 
+using System.Linq;
+#endif
 
-namespace CoreAudio
-{
-    [Flags]
-    public enum AUDCLNT_SESSIONFLAGS : uint
-    {
-        AUDCLNT_SESSIONFLAGS_EXPIREWHENUNOWNED = 0x10000000,
-        AUDCLNT_SESSIONFLAGS_DISPLAY_HIDE = 0x20000000,
-        AUDCLNT_SESSIONFLAGS_DISPLAY_HIDEWHENEXPIRED = 0x40000000
+namespace CoreAudio {
+    public enum AudioClientShareMode {
+        Shared,
+        Exclusive
     }
 }

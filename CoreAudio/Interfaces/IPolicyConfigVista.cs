@@ -3,12 +3,10 @@
 // http://eretik.omegahg.com/download/PolicyConfig.h
 // http://social.microsoft.com/Forums/en-US/Offtopic/thread/9ebd7ad6-a460-4a28-9de9-2af63fd4a13e/
 
-namespace CoreAudio.Interfaces
-{
+namespace CoreAudio.Interfaces {
     [Guid("568b9108-44bf-40b4-9006-86afe5b5a620"),
     InterfaceType(ComInterfaceType.InterfaceIsIUnknown)]
-    internal interface IPolicyConfigVista
-    {
+    internal interface IPolicyConfigVista {
         [PreserveSig]
         int GetMixFormat();
         [PreserveSig]

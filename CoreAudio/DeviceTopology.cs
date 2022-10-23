@@ -23,65 +23,52 @@
 using System.Runtime.InteropServices;
 using CoreAudio.Interfaces;
 
-namespace CoreAudio
-{
-    public class DeviceTopology
-    {
+namespace CoreAudio {
+    public class DeviceTopology {
         IDeviceTopology _DeviceTopology;
 
-        internal DeviceTopology(IDeviceTopology realInterface)
-        {
+        internal DeviceTopology(IDeviceTopology realInterface) {
             _DeviceTopology = realInterface;
-            
+
         }
 
-        public int GetConnectorCount
-        {
-            get
-            {
+        public int GetConnectorCount {
+            get {
                 Marshal.ThrowExceptionForHR(_DeviceTopology.GetConnectorCount(out var count));
                 return count;
             }
         }
 
-        public Connector GetConnector(int index)
-        {
+        public Connector GetConnector(int index) {
             Marshal.ThrowExceptionForHR(_DeviceTopology.GetConnector(index, out IConnector connector));
             return new Connector(connector);
         }
 
-        public int GetSubunitCount
-        {
-            get
-            {
+        public int GetSubunitCount {
+            get {
                 Marshal.ThrowExceptionForHR(_DeviceTopology.GetSubunitCount(out var count));
                 return count;
             }
         }
 
-        public Subunit GetSubunit(int index)
-        {
+        public Subunit GetSubunit(int index) {
             Marshal.ThrowExceptionForHR(_DeviceTopology.GetSubunit(index, out ISubunit subUnit));
             return new Subunit(subUnit);
         }
 
-        public Part GetPartById(int id)
-        {
+        public Part GetPartById(int id) {
             Marshal.ThrowExceptionForHR(_DeviceTopology.GetPartById(id, out IPart part));
             return new Part(part);
         }
 
-        public string GetDeviceId
-        {
-            get
-            {
+        public string GetDeviceId {
+            get {
                 Marshal.ThrowExceptionForHR(_DeviceTopology.GetDeviceId(out string id));
                 return id;
             }
         }
 
-        public PartsList GetSignalPath(Part from, Part to, bool rejectMixedPaths)
-        {
+        public PartsList GetSignalPath(Part from, Part to, bool rejectMixedPaths) {
             Marshal.ThrowExceptionForHR(_DeviceTopology.GetSignalPath((IPart)from, (IPart)to, rejectMixedPaths, out IPartsList partList));
             return new PartsList(partList);
         }

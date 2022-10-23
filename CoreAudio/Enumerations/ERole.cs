@@ -20,13 +20,11 @@
   3. This notice may not be removed or altered from any source distribution.
 */
 
-namespace CoreAudio
-{
-    public enum ERole
-    {
-        eConsole =0,
-        eMultimedia =1,
-        eCommunications=2,
-        ERole_enum_count=3
+namespace CoreAudio {
+    public enum ERole {
+        eConsole = 0,
+        eMultimedia = 1,
+        eCommunications = 2,
+        ERole_enum_count = 3
     }
 }

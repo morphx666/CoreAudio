@@ -20,11 +20,9 @@
   3. This notice may not be removed or altered from any source distribution.
 */
 
-namespace CoreAudio
-{
-    public enum PartType
-    {
+namespace CoreAudio {
+    public enum PartType {
         Connector = 0,
-        Subunit = (Connector + 1) 
+        Subunit = (Connector + 1)
     }
 }

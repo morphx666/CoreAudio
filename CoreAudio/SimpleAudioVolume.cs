@@ -27,39 +27,30 @@ using CoreAudio.Interfaces;
 using System.Linq;
 #endif
 
-namespace CoreAudio
-{
-    public class SimpleAudioVolume
-    {
+namespace CoreAudio {
+    public class SimpleAudioVolume {
         ISimpleAudioVolume _SimpleAudioVolume;
-        internal SimpleAudioVolume(ISimpleAudioVolume realSimpleVolume)
-        {
+        internal SimpleAudioVolume(ISimpleAudioVolume realSimpleVolume) {
             _SimpleAudioVolume = realSimpleVolume;
         }
 
-        public float MasterVolume
-        {
-            get
-            {
+        public float MasterVolume {
+            get {
                 Marshal.ThrowExceptionForHR(_SimpleAudioVolume.GetMasterVolume(out var ret));
                 return ret;
             }
-            set
-            {
+            set {
                 var Empty = Guid.Empty;
                 Marshal.ThrowExceptionForHR(_SimpleAudioVolume.SetMasterVolume(value, ref Empty));
             }
         }
 
-        public bool Mute
-        {
-            get
-            {
+        public bool Mute {
+            get {
                 Marshal.ThrowExceptionForHR(_SimpleAudioVolume.GetMute(out var ret));
                 return ret;
             }
-            set
-            {
+            set {
                 var Empty = Guid.Empty;
                 Marshal.ThrowExceptionForHR(_SimpleAudioVolume.SetMute(value, ref Empty));
             }

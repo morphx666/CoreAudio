@@ -23,16 +23,13 @@
 using System.Runtime.InteropServices;
 using CoreAudio.Interfaces;
 
-namespace CoreAudio
-{
-    public class AudioMeterInformation
-    {
+namespace CoreAudio {
+    public class AudioMeterInformation {
         IAudioMeterInformation _AudioMeterInformation;
         EEndpointHardwareSupport _HardwareSupport;
         AudioMeterInformationChannels _Channels;
 
-        internal AudioMeterInformation(IAudioMeterInformation realInterface)
-        {
+        internal AudioMeterInformation(IAudioMeterInformation realInterface) {
             _AudioMeterInformation = realInterface;
             Marshal.ThrowExceptionForHR(_AudioMeterInformation.QueryHardwareSupport(out var HardwareSupp));
             _HardwareSupport = (EEndpointHardwareSupport)HardwareSupp;
@@ -43,10 +40,8 @@ namespace CoreAudio
 
         public EEndpointHardwareSupport HardwareSupport => _HardwareSupport;
 
-        public float MasterPeakValue
-        {
-            get
-            {
+        public float MasterPeakValue {
+            get {
                 Marshal.ThrowExceptionForHR(_AudioMeterInformation.GetPeakValue(out var result));
                 return result;
             }

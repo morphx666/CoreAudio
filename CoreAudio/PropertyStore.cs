@@ -23,54 +23,42 @@
 using System.Runtime.InteropServices;
 using CoreAudio.Interfaces;
 
-namespace CoreAudio
-{
+namespace CoreAudio {
     /// <summary>
     /// Property Store class, only supports reading properties at the moment.
     /// </summary>
-    public class PropertyStore
-    {
+    public class PropertyStore {
         IPropertyStore _Store;
 
-        public int Count
-        {
-            get
-            {
+        public int Count {
+            get {
                 Marshal.ThrowExceptionForHR(_Store.GetCount(out var result));
                 return result;
             }
         }
 
-        public PropertyStoreProperty this[int index]
-        {
-            get
-            {
+        public PropertyStoreProperty this[int index] {
+            get {
                 var key = Get(index);
                 Marshal.ThrowExceptionForHR(_Store.GetValue(ref key, out var result));
                 return new PropertyStoreProperty(key, result);
             }
         }
 
-        public bool Contains(PropertyKey testKey)
-        {
-            for (var i = 0; i < Count; i++)
-            {
+        public bool Contains(PropertyKey testKey) {
+            for(var i = 0; i < Count; i++) {
                 var key = Get(i);
-                if (key.fmtid == testKey.fmtid && key.pid == testKey.pid)
+                if(key.fmtId == testKey.fmtId && key.pId == testKey.pId)
                     return true;
             }
             return false;
         }
 
-        public PropertyStoreProperty? this[PropertyKey testKey]
-        {
-            get
-            {
-                for (var i = 0; i < Count; i++)
-                {
+        public PropertyStoreProperty? this[PropertyKey testKey] {
+            get {
+                for(var i = 0; i < Count; i++) {
                     var key = Get(i);
-                    if (key.fmtid == testKey.fmtid && key.pid == testKey.pid)
-                    {
+                    if(key.fmtId == testKey.fmtId && key.pId == testKey.pId) {
                         Marshal.ThrowExceptionForHR(_Store.GetValue(ref key, out var result));
                         return new PropertyStoreProperty(key, result);
                     }
@@ -79,21 +67,18 @@ namespace CoreAudio
             }
         }
 
-        public PropertyKey Get(int index)
-        {
+        public PropertyKey Get(int index) {
             Marshal.ThrowExceptionForHR(_Store.GetAt(index, out var key));
             return key;
         }
 
-        public PropVariant GetValue(int index)
-        {
+        public PropVariant GetValue(int index) {
             var key = Get(index);
             Marshal.ThrowExceptionForHR(_Store.GetValue(ref key, out var result));
             return result;
         }
 
-        internal PropertyStore(IPropertyStore store)
-        {
+        internal PropertyStore(IPropertyStore store) {
             _Store = store;
         }
     }

@@ -23,12 +23,10 @@
 using System;
 using System.Runtime.InteropServices;
 
-namespace CoreAudio.Interfaces
-{
+namespace CoreAudio.Interfaces {
     [Guid("AE2DE0E4-5BCA-4F2D-AA46-5D13F8FDB3A9"),
      InterfaceType(ComInterfaceType.InterfaceIsIUnknown)]
-    internal interface IPart
-    {
+    internal interface IPart {
         [PreserveSig]
         int GetName([Out, MarshalAs(UnmanagedType.LPWStr)] out string name);
         [PreserveSig]

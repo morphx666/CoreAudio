@@ -25,42 +25,34 @@ using System.Runtime.InteropServices;
 using System.Threading;
 using CoreAudio.Interfaces;
 
-namespace CoreAudio
-{
-    public class PerChannelDbLevel
-    {
-        public struct LevelRange
-        {
+namespace CoreAudio {
+    public class PerChannelDbLevel {
+        public struct LevelRange {
             public float minLevel;
             public float maxLevel;
             public float stepping;
 
-            public LevelRange(float minLevel, float maxLevel, float stepping)
-            {
+            public LevelRange(float minLevel, float maxLevel, float stepping) {
                 this.minLevel = minLevel;
                 this.maxLevel = maxLevel;
                 this.stepping = stepping;
-            }            
+            }
         }
 
         IPerChannelDbLevel _PerChannelDbLevel;
 
-        internal PerChannelDbLevel(IPerChannelDbLevel perChannelDbLevel)
-        {
+        internal PerChannelDbLevel(IPerChannelDbLevel perChannelDbLevel) {
             _PerChannelDbLevel = perChannelDbLevel;
         }
-        
-        public int GetChannelCount
-        {
-            get
-            {
+
+        public int GetChannelCount {
+            get {
                 Marshal.ThrowExceptionForHR(_PerChannelDbLevel.GetChannelCount(out var count));
                 return (int)count;
             }
         }
 
-        public float GetLevel(int channel)
-        {
+        public float GetLevel(int channel) {
             Thread.Sleep(5);
             float level = 0;
             try {
@@ -71,8 +63,7 @@ namespace CoreAudio
             return level;
         }
 
-        public LevelRange GetLevelRange(int channel)
-        {
+        public LevelRange GetLevelRange(int channel) {
             float minLevel = 0;
             float maxLevel = 0;
             float stepping = 0;
@@ -85,19 +76,17 @@ namespace CoreAudio
             return new LevelRange(minLevel, maxLevel, stepping);
         }
 
-        public void SetLevel(int channel, float level)
-        {
+        public void SetLevel(int channel, float level) {
             Marshal.ThrowExceptionForHR(_PerChannelDbLevel.SetLevel((uint)channel, level, out var eventContext));
         }
 
-        public void SetLevelUniform(float level)
-        {
+        public void SetLevelUniform(float level) {
             Thread.Sleep(5);
             try {
                 Marshal.ThrowExceptionForHR(_PerChannelDbLevel.SetLevelUniform(level, out var eventContext));
             } catch(Exception) {
                 Thread.Sleep(100);
-            } 
+            }
         }
     }
 }

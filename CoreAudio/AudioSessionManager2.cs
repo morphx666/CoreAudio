@@ -27,10 +27,8 @@ using CoreAudio.Interfaces;
 using System.Linq;
 #endif
 
-namespace CoreAudio
-{
-    public class AudioSessionManager2 : IDisposable
-    {
+namespace CoreAudio {
+    public class AudioSessionManager2 : IDisposable {
         readonly IAudioSessionManager2 _AudioSessionManager2;
         SessionCollection? _Sessions;
 
@@ -38,20 +36,17 @@ namespace CoreAudio
         public event SessionCreatedDelegate? OnSessionCreated;
 
         AudioSessionNotification? _AudioSessionNotification;
-        
-        internal AudioSessionManager2(IAudioSessionManager2 realAudioSessionManager2)
-        {
+
+        internal AudioSessionManager2(IAudioSessionManager2 realAudioSessionManager2) {
             _AudioSessionManager2 = realAudioSessionManager2;
             RefreshSessions();
         }
 
-        internal void FireSessionCreated(IAudioSessionControl2 newSession)
-        {
+        internal void FireSessionCreated(IAudioSessionControl2 newSession) {
             OnSessionCreated?.Invoke(this, newSession);
         }
 
-        public void RefreshSessions()
-        {
+        public void RefreshSessions() {
             UnregisterNotifications();
 
             Marshal.ThrowExceptionForHR(_AudioSessionManager2.GetSessionEnumerator(out IAudioSessionEnumerator sessionEnum));
@@ -63,25 +58,21 @@ namespace CoreAudio
 
         public SessionCollection? Sessions => _Sessions;
 
-        void UnregisterNotifications()
-        {
+        void UnregisterNotifications() {
             _Sessions = null;
 
-            if(_AudioSessionNotification != null)
-            {
+            if(_AudioSessionNotification != null) {
                 try {
                     Marshal.ThrowExceptionForHR(_AudioSessionManager2.UnregisterSessionNotification(_AudioSessionNotification));
                 } catch { }
             }
         }
 
-        public void Dispose()
-        {
+        public void Dispose() {
             UnregisterNotifications();
         }
 
-        ~AudioSessionManager2()
-        {
+        ~AudioSessionManager2() {
             Dispose();
         }
     }

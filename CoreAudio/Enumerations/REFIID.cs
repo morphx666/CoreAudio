@@ -28,29 +28,27 @@ using CoreAudio.Interfaces;
 using System.Linq;
 #endif
 
-namespace CoreAudio
-{
-    public class IIDs
-    {
-        public static Guid IID_IAudioCaptureClient = typeof(IAudioCaptureClient).GUID;
-        //public static Guid IID_IAudioClock
-        //public static Guid IID_IAudioRenderClient
-        //public static Guid IID_IAudioSessionControl
-        //public static Guid IID_IAudioStreamVolume
-        //public static Guid IID_IChannelAudioVolume
-        //public static Guid IID_IMFTrustedOutput
+namespace CoreAudio {
+    public class RefIId {
+        public static Guid IIdIAudioCaptureClient = typeof(IAudioCaptureClient).GUID;
+        //public static Guid IIdIAudioClock
+        //public static Guid IIdIAudioRenderClient
+        //public static Guid IIdIAudioSessionControl
+        //public static Guid IIdIAudioStreamVolume
+        //public static Guid IIdIChannelAudioVolume
+        //public static Guid IIdIMFTrustedOutput
 
-        public static Guid IID_ISimpleAudioVolume = typeof(ISimpleAudioVolume).GUID;
-        public static Guid IID_IAudioVolumeLevel = typeof(IAudioVolumeLevel).GUID;
-        public static Guid IID_IAudioMute = typeof(IAudioMute).GUID;
-        public static Guid IID_IAudioPeakMeter = typeof(IAudioPeakMeter).GUID;
-        public static Guid IID_IAudioLoudness = typeof(IAudioLoudness).GUID;
+        public static Guid IIdISimpleAudioVolume = typeof(ISimpleAudioVolume).GUID;
+        public static Guid IIdIAudioVolumeLevel = typeof(IAudioVolumeLevel).GUID;
+        public static Guid IIdIAudioMute = typeof(IAudioMute).GUID;
+        public static Guid IIdIAudioPeakMeter = typeof(IAudioPeakMeter).GUID;
+        public static Guid IIdIAudioLoudness = typeof(IAudioLoudness).GUID;
 
-        public static Guid IID_IAudioMeterInformation = typeof(IAudioMeterInformation).GUID;
-        public static Guid IID_IAudioEndpointVolume = typeof(IAudioEndpointVolume).GUID;
-        public static Guid IID_IAudioSessionManager2 = typeof(IAudioSessionManager2).GUID;
-        public static Guid IID_IDeviceTopology = typeof(IDeviceTopology).GUID;
+        public static Guid IIdIAudioMeterInformation = typeof(IAudioMeterInformation).GUID;
+        public static Guid IIdIAudioEndpointVolume = typeof(IAudioEndpointVolume).GUID;
+        public static Guid IIdIAudioSessionManager2 = typeof(IAudioSessionManager2).GUID;
+        public static Guid IIdIDeviceTopology = typeof(IDeviceTopology).GUID;
 
-        public static Guid IID_IPart = typeof(IPart).GUID;
+        public static Guid IIdIPart = typeof(IPart).GUID;
     }
 }

@@ -22,12 +22,10 @@
 
 using System.Runtime.InteropServices;
 
-namespace CoreAudio.Interfaces
-{
+namespace CoreAudio.Interfaces {
     [Guid("9c2c4058-23f5-41de-877a-df3af236a09e"),
      InterfaceType(ComInterfaceType.InterfaceIsIUnknown)]
-    internal interface IConnector
-    {
+    internal interface IConnector {
         [PreserveSig]
         int GetType(out ConnectorType type);
         [PreserveSig]

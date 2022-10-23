@@ -21,15 +21,12 @@
 */
 
 
-namespace CoreAudio
-{
-    public class PropertyStoreProperty
-    {
+namespace CoreAudio {
+    public class PropertyStoreProperty {
         PropertyKey _PropertyKey;
         PropVariant _PropValue;
 
-        internal PropertyStoreProperty(PropertyKey key, PropVariant value)
-        {
+        internal PropertyStoreProperty(PropertyKey key, PropVariant value) {
             _PropertyKey = key;
             _PropValue = value;
         }

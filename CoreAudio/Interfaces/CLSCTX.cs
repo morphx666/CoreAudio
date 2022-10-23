@@ -22,11 +22,9 @@
 
 using System;
 
-namespace CoreAudio.Interfaces
-{
+namespace CoreAudio.Interfaces {
     [Flags]
-    internal enum CLSCTX : uint
-    {
+    internal enum CLSCTX : uint {
         INPROC_SERVER = 0x1,
         INPROC_HANDLER = 0x2,
         LOCAL_SERVER = 0x4,

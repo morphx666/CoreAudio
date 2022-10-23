@@ -23,12 +23,10 @@
 using System;
 using System.Runtime.InteropServices;
 
-namespace CoreAudio.Interfaces
-{
+namespace CoreAudio.Interfaces {
     [Guid("DF45AEEA-B74A-4B6B-AFAD-2366B6AA012E"),
      InterfaceType(ComInterfaceType.InterfaceIsIUnknown)]
-    internal interface IAudioMute
-    {
+    internal interface IAudioMute {
         int SetMute([MarshalAs(UnmanagedType.Bool)] bool muted, out Guid eventContext);
         int GetMute([Out, MarshalAs(UnmanagedType.Bool)] out bool muted);
     }

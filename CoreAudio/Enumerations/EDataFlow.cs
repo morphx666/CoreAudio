@@ -20,13 +20,11 @@
   3. This notice may not be removed or altered from any source distribution.
 */
 
-namespace CoreAudio
-{
-    public enum EDataFlow
-    {
+namespace CoreAudio {
+    public enum EDataFlow {
         eRender = 0,
         eCapture = 1,
-        eAll = 2 ,
-        EDataFlow_enum_count =3
+        eAll = 2,
+        EDataFlow_enum_count = 3
     }
 }

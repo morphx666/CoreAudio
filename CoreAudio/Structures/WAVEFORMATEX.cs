@@ -22,17 +22,15 @@
 
 using System.Runtime.InteropServices;
 
-namespace CoreAudio.Interfaces
-{
+namespace CoreAudio.Interfaces {
     [StructLayout(LayoutKind.Sequential)]
-    internal struct WAVEFORMATEX
-    {
-        ushort wFormatTag;		// format type
-        ushort nChannels;		// number of channels (i.e. mono, stereo...)
-        uint nSamplesPerSec;	// sample rate
-        uint nAvgBytesPerSec;	// for buffer estimation
-        ushort nBlockAlign;	    // block size of data
-        ushort wBitsPerSample;	// number of bits per sample of mono data
-        ushort cbSize;			// the count in bytes of
+    internal struct WaveFormatEx {
+        ushort FormatTag;		// format type
+        ushort Channels;		// number of channels (i.e. mono, stereo...)
+        uint SamplesPerSec;     // sample rate
+        uint AvgBytesPerSec;	// for buffer estimation
+        ushort BlockAlign;	    // block size of data
+        ushort BitsPerSample;	// number of bits per sample of mono data
+        ushort Size;			// the count in bytes of
     }
 }

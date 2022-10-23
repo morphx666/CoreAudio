@@ -22,10 +22,8 @@
 
 using System;
 
-namespace CoreAudio
-{
-    public class AudioVolumeNotificationData
-    {
+namespace CoreAudio {
+    public class AudioVolumeNotificationData {
         Guid _EventContext;
         bool _Muted;
         float _MasterVolume;
@@ -42,8 +40,7 @@ namespace CoreAudio
 
         public float[] ChannelVolume => _ChannelVolume;
 
-        public AudioVolumeNotificationData(Guid eventContext, bool muted, float masterVolume, float[] channelVolume)
-        {
+        public AudioVolumeNotificationData(Guid eventContext, bool muted, float masterVolume, float[] channelVolume) {
             _EventContext = eventContext;
             _Muted = muted;
             _MasterVolume = masterVolume;

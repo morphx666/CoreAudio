@@ -23,12 +23,10 @@
 using System;
 using System.Runtime.InteropServices;
 
-namespace CoreAudio.Interfaces
-{
+namespace CoreAudio.Interfaces {
     [Guid("5CDF2C82-841E-4546-9722-0CF74078229A"),
      InterfaceType(ComInterfaceType.InterfaceIsIUnknown)]
-    internal interface IAudioEndpointVolume
-    {
+    internal interface IAudioEndpointVolume {
         [PreserveSig]
         int RegisterControlChangeNotify(IAudioEndpointVolumeCallback pNotify);
         [PreserveSig]

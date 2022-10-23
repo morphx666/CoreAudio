@@ -22,16 +22,13 @@
 
 using CoreAudio.Interfaces;
 
-namespace CoreAudio
-{
-    public class Subunit
-    {
+namespace CoreAudio {
+    public class Subunit {
         ISubunit _Subunit;
 
-        internal Subunit(ISubunit subunit)
-        {
+        internal Subunit(ISubunit subunit) {
             _Subunit = subunit;
-            
+
         }
     }
 }

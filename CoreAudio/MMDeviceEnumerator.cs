@@ -24,39 +24,32 @@ using System;
 using System.Runtime.InteropServices;
 using CoreAudio.Interfaces;
 
-namespace CoreAudio
-{
+namespace CoreAudio {
     //Marked as internal, since on its own its no good
     [ComImport, Guid("BCDE0395-E52F-467C-8E3D-C4579291692E")]
-    internal class _MMDeviceEnumerator
-    {
+    internal class _MMDeviceEnumerator {
     }
 
     //Small wrapper class
-    public class MMDeviceEnumerator 
-    {
+    public class MMDeviceEnumerator {
         IMMDeviceEnumerator _realEnumerator = (IMMDeviceEnumerator)new _MMDeviceEnumerator();
 
-        public MMDeviceCollection EnumerateAudioEndPoints(EDataFlow dataFlow, DeviceState dwStateMask)
-        {
+        public MMDeviceCollection EnumerateAudioEndPoints(EDataFlow dataFlow, DeviceState dwStateMask) {
             Marshal.ThrowExceptionForHR(_realEnumerator.EnumAudioEndpoints(dataFlow, dwStateMask, out var result));
             return new MMDeviceCollection(result);
         }
 
-        public MMDevice GetDefaultAudioEndpoint(EDataFlow dataFlow, ERole role)
-        {
+        public MMDevice GetDefaultAudioEndpoint(EDataFlow dataFlow, ERole role) {
             Marshal.ThrowExceptionForHR(_realEnumerator.GetDefaultAudioEndpoint(dataFlow, role, out var device));
             return new MMDevice(device);
         }
 
-        public void SetDefaultAudioEndpoint(MMDevice device)
-        {
+        public void SetDefaultAudioEndpoint(MMDevice device) {
             //Marshal.ThrowExceptionForHR(((IMMDeviceEnumerator)_realEnumerator).SetDefaultAudioEndpoint(device.ReadDevice));
             device.Selected = true;
         }
 
-        public MMDevice GetDevice(string ID)
-        {
+        public MMDevice GetDevice(string ID) {
             Marshal.ThrowExceptionForHR(_realEnumerator.GetDevice(ID, out var device));
             return new MMDevice(device);
         }
@@ -73,10 +66,8 @@ namespace CoreAudio
             return result;
         }
 
-        public MMDeviceEnumerator()
-        {
-            if (Environment.OSVersion.Version.Major < 6)
-            {
+        public MMDeviceEnumerator() {
+            if(Environment.OSVersion.Version.Major < 6) {
                 throw new NotSupportedException("This functionality is only supported on Windows Vista or newer.");
             }
         }

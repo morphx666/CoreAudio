@@ -23,14 +23,11 @@
 using System.Runtime.InteropServices;
 using CoreAudio.Interfaces;
 
-namespace CoreAudio
-{
-    public class AudioEndpointVolumeStepInformation
-    {
+namespace CoreAudio {
+    public class AudioEndpointVolumeStepInformation {
         uint _Step;
         uint _StepCount;
-        internal AudioEndpointVolumeStepInformation(IAudioEndpointVolume parent)
-        {
+        internal AudioEndpointVolumeStepInformation(IAudioEndpointVolume parent) {
             Marshal.ThrowExceptionForHR(parent.GetVolumeStepInfo(out _Step, out _StepCount));
         }
 

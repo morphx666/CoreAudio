@@ -22,12 +22,10 @@
 
 using System.Runtime.InteropServices;
 
-namespace CoreAudio.Interfaces
-{
+namespace CoreAudio.Interfaces {
     [Guid("6DAA848C-5EB0-45CC-AEA5-998A2CDA1FFB"),
      InterfaceType(ComInterfaceType.InterfaceIsIUnknown)]
-    internal interface IPartsList
-    {
+    internal interface IPartsList {
         [PreserveSig]
         int GetCount(out int count);
         [PreserveSig]

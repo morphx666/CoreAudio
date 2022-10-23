@@ -22,38 +22,30 @@
 
 using System;
 
-namespace CoreAudio
-{
-    public struct PropertyKey
-    {
-        public Guid fmtid;
-        public int pid;
+namespace CoreAudio {
+    public struct PropertyKey {
+        public Guid fmtId;
+        public int pId;
 
-        public PropertyKey(Guid fmtid, int pid)
-        {
-            this.fmtid = fmtid;
-            this.pid = pid;
+        public PropertyKey(Guid fmtId, int pId) {
+            this.fmtId = fmtId;
+            this.pId = pId;
         }
 
-        public static bool operator ==(PropertyKey pk1, PropertyKey pk2)
-        {
-            return (pk1.fmtid == pk2.fmtid) && (pk1.pid == pk2.pid);
+        public static bool operator ==(PropertyKey pk1, PropertyKey pk2) {
+            return (pk1.fmtId == pk2.fmtId) && (pk1.pId == pk2.pId);
         }
 
-        public static bool operator !=(PropertyKey pk1, PropertyKey pk2)
-        {
+        public static bool operator !=(PropertyKey pk1, PropertyKey pk2) {
             return !(pk1 == pk2);
         }
 
-        public override bool Equals(object obj)
-        {
+        public override bool Equals(object obj) {
             return base.Equals(obj);
         }
 
-        public override int GetHashCode()
-        {
+        public override int GetHashCode() {
             return base.GetHashCode();
         }
-    } 
-
+    }
 }

@@ -24,12 +24,10 @@
 
 using System.Runtime.InteropServices;
 
-namespace CoreAudio.Interfaces
-{
+namespace CoreAudio.Interfaces {
     [Guid("7991EEC9-7E89-4D85-8390-6C703CEC60C0"),
     InterfaceType(ComInterfaceType.InterfaceIsIUnknown)]
-    internal interface IMMNotificationClient
-    {
+    internal interface IMMNotificationClient {
         [PreserveSig]
         void OnDeviceStateChanged([In, MarshalAs(UnmanagedType.LPWStr)] string pwstrDeviceId, DeviceState dwNewState);
         [PreserveSig]
@@ -40,5 +38,5 @@ namespace CoreAudio.Interfaces
         void OnDefaultDeviceChanged(EDataFlow flow, ERole role, [In, MarshalAs(UnmanagedType.LPWStr)] string pwstrDeviceId);
         [PreserveSig]
         void OnPropertyValueChanged([In, MarshalAs(UnmanagedType.LPWStr)] string pwstrDeviceId, PropertyKey key);
-    } 
+    }
 }

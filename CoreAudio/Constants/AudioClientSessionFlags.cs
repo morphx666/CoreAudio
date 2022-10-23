@@ -24,15 +24,11 @@
 
 using System;
 
-namespace CoreAudio
-{
+namespace CoreAudio {
     [Flags]
-    public enum AUDCLNT_STREAMFLAGS : uint
-    {
-        AUDCLNT_STREAMFLAGS_CROSSPROCESS = 0x00010000,
-        AUDCLNT_STREAMFLAGS_LOOPBACK = 0x00020000,
-        AUDCLNT_STREAMFLAGS_EVENTCALLBACK = 0x00040000,
-        AUDCLNT_STREAMFLAGS_NOPERSIST = 0x00080000,
-        AUDCLNT_STREAMFLAGS_RATEADJUST = 0x00100000
+    public enum AudioClientSessionFlags : uint {
+        ExpireWhenUnowned = 0x10000000,
+        DisplayHide = 0x20000000,
+        DisplayHideWhenExpired = 0x40000000
     }
 }

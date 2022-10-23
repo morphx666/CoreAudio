@@ -24,17 +24,15 @@
 
 using System.Runtime.InteropServices;
 
-namespace CoreAudio.Interfaces
-{
+namespace CoreAudio.Interfaces {
     [Guid("C8ADBD64-E71E-48a0-A4DE-185C395CD317"),
     InterfaceType(ComInterfaceType.InterfaceIsIUnknown)]
-    internal interface IAudioCaptureClient
-    {
+    internal interface IAudioCaptureClient {
         [PreserveSig]
-        AUDCLNT_RETURNFLAGS GetBuffer(out byte[] ppData, out _AUDCLNT_BUFFERFLAGS pNumFramesToRead, ulong pu64DevicePosition, ulong pu64QPCPosition);
+        AudioClientReturnFlags GetBuffer(out byte[] ppData, out AudioClientBufferFlags pNumFramesToRead, ulong pu64DevicePosition, ulong pu64QPCPosition);
         [PreserveSig]
-        AUDCLNT_RETURNFLAGS ReleaseBuffer(uint NumFramesRead);
+        AudioClientReturnFlags ReleaseBuffer(uint NumFramesRead);
         [PreserveSig]
-        AUDCLNT_RETURNFLAGS GetNextPacketSize(out uint pNumFramesInNextPacket);
+        AudioClientReturnFlags GetNextPacketSize(out uint pNumFramesInNextPacket);
     }
 }

@@ -26,11 +26,10 @@
 using System.Linq;
 #endif
 
-namespace CoreAudio
-{
-    public enum AUDCLNT_SHAREMODE
-    {
-        AUDCLNT_SHAREMODE_SHARED,
-        AUDCLNT_SHAREMODE_EXCLUSIVE
+namespace CoreAudio {
+    public enum AudioClientBufferFlags {
+        DataDiscontinuity = 0x1,
+        Silent = 0x2,
+        TimestampError = 0x4
     }
 }

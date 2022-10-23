@@ -22,12 +22,10 @@
 
 using System.Runtime.InteropServices;
 
-namespace CoreAudio.Interfaces
-{
+namespace CoreAudio.Interfaces {
     [Guid("82149A85-DBA6-4487-86BB-EA8F7FEFCC71"),
      InterfaceType(ComInterfaceType.InterfaceIsIUnknown)]
-    internal interface ISubunit
-    {
-        
+    internal interface ISubunit {
+
     }
 }

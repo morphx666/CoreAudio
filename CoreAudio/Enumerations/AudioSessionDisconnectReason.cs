@@ -23,15 +23,13 @@
 using System.Linq;
 #endif
 
-namespace CoreAudio
-{
-    public enum AudioSessionDisconnectReason
-    {
+namespace CoreAudio {
+    public enum AudioSessionDisconnectReason {
         DisconnectReasonDeviceRemoval = 0,
         DisconnectReasonServerShutdown = (DisconnectReasonDeviceRemoval + 1),
         DisconnectReasonFormatChanged = (DisconnectReasonServerShutdown + 1),
         DisconnectReasonSessionLogoff = (DisconnectReasonFormatChanged + 1),
         DisconnectReasonSessionDisconnected = (DisconnectReasonSessionLogoff + 1),
-        DisconnectReasonExclusiveModeOverride = (DisconnectReasonSessionDisconnected + 1) 
+        DisconnectReasonExclusiveModeOverride = (DisconnectReasonSessionDisconnected + 1)
     }
 }

@@ -23,25 +23,23 @@
 using System;
 using System.Runtime.InteropServices;
 
-namespace CoreAudio.Interfaces
-{
+namespace CoreAudio.Interfaces {
     [Guid("24918ACC-64B3-37C1-8CA9-74A66E9957A8"),
     InterfaceType(ComInterfaceType.InterfaceIsIUnknown)]
-    public interface IAudioSessionEvents
-    {
-        [PreserveSig] 
+    public interface IAudioSessionEvents {
+        [PreserveSig]
         int OnDisplayNameChanged([MarshalAs(UnmanagedType.LPWStr)] string NewDisplayName, ref Guid EventContext);
         [PreserveSig]
         int OnIconPathChanged([MarshalAs(UnmanagedType.LPWStr)] string NewIconPath, ref Guid EventContext);
         [PreserveSig]
-        int OnSimpleVolumeChanged(float NewVolume, bool newMute, ref  Guid EventContext);
+        int OnSimpleVolumeChanged(float NewVolume, bool newMute, ref Guid EventContext);
         [PreserveSig]
         int OnChannelVolumeChanged(uint ChannelCount, IntPtr NewChannelVolumeArray, uint ChangedChannel, ref Guid EventContext);
         [PreserveSig]
         int OnGroupingParamChanged(ref Guid NewGroupingParam, ref Guid EventContext);
-        [PreserveSig] 
+        [PreserveSig]
         int OnStateChanged(AudioSessionState NewState);
-        [PreserveSig] 
+        [PreserveSig]
         int OnSessionDisconnected(AudioSessionDisconnectReason DisconnectReason);
     }
 }

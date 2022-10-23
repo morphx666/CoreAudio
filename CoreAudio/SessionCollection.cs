@@ -26,46 +26,36 @@ using System.Collections.Generic;
 using System.Runtime.InteropServices;
 using CoreAudio.Interfaces;
 
-namespace CoreAudio
-{
+namespace CoreAudio {
     public class SessionCollection
-        : IEnumerable<AudioSessionControl2>
-    {
+        : IEnumerable<AudioSessionControl2> {
         readonly IAudioSessionEnumerator _AudioSessionEnumerator;
 
-        internal SessionCollection(IAudioSessionEnumerator realEnumerator)
-        {
+        internal SessionCollection(IAudioSessionEnumerator realEnumerator) {
             _AudioSessionEnumerator = realEnumerator;
         }
 
-        public AudioSessionControl2 this[int index]
-        {
-            get
-            {
+        public AudioSessionControl2 this[int index] {
+            get {
                 Marshal.ThrowExceptionForHR(_AudioSessionEnumerator.GetSession(index, out IAudioSessionControl2 _Result));
                 return new AudioSessionControl2(_Result);
             }
         }
 
-        public int Count
-        {
-            get
-            {
+        public int Count {
+            get {
                 Marshal.ThrowExceptionForHR(_AudioSessionEnumerator.GetCount(out var result));
                 return result;
             }
         }
 
-        public IEnumerator<AudioSessionControl2> GetEnumerator()
-        {
-            for (var index = 0; index < Count; index++)
-            {
+        public IEnumerator<AudioSessionControl2> GetEnumerator() {
+            for(var index = 0; index < Count; index++) {
                 yield return this[index];
             }
         }
 
-        IEnumerator IEnumerable.GetEnumerator()
-        {
+        IEnumerator IEnumerable.GetEnumerator() {
             return GetEnumerator();
         }
     }

@@ -23,18 +23,16 @@
 using System;
 using System.Runtime.InteropServices;
 
-namespace CoreAudio.Interfaces
-{
+namespace CoreAudio.Interfaces {
     [Guid("C2F8E001-F205-4BC9-99BC-C13B1E048CCB"),
      InterfaceType(ComInterfaceType.InterfaceIsIUnknown)]
-    internal interface IPerChannelDbLevel
-    {
+    internal interface IPerChannelDbLevel {
         [PreserveSig]
         int GetChannelCount(out uint count);
         [PreserveSig]
         int GetLevelRange(uint channel, out float minLevel, out float maxLevel, out float stepping);
         [PreserveSig]
-        int GetLevel(uint channel, out float level);        
+        int GetLevel(uint channel, out float level);
         [PreserveSig]
         int SetLevel(uint channel, float level, out Guid eventContext);
         [PreserveSig]

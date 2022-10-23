@@ -23,12 +23,10 @@
 using System;
 using System.Runtime.InteropServices;
 
-namespace CoreAudio.Interfaces
-{
+namespace CoreAudio.Interfaces {
     [Guid("BFB7FF88-7239-4FC9-8FA2-07C950BE9C6D"),
      InterfaceType(ComInterfaceType.InterfaceIsIUnknown)]
-    public interface IAudioSessionControl2
-    {
+    public interface IAudioSessionControl2 {
         [PreserveSig]
         int GetState(out AudioSessionState state);
         [PreserveSig]

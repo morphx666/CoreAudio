@@ -26,8 +26,7 @@ using System.Runtime.InteropServices;
 namespace CoreAudio.Interfaces {
     [Guid("BFA971F1-4D5E-40BB-935E-967039BFBEE4"),
     InterfaceType(ComInterfaceType.InterfaceIsIUnknown)]
-    internal interface IAudioSessionManager
-    {
+    internal interface IAudioSessionManager {
         [PreserveSig]
         int GetAudioSessionControl(ref Guid AudioSessionGuid, uint StreamFlags, out IAudioSessionControl ISessionControl);
         [PreserveSig]

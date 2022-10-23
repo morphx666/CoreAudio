@@ -1,4 +1,4 @@
-﻿/*
+/*
   LICENSE
   -------
   Copyright (C) 2007-2010 Ray Molenkamp
@@ -22,16 +22,15 @@
 
 /* Created by Xavier Flix (2010/11/18) */
 
-#if (NET40) 
-using System.Linq;
-#endif
+using System;
 
-namespace CoreAudio
-{
-    public enum _AUDCLNT_BUFFERFLAGS
-    {
-        AUDCLNT_BUFFERFLAGS_DATA_DISCONTINUITY = 0x1,
-        AUDCLNT_BUFFERFLAGS_SILENT = 0x2,
-        AUDCLNT_BUFFERFLAGS_TIMESTAMP_ERROR = 0x4
+namespace CoreAudio {
+    [Flags]
+    public enum AudioClientStreamFlags : uint {
+        CrossProcess = 0x00010000,
+        Loopback = 0x00020000,
+        EventCallback = 0x00040000,
+        NoPersist = 0x00080000,
+        RateAdjust = 0x00100000
     }
 }

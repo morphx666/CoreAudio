@@ -24,10 +24,8 @@ using System;
 using System.Runtime.InteropServices;
 using CoreAudio.Interfaces;
 
-namespace CoreAudio
-{
-    public class MMDevice : IDisposable
-    {
+namespace CoreAudio {
+    public class MMDevice : IDisposable {
         #region Variables
 
         readonly IMMDevice _RealDevice;
@@ -41,33 +39,28 @@ namespace CoreAudio
 
         #region Init
 
-        void GetPropertyInformation()
-        {
+        void GetPropertyInformation() {
             Marshal.ThrowExceptionForHR(_RealDevice.OpenPropertyStore(EStgmAccess.STGM_READ, out IPropertyStore propertyStore));
             _PropertyStore = new PropertyStore(propertyStore);
         }
 
-        void GetAudioSessionManager2()
-        {
-            Marshal.ThrowExceptionForHR(_RealDevice.Activate(ref IIDs.IID_IAudioSessionManager2, CLSCTX.ALL, IntPtr.Zero, out var result));
+        void GetAudioSessionManager2() {
+            Marshal.ThrowExceptionForHR(_RealDevice.Activate(ref RefIId.IIdIAudioSessionManager2, CLSCTX.ALL, IntPtr.Zero, out var result));
             _AudioSessionManager2 = new AudioSessionManager2((IAudioSessionManager2)result);
         }
 
-        void GetAudioMeterInformation()
-        {
-            Marshal.ThrowExceptionForHR(_RealDevice.Activate(ref IIDs.IID_IAudioMeterInformation, CLSCTX.ALL, IntPtr.Zero, out var result));
+        void GetAudioMeterInformation() {
+            Marshal.ThrowExceptionForHR(_RealDevice.Activate(ref RefIId.IIdIAudioMeterInformation, CLSCTX.ALL, IntPtr.Zero, out var result));
             _AudioMeterInformation = new AudioMeterInformation((IAudioMeterInformation)result);
         }
 
-        void GetAudioEndpointVolume()
-        {
-            Marshal.ThrowExceptionForHR(_RealDevice.Activate(ref IIDs.IID_IAudioEndpointVolume, CLSCTX.ALL, IntPtr.Zero, out var result));
+        void GetAudioEndpointVolume() {
+            Marshal.ThrowExceptionForHR(_RealDevice.Activate(ref RefIId.IIdIAudioEndpointVolume, CLSCTX.ALL, IntPtr.Zero, out var result));
             _AudioEndpointVolume = new AudioEndpointVolume((IAudioEndpointVolume)result);
         }
 
-        void GetDeviceTopology()
-        {
-            Marshal.ThrowExceptionForHR(_RealDevice.Activate(ref IIDs.IID_IDeviceTopology, CLSCTX.ALL, IntPtr.Zero, out var result));
+        void GetDeviceTopology() {
+            Marshal.ThrowExceptionForHR(_RealDevice.Activate(ref RefIId.IIdIDeviceTopology, CLSCTX.ALL, IntPtr.Zero, out var result));
             _DeviceTopology = new DeviceTopology((IDeviceTopology)result);
         }
 
@@ -84,47 +77,37 @@ namespace CoreAudio
 
         #region Properties
 
-        public AudioSessionManager2? AudioSessionManager2
-        {
-            get
-            {
-                if (_AudioSessionManager2 == null) GetAudioSessionManager2();
+        public AudioSessionManager2? AudioSessionManager2 {
+            get {
+                if(_AudioSessionManager2 == null) GetAudioSessionManager2();
                 return _AudioSessionManager2;
             }
         }
 
-        public AudioMeterInformation? AudioMeterInformation
-        {
-            get
-            {
-                if (_AudioMeterInformation == null) GetAudioMeterInformation();
+        public AudioMeterInformation? AudioMeterInformation {
+            get {
+                if(_AudioMeterInformation == null) GetAudioMeterInformation();
                 return _AudioMeterInformation;
             }
         }
 
-        public AudioEndpointVolume? AudioEndpointVolume
-        {
-            get
-            {
-                if (_AudioEndpointVolume == null) GetAudioEndpointVolume();
+        public AudioEndpointVolume? AudioEndpointVolume {
+            get {
+                if(_AudioEndpointVolume == null) GetAudioEndpointVolume();
                 return _AudioEndpointVolume;
             }
         }
 
-        public PropertyStore? Properties
-        {
-            get
-            {
-                if (_PropertyStore == null) GetPropertyInformation();
+        public PropertyStore? Properties {
+            get {
+                if(_PropertyStore == null) GetPropertyInformation();
                 return _PropertyStore;
             }
         }
 
-        public DeviceTopology? DeviceTopology
-        {
-            get
-            {
-                if (_DeviceTopology == null) GetDeviceTopology();
+        public DeviceTopology? DeviceTopology {
+            get {
+                if(_DeviceTopology == null) GetDeviceTopology();
                 return _DeviceTopology;
             }
         }
@@ -136,69 +119,56 @@ namespace CoreAudio
             }
         }
 
-        public string DeviceInterfaceFriendlyName
-        {
-            get
-            {
-                if (_PropertyStore == null) 
+        public string DeviceInterfaceFriendlyName {
+            get {
+                if(_PropertyStore == null)
                     GetPropertyInformation();
-                if (_PropertyStore?.Contains(PKEY.PKEY_DeviceInterface_FriendlyName) ?? false) {
-                    return (string?)_PropertyStore?[PKEY.PKEY_DeviceInterface_FriendlyName]?.Value ?? "";
+                if(_PropertyStore?.Contains(PKey.DeviceInterfaceFriendlyName) ?? false) {
+                    return (string?)_PropertyStore?[PKey.DeviceInterfaceFriendlyName]?.Value ?? "";
                 }
 
                 return "Unknown";
             }
         }
 
-        public string DeviceFriendlyName
-        {
-            get
-            {
-                if (_PropertyStore == null)
+        public string DeviceFriendlyName {
+            get {
+                if(_PropertyStore == null)
                     GetPropertyInformation();
-                if (_PropertyStore?.Contains(PKEY.PKEY_Device_FriendlyName) ?? false)
-                {
-                    return (string?)_PropertyStore?[PKEY.PKEY_Device_FriendlyName]?.Value ?? "";
+                if(_PropertyStore?.Contains(PKey.DeviceFriendlyName) ?? false) {
+                    return (string?)_PropertyStore?[PKey.DeviceFriendlyName]?.Value ?? "";
                 }
 
                 return "Unknown";
             }
         }
 
-        public string IconPath
-        {
-            get
-            {
-                if (_PropertyStore == null) GetPropertyInformation();
-                if (_PropertyStore?.Contains(PKEY.PKEY_DeviceClass_IconPath) ?? false)
-                    return (string?)_PropertyStore[PKEY.PKEY_DeviceClass_IconPath]?.Value ?? "";
+        public string IconPath {
+            get {
+                if(_PropertyStore == null) GetPropertyInformation();
+                if(_PropertyStore?.Contains(PKey.DeviceClassIconPath) ?? false)
+                    return (string?)_PropertyStore[PKey.DeviceClassIconPath]?.Value ?? "";
                 return "";
             }
         }
 
-        public string ID
-        {
-            get
-            {
+        public string ID {
+            get {
                 Marshal.ThrowExceptionForHR(_RealDevice.GetId(out string result));
                 return result;
             }
         }
 
-        public EDataFlow DataFlow
-        {
-            get
-            {
+        public EDataFlow DataFlow {
+            get {
                 var ep = (IMMEndpoint)_RealDevice;
                 ep.GetDataFlow(out var result);
                 return result;
             }
         }
 
-        public DeviceState State
-        {
-            get
-            {
+        public DeviceState State {
+            get {
                 Marshal.ThrowExceptionForHR(_RealDevice.GetState(out var result));
                 return result;
 
@@ -207,13 +177,10 @@ namespace CoreAudio
 
         internal IMMDevice ReadDevice => _RealDevice;
 
-        public bool Selected
-        {
+        public bool Selected {
             get => new MMDeviceEnumerator().GetDefaultAudioEndpoint(DataFlow, ERole.eMultimedia).ID == ID;
-            set
-            {
-                if (value)
-                {
+            set {
+                if(value) {
                     new CPolicyConfigVistaClient().SetDefaultDevice(ID);
                 }
             }
@@ -222,8 +189,7 @@ namespace CoreAudio
         #endregion
 
         #region Constructor
-        internal MMDevice(IMMDevice realDevice)
-        {
+        internal MMDevice(IMMDevice realDevice) {
             _RealDevice = realDevice;
         }
         #endregion

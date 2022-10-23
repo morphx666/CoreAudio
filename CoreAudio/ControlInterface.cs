@@ -24,30 +24,23 @@ using System;
 using System.Runtime.InteropServices;
 using CoreAudio.Interfaces;
 
-namespace CoreAudio
-{
-    public class ControlInterface
-    {
+namespace CoreAudio {
+    public class ControlInterface {
         IControlInterface _ControlInterface;
 
-        internal ControlInterface(IControlInterface controlInterface)
-        {
+        internal ControlInterface(IControlInterface controlInterface) {
             _ControlInterface = controlInterface;
         }
 
-        public string GetName
-        {
-            get
-            {
+        public string GetName {
+            get {
                 Marshal.ThrowExceptionForHR(_ControlInterface.GetName(out string name));
                 return name;
             }
         }
 
-        public Guid GetId
-        {
-            get
-            {
+        public Guid GetId {
+            get {
                 Marshal.ThrowExceptionForHR(_ControlInterface.GetID(out var id));
                 return id;
             }

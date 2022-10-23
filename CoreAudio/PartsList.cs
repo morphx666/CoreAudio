@@ -24,32 +24,25 @@ using System.Collections.Generic;
 using System.Runtime.InteropServices;
 using CoreAudio.Interfaces;
 
-namespace CoreAudio
-{
-    public class PartsList
-    {
+namespace CoreAudio {
+    public class PartsList {
         IPartsList _PartsList;
         Dictionary<int, Part> partsCache;
 
-        internal PartsList(IPartsList partsList)
-        {
+        internal PartsList(IPartsList partsList) {
             _PartsList = partsList;
             partsCache = new Dictionary<int, Part>();
         }
 
-        public int GetCount
-        {
-            get
-            {
+        public int GetCount {
+            get {
                 Marshal.ThrowExceptionForHR(_PartsList.GetCount(out var count));
                 return count;
             }
         }
 
-        public Part GetPart(int index)
-        {
-            if (partsCache.ContainsKey(index))
-            {
+        public Part GetPart(int index) {
+            if(partsCache.ContainsKey(index)) {
                 return partsCache[index];
             }
 

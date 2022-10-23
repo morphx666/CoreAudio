@@ -24,33 +24,26 @@ using System;
 using System.Runtime.InteropServices;
 using CoreAudio.Interfaces;
 
-namespace CoreAudio
-{
-    public class AudioEndpointVolumeChannel
-    {
+namespace CoreAudio {
+    public class AudioEndpointVolumeChannel {
         uint _Channel;
         IAudioEndpointVolume _AudioEndpointVolume;
 
-        internal AudioEndpointVolumeChannel(IAudioEndpointVolume parent, int channel)
-        {
+        internal AudioEndpointVolumeChannel(IAudioEndpointVolume parent, int channel) {
             _Channel = (uint)channel;
             _AudioEndpointVolume = parent;
         }
 
-        public float VolumeLevel
-        {
-            get
-            {
+        public float VolumeLevel {
+            get {
                 Marshal.ThrowExceptionForHR(_AudioEndpointVolume.GetChannelVolumeLevel(_Channel, out var result));
                 return result;
             }
-            set => Marshal.ThrowExceptionForHR(_AudioEndpointVolume.SetChannelVolumeLevel(_Channel, value,Guid.Empty));
+            set => Marshal.ThrowExceptionForHR(_AudioEndpointVolume.SetChannelVolumeLevel(_Channel, value, Guid.Empty));
         }
 
-        public float VolumeLevelScalar
-        {
-            get
-            {
+        public float VolumeLevelScalar {
+            get {
                 Marshal.ThrowExceptionForHR(_AudioEndpointVolume.GetChannelVolumeLevelScalar(_Channel, out var result));
                 return result;
             }

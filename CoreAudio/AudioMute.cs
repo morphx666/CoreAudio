@@ -23,21 +23,16 @@
 using System.Runtime.InteropServices;
 using CoreAudio.Interfaces;
 
-namespace CoreAudio
-{
-    public class AudioMute
-    {
+namespace CoreAudio {
+    public class AudioMute {
         IAudioMute _AudioMute;
 
-        internal AudioMute(IAudioMute audioMute)
-        {
+        internal AudioMute(IAudioMute audioMute) {
             _AudioMute = audioMute;
         }
 
-        public bool Mute
-        {
-            get
-            {
+        public bool Mute {
+            get {
                 Marshal.ThrowExceptionForHR(_AudioMute.GetMute(out var muted));
                 return muted;
             }

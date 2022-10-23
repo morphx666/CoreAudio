@@ -22,12 +22,10 @@
 
 using System;
 
-namespace CoreAudio.Interfaces
-{
-    internal struct Blob
-    {
-         public int Length;
-         public IntPtr Data;
+namespace CoreAudio.Interfaces {
+    internal struct Blob {
+        public int Length;
+        public IntPtr Data;
 
         //Code Should Compile at warning level4 without any warnings, 
         //However this struct will give us Warning CS0649: Field [Fieldname] 
@@ -36,8 +34,7 @@ namespace CoreAudio.Interfaces
         //the warning for the whole project, it's a nice warning and we do want 
         //it in other places so we make a nice dummy function to keep the compiler
         //happy.
-        void FixCS0649()
-        {
+        void FixCS0649() {
             Length = 0;
             Data = IntPtr.Zero;
         }

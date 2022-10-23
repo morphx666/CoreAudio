@@ -23,21 +23,16 @@
 using System.Runtime.InteropServices;
 using CoreAudio.Interfaces;
 
-namespace CoreAudio
-{
-    public class AudioLoudness
-    {
+namespace CoreAudio {
+    public class AudioLoudness {
         IAudioLoudness _AudioLoudness;
 
-        internal AudioLoudness(IAudioLoudness audioLoudness)
-        {
+        internal AudioLoudness(IAudioLoudness audioLoudness) {
             _AudioLoudness = audioLoudness;
         }
 
-        public bool Enabled
-        {
-            get
-            {
+        public bool Enabled {
+            get {
                 Marshal.ThrowExceptionForHR(_AudioLoudness.GetEnabled(out var enabled));
                 return enabled;
             }

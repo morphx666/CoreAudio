@@ -10,7 +10,7 @@ namespace CoreAudioForms.Framework.Sessions {
 
             public RenderDevice(MMDevice device) {
                 Device = device;
-                Name = $"{device.Properties[PKEY.PKEY_Device_DeviceDesc].Value} ({device.DeviceInterfaceFriendlyName})";
+                Name = $"{device.Properties[PKey.DeviceDescription].Value} ({device.DeviceInterfaceFriendlyName})";
             }
 
             public override string ToString() {
