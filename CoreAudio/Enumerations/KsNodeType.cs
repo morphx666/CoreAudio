@@ -25,7 +25,7 @@
 using System;
 
 namespace CoreAudio {
-    public class Ks123NodeType {
+    public class KsNodeType {
         public static Guid InputUndefined = new("DFF21BE0-F70F-11D0-B917-00A0C9223196");
         public static Guid Microphone = new("DFF21BE1-F70F-11D0-B917-00A0C9223196");
         public static Guid DesktopMicrophone = new("DFF21BE2-F70F-11D0-B917-00A0C9223196");

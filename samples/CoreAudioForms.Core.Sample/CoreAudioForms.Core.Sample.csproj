@@ -4,8 +4,8 @@
         <OutputType>WinExe</OutputType>
         <TargetFramework>netcoreapp3.1</TargetFramework>
         <UseWindowsForms>true</UseWindowsForms>
-        <AssemblyVersion>2022.11.3.172</AssemblyVersion>
-        <FileVersion>2022.11.3.172</FileVersion>
+        <AssemblyVersion>2022.11.3.173</AssemblyVersion>
+        <FileVersion>2022.11.3.173</FileVersion>
     </PropertyGroup>
 
     <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">

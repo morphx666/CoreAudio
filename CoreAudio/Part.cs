@@ -135,7 +135,7 @@ namespace CoreAudio {
             get {
                 string result;
 
-                result = FindSubTypeIn(SubType, typeof(Ks123NodeType));
+                result = FindSubTypeIn(SubType, typeof(KsNodeType));
                 if(result != "") return result;
 
                 result = FindSubTypeIn(SubType, typeof(KsCategory));

@@ -123,7 +123,7 @@ namespace CoreAudioConsole.Framework.Discover.Tester {
             if(part.PartType == PartType.Connector) tabLevel += 1;
 
             switch(part.SubType) {
-                case Guid r when r == Ks123NodeType.Volume: {
+                case Guid r when r == KsNodeType.Volume: {
                         AudioVolumeLevel audioVolumeLevel = part.AudioVolumeLevel;
                         if(audioVolumeLevel != null) {
                             for(int i = 0; i < audioVolumeLevel.ChannelCount; i++) {
@@ -135,19 +135,19 @@ namespace CoreAudioConsole.Framework.Discover.Tester {
                         break;
                     }
 
-                case Guid r when r == Ks123NodeType.Speaker: {
+                case Guid r when r == KsNodeType.Speaker: {
                         sb.AppendLine($"{tabs}Incoming Parts:");
                         break;
                     }
 
-                case Guid r when r == Ks123NodeType.Mute: {
+                case Guid r when r == KsNodeType.Mute: {
                         AudioMute audioMute = part.AudioMute;
                         if(audioMute != null)
                             sb.AppendLine($"{tabs}\t{(!audioMute.Mute ? "Not " : "")}Muted");
                         break;
                     }
 
-                case Guid r when r == Ks123NodeType.PeakMeter: {
+                case Guid r when r == KsNodeType.PeakMeter: {
                         AudioPeakMeter audioPeakMeter = part.AudioPeakMeter;
                         if(audioPeakMeter != null) {
                             int num = checked(audioPeakMeter.ChannelCount - 1);
@@ -160,7 +160,7 @@ namespace CoreAudioConsole.Framework.Discover.Tester {
                         break;
                     }
 
-                case Guid r when r == Ks123NodeType.Loudness: {
+                case Guid r when r == KsNodeType.Loudness: {
                         var al = part.AudioLoudness;
                         if(al != null)
                             sb.AppendLine($"{tabs}\t{(!al.Enabled ? "Not " : "")} Enabled");
