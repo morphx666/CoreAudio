@@ -23,9 +23,6 @@
 using System;
 using System.Runtime.InteropServices;
 using CoreAudio.Interfaces;
-#if (NET40) 
-using System.Linq;
-#endif
 
 namespace CoreAudio {
     public class AudioSessionManager2 : IDisposable {

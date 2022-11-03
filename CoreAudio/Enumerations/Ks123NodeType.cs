@@ -23,12 +23,9 @@
 /* Created by Xavier Flix (2010/11/18) */
 
 using System;
-#if (NET40) 
-using System.Linq;
-#endif
 
 namespace CoreAudio {
-    public class KsNodeType {
+    public class Ks123NodeType {
         public static Guid InputUndefined = new("DFF21BE0-F70F-11D0-B917-00A0C9223196");
         public static Guid Microphone = new("DFF21BE1-F70F-11D0-B917-00A0C9223196");
         public static Guid DesktopMicrophone = new("DFF21BE2-F70F-11D0-B917-00A0C9223196");

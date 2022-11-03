@@ -19,9 +19,6 @@
      misrepresented as being the original source code.
   3. This notice may not be removed or altered from any source distribution.
 */
-#if (NET40) 
-using System.Linq;
-#endif
 
 namespace CoreAudio {
     public enum AudioSessionState {

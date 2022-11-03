@@ -18,8 +18,8 @@ namespace CoreAudioConsole.Framework.Discover.Tester {
         private System.Threading.Timer timer;
         private int tabLevel;
 
-        private List<Part> lines;
-        private List<Part> ctrls;
+        private readonly List<Part> lines;
+        private readonly List<Part> ctrls;
 
         private bool isFirstTime;
 
@@ -52,7 +52,7 @@ namespace CoreAudioConsole.Framework.Discover.Tester {
         }
 
         private void SafeEnum() {
-            Invoke(new DoSafeEnum(() => EnumDevices(DataFlow.eAll)));
+            Invoke(new DoSafeEnum(() => EnumDevices(DataFlow.All)));
         }
 
         private void EnumDevices(DataFlow flow) {
@@ -123,7 +123,7 @@ namespace CoreAudioConsole.Framework.Discover.Tester {
             if(part.PartType == PartType.Connector) tabLevel += 1;
 
             switch(part.SubType) {
-                case Guid r when r == KsNodeType.Volume: {
+                case Guid r when r == Ks123NodeType.Volume: {
                         AudioVolumeLevel audioVolumeLevel = part.AudioVolumeLevel;
                         if(audioVolumeLevel != null) {
                             for(int i = 0; i < audioVolumeLevel.ChannelCount; i++) {
@@ -135,19 +135,19 @@ namespace CoreAudioConsole.Framework.Discover.Tester {
                         break;
                     }
 
-                case Guid r when r == KsNodeType.Speaker: {
+                case Guid r when r == Ks123NodeType.Speaker: {
                         sb.AppendLine($"{tabs}Incoming Parts:");
                         break;
                     }
 
-                case Guid r when r == KsNodeType.Mute: {
+                case Guid r when r == Ks123NodeType.Mute: {
                         AudioMute audioMute = part.AudioMute;
                         if(audioMute != null)
                             sb.AppendLine($"{tabs}\t{(!audioMute.Mute ? "Not " : "")}Muted");
                         break;
                     }
 
-                case Guid r when r == KsNodeType.PeakMeter: {
+                case Guid r when r == Ks123NodeType.PeakMeter: {
                         AudioPeakMeter audioPeakMeter = part.AudioPeakMeter;
                         if(audioPeakMeter != null) {
                             int num = checked(audioPeakMeter.ChannelCount - 1);
@@ -160,7 +160,7 @@ namespace CoreAudioConsole.Framework.Discover.Tester {
                         break;
                     }
 
-                case Guid r when r == KsNodeType.Loudness: {
+                case Guid r when r == Ks123NodeType.Loudness: {
                         var al = part.AudioLoudness;
                         if(al != null)
                             sb.AppendLine($"{tabs}\t{(!al.Enabled ? "Not " : "")} Enabled");

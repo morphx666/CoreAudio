@@ -6,7 +6,7 @@ namespace CoreAudioConsole.Framework.Sample {
     class Program {
         static void Main(string[] args) {
             MMDeviceEnumerator DevEnum = new MMDeviceEnumerator();
-            MMDevice device = DevEnum.GetDefaultAudioEndpoint(DataFlow.eRender, Role.Multimedia);
+            MMDevice device = DevEnum.GetDefaultAudioEndpoint(DataFlow.Render, Role.Multimedia);
             // Note the AudioSession manager did not have a method to enumerate all sessions in windows Vista
             // this will only work on Win7 and newer.
 

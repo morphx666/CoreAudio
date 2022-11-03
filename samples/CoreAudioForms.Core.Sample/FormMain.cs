@@ -15,7 +15,7 @@ namespace CoreAudioForms.Core.Sample {
             InitializeComponent();
 
             MMDeviceEnumerator devEnum = new MMDeviceEnumerator();
-            device = devEnum.GetDefaultAudioEndpoint(DataFlow.eRender, Role.Multimedia);
+            device = devEnum.GetDefaultAudioEndpoint(DataFlow.Render, Role.Multimedia);
             device.AudioEndpointVolume.OnVolumeNotification += (AudioVolumeNotificationData data) =>
                 this.Invoke((MethodInvoker)delegate { TrackBarMaster.Value = (int)(data.MasterVolume * 100); });
 

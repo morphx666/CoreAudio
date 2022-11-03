@@ -29,7 +29,7 @@ namespace CoreAudioForms.Framework.Sessions {
             ComboBoxDevices.SelectedIndexChanged += (_, __) => EnumerateSessions();
 
             MMDeviceEnumerator deviceEnumerator = new MMDeviceEnumerator();
-            MMDeviceCollection devCol = deviceEnumerator.EnumerateAudioEndPoints(DataFlow.eRender, DeviceState.Active);
+            MMDeviceCollection devCol = deviceEnumerator.EnumerateAudioEndPoints(DataFlow.Render, DeviceState.Active);
             int selectedIndex = 0;
             for(int i = 0; i < devCol.Count; i++) {
                 RenderDevice rdev = new RenderDevice(devCol[i]);

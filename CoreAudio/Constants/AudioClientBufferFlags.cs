@@ -22,10 +22,6 @@
 
 /* Created by Xavier Flix (2010/11/18) */
 
-#if (NET40) 
-using System.Linq;
-#endif
-
 namespace CoreAudio {
     public enum AudioClientBufferFlags {
         DataDiscontinuity = 0x1,

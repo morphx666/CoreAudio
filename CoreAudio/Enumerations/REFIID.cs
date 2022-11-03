@@ -24,9 +24,6 @@
 
 using System;
 using CoreAudio.Interfaces;
-#if (NET40) 
-using System.Linq;
-#endif
 
 namespace CoreAudio {
     public class RefIId {

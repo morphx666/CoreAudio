@@ -22,9 +22,6 @@
 
 using System;
 using System.Runtime.InteropServices;
-#if (NET40) 
-using System.Linq;
-#endif
 
 namespace CoreAudio.Interfaces {
     [Guid("77AA99A0-1BD6-484F-8BC7-2C654C9A9B6F"),
