@@ -52,11 +52,11 @@ namespace CoreAudio {
             OnPartNotification?.Invoke(this);
         }
 
-        private AudioVolumeLevel GetAudioVolumeLevel() {
+        private AudioVolumeLevel? GetAudioVolumeLevel() {
             return audioVolumeLevel;
         }
 
-        void GetAudioVolumeLevel(AudioVolumeLevel audioVolumeLevel) {
+        void GetAudioVolumeLevel(AudioVolumeLevel? audioVolumeLevel) {
             part.Activate(CLSCTX.ALL, ref RefIId.IIdIAudioVolumeLevel, out var result);
             if(result is IAudioVolumeLevel level) {
                 audioVolumeLevel = new AudioVolumeLevel(level);

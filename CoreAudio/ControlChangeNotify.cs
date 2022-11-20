@@ -27,11 +27,11 @@ using CoreAudio.Interfaces;
 
 namespace CoreAudio {
     internal class ControlChangeNotify : IControlChangeNotify, IDisposable {
-        Part parent;
+        readonly Part parent;
         GCHandle rcwHandle;
 
         internal ControlChangeNotify(Part parent) {
-            parent = parent;
+            this.parent = parent;
             rcwHandle = GCHandle.Alloc(this, GCHandleType.Normal);
         }
 

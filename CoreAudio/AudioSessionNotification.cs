@@ -25,10 +25,10 @@ using CoreAudio.Interfaces;
 
 namespace CoreAudio {
     internal class AudioSessionNotification : IAudioSessionNotification {
-        AudioSessionManager2 parent;
+        readonly AudioSessionManager2 parent;
 
         internal AudioSessionNotification(AudioSessionManager2 parent) {
-            parent = parent;
+            this.parent = parent;
         }
 
         [PreserveSig]
