@@ -34,7 +34,7 @@ namespace CoreAudio {
         AudioEndpointVolume parent;
 
         internal AudioEndpointVolumeCallback(AudioEndpointVolume parent) {
-            parent = parent;
+            this.parent = parent;
         }
 
         [PreserveSig]
