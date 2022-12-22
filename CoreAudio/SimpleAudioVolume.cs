@@ -27,8 +27,10 @@ using CoreAudio.Interfaces;
 namespace CoreAudio {
     public class SimpleAudioVolume {
         ISimpleAudioVolume simpleAudioVolume;
-        internal SimpleAudioVolume(ISimpleAudioVolume realSimpleVolume) {
+        private Guid eventContext;
+        internal SimpleAudioVolume(ISimpleAudioVolume realSimpleVolume, Guid eventContext) {
             simpleAudioVolume = realSimpleVolume;
+            this.eventContext = eventContext;
         }
 
         public float MasterVolume {
@@ -37,8 +39,7 @@ namespace CoreAudio {
                 return ret;
             }
             set {
-                var Empty = Guid.Empty;
-                Marshal.ThrowExceptionForHR(simpleAudioVolume.SetMasterVolume(value, ref Empty));
+                Marshal.ThrowExceptionForHR(simpleAudioVolume.SetMasterVolume(value, ref eventContext));
             }
         }
 
@@ -48,9 +49,9 @@ namespace CoreAudio {
                 return ret;
             }
             set {
-                var Empty = Guid.Empty;
-                Marshal.ThrowExceptionForHR(simpleAudioVolume.SetMute(value, ref Empty));
+                Marshal.ThrowExceptionForHR(simpleAudioVolume.SetMute(value, ref eventContext));
             }
         }
+        
     }
 }

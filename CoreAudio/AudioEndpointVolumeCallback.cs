@@ -46,6 +46,8 @@ namespace CoreAudio {
             //remaining floats are read from memory.
             //
             var data = Marshal.PtrToStructure<Interfaces.AudioVolumeNotificationData>(NotifyData);
+            if (data.GuidEventContext == parent.eventContext)
+                return 0; //S_OK
 
             //Determine offset in structure of the first float
             var Offset = Marshal.OffsetOf<Interfaces.AudioVolumeNotificationData>("ChannelVolume");

@@ -8,7 +8,7 @@
     <OutputType>Exe</OutputType>
     <RootNamespace>CoreAudioConsole.Framework.Sample</RootNamespace>
     <AssemblyName>CoreAudioConsole.Framework.Sample</AssemblyName>
-    <TargetFrameworkVersion>v4.7.2</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v4.8.1</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
     <Deterministic>true</Deterministic>
@@ -51,7 +51,7 @@
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\..\CoreAudio\CoreAudio.csproj">
-      <Project>{8A45AD26-C5CE-4288-BB9E-6D6807966760}</Project>
+      <Project>{8a45ad26-c5ce-4288-bb9e-6d6807966760}</Project>
       <Name>CoreAudio</Name>
     </ProjectReference>
   </ItemGroup>

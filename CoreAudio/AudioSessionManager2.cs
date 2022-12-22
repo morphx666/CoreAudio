@@ -31,11 +31,13 @@ namespace CoreAudio {
 
         public delegate void SessionCreatedDelegate(object sender, IAudioSessionControl2 newSession);
         public event SessionCreatedDelegate? OnSessionCreated;
+        public readonly Guid eventContext;
 
         AudioSessionNotification? _AudioSessionNotification;
 
-        internal AudioSessionManager2(IAudioSessionManager2 realAudioSessionManager2) {
+        internal AudioSessionManager2(IAudioSessionManager2 realAudioSessionManager2, Guid eventContext) {
             audioSessionManager2 = realAudioSessionManager2;
+            this.eventContext = eventContext;
             RefreshSessions();
         }
 
@@ -47,7 +49,7 @@ namespace CoreAudio {
             UnregisterNotifications();
 
             Marshal.ThrowExceptionForHR(audioSessionManager2.GetSessionEnumerator(out IAudioSessionEnumerator sessionEnum));
-            sessions = new SessionCollection(sessionEnum);
+            sessions = new SessionCollection(sessionEnum, eventContext);
 
             _AudioSessionNotification = new AudioSessionNotification(this);
             Marshal.ThrowExceptionForHR(audioSessionManager2.RegisterSessionNotification(_AudioSessionNotification));

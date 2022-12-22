@@ -57,7 +57,7 @@ namespace CoreAudioConsole.Framework.Discover.Tester {
 
         private void EnumDevices(DataFlow flow) {
             TextBoxOutput.Text = "";
-            MMDeviceCollection deviceCollection = new MMDeviceEnumerator().EnumerateAudioEndPoints(flow, DeviceState.Active);
+            MMDeviceCollection deviceCollection = new MMDeviceEnumerator(Guid.NewGuid()).EnumerateAudioEndPoints(flow, DeviceState.Active);
             StringBuilder sb = new StringBuilder($"{DateTime.Now}{nl}{nl}");
             for(int i = 0; i < deviceCollection.Count; i++) {
                 MMDevice dev = deviceCollection[i];

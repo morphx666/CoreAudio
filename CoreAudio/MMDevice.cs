@@ -34,7 +34,7 @@ namespace CoreAudio {
         AudioEndpointVolume? audioEndPointVolume;
         AudioSessionManager2? audioSessionManager2;
         DeviceTopology? deviceTopology;
-
+        private Guid eventContext;
         #endregion
 
         #region Init
@@ -46,7 +46,7 @@ namespace CoreAudio {
 
         void GetAudioSessionManager2() {
             Marshal.ThrowExceptionForHR(realDevice.Activate(ref RefIId.IIdIAudioSessionManager2, CLSCTX.ALL, IntPtr.Zero, out var result));
-            audioSessionManager2 = new AudioSessionManager2((IAudioSessionManager2)result);
+            audioSessionManager2 = new AudioSessionManager2((IAudioSessionManager2)result, eventContext);
         }
 
         void GetAudioMeterInformation() {
@@ -56,7 +56,7 @@ namespace CoreAudio {
 
         void GetAudioEndpointVolume() {
             Marshal.ThrowExceptionForHR(realDevice.Activate(ref RefIId.IIdIAudioEndpointVolume, CLSCTX.ALL, IntPtr.Zero, out var result));
-            audioEndPointVolume = new AudioEndpointVolume((IAudioEndpointVolume)result);
+            audioEndPointVolume = new AudioEndpointVolume((IAudioEndpointVolume)result, eventContext);
         }
 
         void GetDeviceTopology() {
@@ -178,7 +178,7 @@ namespace CoreAudio {
         internal IMMDevice ReadDevice => realDevice;
 
         public bool Selected {
-            get => new MMDeviceEnumerator().GetDefaultAudioEndpoint(DataFlow, Role.Multimedia).ID == ID;
+            get => new MMDeviceEnumerator(eventContext).GetDefaultAudioEndpoint(DataFlow, Role.Multimedia).ID == ID;
             set {
                 if(value) {
                     new CPolicyConfigVistaClient().SetDefaultDevice(ID);
@@ -189,8 +189,9 @@ namespace CoreAudio {
         #endregion
 
         #region Constructor
-        internal MMDevice(IMMDevice realDevice) {
+        internal MMDevice(IMMDevice realDevice, Guid eventContext) {
             this.realDevice = realDevice;
+            this.eventContext = eventContext;
         }
         #endregion
     }

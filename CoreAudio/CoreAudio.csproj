@@ -1,7 +1,6 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
     <PropertyGroup>
-        <TargetFramework>netstandard2.0</TargetFramework>
         <AssemblyVersion>2022.11.3.109</AssemblyVersion>
         <FileVersion>2022.11.3.109</FileVersion>
         <LangVersion>9</LangVersion>
@@ -12,6 +11,15 @@
         <PackageProjectUrl>https://github.com/morphx666/CoreAudio</PackageProjectUrl>
         <RepositoryUrl>https://github.com/morphx666/CoreAudio</RepositoryUrl>
         <PackageIcon>coreaudio.png</PackageIcon>
+        <TargetFrameworks>net481;netstandard2.0;netstandard2.1</TargetFrameworks>
+    </PropertyGroup>
+
+    <PropertyGroup Condition=" '$(Configuration)' == 'Debug' ">
+      <Prefer32bit>false</Prefer32bit>
+    </PropertyGroup>
+
+    <PropertyGroup Condition=" '$(Configuration)' == 'Release' ">
+      <Prefer32bit>false</Prefer32bit>
     </PropertyGroup>
     <ItemGroup>
         <None Include="coreaudio.png" Pack="true" PackagePath="" />

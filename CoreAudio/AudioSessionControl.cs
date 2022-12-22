@@ -71,7 +71,7 @@ namespace CoreAudio {
             if(realAudioSessionControl is IAudioMeterInformation _meters)
                 _AudioMeterInformation = new AudioMeterInformation(_meters);
             if(realAudioSessionControl is ISimpleAudioVolume _volume)
-                _SimpleAudioVolume = new SimpleAudioVolume(_volume);
+                _SimpleAudioVolume = new SimpleAudioVolume(_volume, Guid.Empty);
             _AudioSessionControl = realAudioSessionControl;
 
             audioSessionEvents = new AudioSessionEvents(this);

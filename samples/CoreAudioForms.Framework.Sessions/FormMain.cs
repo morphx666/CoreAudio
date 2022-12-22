@@ -1,4 +1,5 @@
-﻿using CoreAudio;
+﻿using System;
+using CoreAudio;
 using CoreAudio.Interfaces;
 using System.Diagnostics;
 using System.Windows.Forms;
@@ -24,11 +25,9 @@ namespace CoreAudioForms.Framework.Sessions {
         public FormMain() {
             InitializeComponent();
 
-            MMDeviceEnumerator devEnum = new MMDeviceEnumerator();
-
             ComboBoxDevices.SelectedIndexChanged += (_, __) => EnumerateSessions();
 
-            MMDeviceEnumerator deviceEnumerator = new MMDeviceEnumerator();
+            MMDeviceEnumerator deviceEnumerator = new MMDeviceEnumerator(Guid.NewGuid());
             MMDeviceCollection devCol = deviceEnumerator.EnumerateAudioEndPoints(DataFlow.Render, DeviceState.Active);
             int selectedIndex = 0;
             for(int i = 0; i < devCol.Count; i++) {

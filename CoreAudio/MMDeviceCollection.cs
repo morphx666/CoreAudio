@@ -21,6 +21,7 @@
 */
 /* Updated by John de Jong (2020/04/02) */
 
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Runtime.InteropServices;
@@ -30,7 +31,7 @@ namespace CoreAudio {
     public class MMDeviceCollection
         : IEnumerable<MMDevice> {
         readonly IMMDeviceCollection mMDeviceCollection;
-
+        public readonly Guid eventContext;
         public int Count {
             get {
                 Marshal.ThrowExceptionForHR(mMDeviceCollection.GetCount(out var result));
@@ -41,12 +42,13 @@ namespace CoreAudio {
         public MMDevice this[int index] {
             get {
                 mMDeviceCollection.Item((uint)index, out IMMDevice result);
-                return new MMDevice(result);
+                return new MMDevice(result, eventContext);
             }
         }
 
-        internal MMDeviceCollection(IMMDeviceCollection parent) {
+        internal MMDeviceCollection(IMMDeviceCollection parent, Guid eventContext) {
             mMDeviceCollection = parent;
+            this.eventContext = eventContext;
         }
 
         public IEnumerator<MMDevice> GetEnumerator() {
