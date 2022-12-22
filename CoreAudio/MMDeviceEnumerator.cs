@@ -33,15 +33,16 @@ namespace CoreAudio {
     //Small wrapper class
     public class MMDeviceEnumerator {
         IMMDeviceEnumerator _realEnumerator;
+        public readonly Guid eventContext;
 
         public MMDeviceCollection EnumerateAudioEndPoints(DataFlow dataFlow, DeviceState dwStateMask) {
             Marshal.ThrowExceptionForHR(_realEnumerator.EnumAudioEndpoints(dataFlow, dwStateMask, out var result));
-            return new MMDeviceCollection(result);
+            return new MMDeviceCollection(result, eventContext);
         }
 
         public MMDevice GetDefaultAudioEndpoint(DataFlow dataFlow, Role role) {
             Marshal.ThrowExceptionForHR(_realEnumerator.GetDefaultAudioEndpoint(dataFlow, role, out var device));
-            return new MMDevice(device);
+            return new MMDevice(device, eventContext);
         }
 
         public void SetDefaultAudioEndpoint(MMDevice device) {
@@ -51,7 +52,7 @@ namespace CoreAudio {
 
         public MMDevice GetDevice(string ID) {
             Marshal.ThrowExceptionForHR(_realEnumerator.GetDevice(ID, out var device));
-            return new MMDevice(device);
+            return new MMDevice(device, eventContext);
         }
 
         internal int RegisterEndpointNotificationCallback(IMMNotificationClient client) {
@@ -66,11 +67,12 @@ namespace CoreAudio {
             return result;
         }
 
-        public MMDeviceEnumerator() {
+        public MMDeviceEnumerator(Guid eventContext) {
             if(Environment.OSVersion.Version.Major < 6) {
                 throw new NotSupportedException("This functionality is only supported on Windows Vista or newer");
             } else {
                 _realEnumerator = (IMMDeviceEnumerator)new _MMDeviceEnumerator();
+                this.eventContext = eventContext;
             }
         }
     }

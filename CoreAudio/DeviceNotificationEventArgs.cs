@@ -10,7 +10,7 @@ namespace CoreAudio {
 
         public bool TryGetDevice(out MMDevice? device) {
             try {
-                var deviceEnumerator = new MMDeviceEnumerator();
+                var deviceEnumerator = new MMDeviceEnumerator(Guid.Empty);
                 device = deviceEnumerator.GetDevice(DeviceId);
                 return true;
             } catch(Exception) {

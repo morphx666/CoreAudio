@@ -22,6 +22,7 @@
 
 using System;
 using System.Runtime.InteropServices;
+using System.Security.Cryptography.X509Certificates;
 using CoreAudio.Interfaces;
 
 namespace CoreAudio {
@@ -33,6 +34,7 @@ namespace CoreAudio {
         AudioEndPointVolumeVolumeRange volumeRange;
         EEndpointHardwareSupport hardwareSupport;
         AudioEndpointVolumeCallback? callBack;
+        public readonly Guid eventContext;
         public event AudioEndpointVolumeNotificationDelegate? OnVolumeNotification;
 
         public AudioEndPointVolumeVolumeRange VolumeRange => volumeRange;
@@ -48,7 +50,7 @@ namespace CoreAudio {
                 Marshal.ThrowExceptionForHR(audioEndPointVolume.GetMasterVolumeLevel(out var result));
                 return result;
             }
-            set => Marshal.ThrowExceptionForHR(audioEndPointVolume.SetMasterVolumeLevel(value, Guid.Empty));
+            set => Marshal.ThrowExceptionForHR(audioEndPointVolume.SetMasterVolumeLevel(value, eventContext));
         }
 
         public float MasterVolumeLevelScalar {
@@ -56,7 +58,7 @@ namespace CoreAudio {
                 Marshal.ThrowExceptionForHR(audioEndPointVolume.GetMasterVolumeLevelScalar(out var result));
                 return result;
             }
-            set => Marshal.ThrowExceptionForHR(audioEndPointVolume.SetMasterVolumeLevelScalar(value, Guid.Empty));
+            set => Marshal.ThrowExceptionForHR(audioEndPointVolume.SetMasterVolumeLevelScalar(value, eventContext));
         }
 
         public bool Mute {
@@ -64,19 +66,20 @@ namespace CoreAudio {
                 Marshal.ThrowExceptionForHR(audioEndPointVolume.GetMute(out var result));
                 return result;
             }
-            set => Marshal.ThrowExceptionForHR(audioEndPointVolume.SetMute(value, Guid.Empty));
+            set => Marshal.ThrowExceptionForHR(audioEndPointVolume.SetMute(value, eventContext));
         }
 
         public void VolumeStepUp() {
-            Marshal.ThrowExceptionForHR(audioEndPointVolume.VolumeStepUp(Guid.Empty));
+            Marshal.ThrowExceptionForHR(audioEndPointVolume.VolumeStepUp(eventContext));
         }
-
+      
         public void VolumeStepDown() {
-            Marshal.ThrowExceptionForHR(audioEndPointVolume.VolumeStepDown(Guid.Empty));
+            Marshal.ThrowExceptionForHR(audioEndPointVolume.VolumeStepDown(eventContext));
         }
 
-        internal AudioEndpointVolume(IAudioEndpointVolume realEndpointVolume) {
+        internal AudioEndpointVolume(IAudioEndpointVolume realEndpointVolume, Guid eventContext) {
             audioEndPointVolume = realEndpointVolume;
+            this.eventContext = eventContext;
             channels = new AudioEndpointVolumeChannels(audioEndPointVolume);
             stepInformation = new AudioEndpointVolumeStepInformation(audioEndPointVolume);
             Marshal.ThrowExceptionForHR(audioEndPointVolume.QueryHardwareSupport(out var hardwareSupp));

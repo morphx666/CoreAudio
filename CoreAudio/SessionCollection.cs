@@ -21,6 +21,7 @@
 */
 /* Updated by John de Jong (2020/04/02) */
 
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Runtime.InteropServices;
@@ -29,15 +30,16 @@ using CoreAudio.Interfaces;
 namespace CoreAudio {
     public class SessionCollection : IEnumerable<AudioSessionControl2> {
         readonly IAudioSessionEnumerator audioSessionEnumerator;
-
-        internal SessionCollection(IAudioSessionEnumerator realEnumerator) {
+        public readonly Guid eventContext;
+        internal SessionCollection(IAudioSessionEnumerator realEnumerator, Guid eventContext) {
             audioSessionEnumerator = realEnumerator;
+            this.eventContext = eventContext;
         }
 
         public AudioSessionControl2 this[int index] {
             get {
                 Marshal.ThrowExceptionForHR(audioSessionEnumerator.GetSession(index, out IAudioSessionControl2 _Result));
-                return new AudioSessionControl2(_Result);
+                return new AudioSessionControl2(_Result, eventContext);
             }
         }
 

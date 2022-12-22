@@ -9,7 +9,7 @@ namespace CoreAudioForms.Framework.Sample {
         public FormMain() {
             InitializeComponent();
 
-            var devEnum = new MMDeviceEnumerator();
+            var devEnum = new MMDeviceEnumerator(Guid.NewGuid());
             _device = devEnum.GetDefaultAudioEndpoint(DataFlow.Render, Role.Multimedia);
             tbMaster.Value = (int)(_device.AudioEndpointVolume.MasterVolumeLevelScalar * 100);
             _device.AudioEndpointVolume.OnVolumeNotification += new AudioEndpointVolumeNotificationDelegate(AudioEndpointVolume_OnVolumeNotification);
