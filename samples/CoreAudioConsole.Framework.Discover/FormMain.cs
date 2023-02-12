@@ -7,6 +7,7 @@ using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading;
+using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace CoreAudioConsole.Framework.Discover.Tester {
@@ -14,7 +15,6 @@ namespace CoreAudioConsole.Framework.Discover.Tester {
         private readonly string nl = Environment.NewLine;
         private readonly string dashes = new string('-', 32);
 
-        private delegate void DoSafeEnum();
         private System.Threading.Timer timer;
         private int tabLevel;
 
@@ -41,8 +41,8 @@ namespace CoreAudioConsole.Framework.Discover.Tester {
             ButtonSave.Click += (object s, EventArgs e) => SaveOutput();
             CheckBoxAutoRefresh.CheckedChanged += (object s, EventArgs e) => {
                 if(CheckBoxAutoRefresh.Checked) {
-                    timer.Change(10, 3000);
-                    CheckBoxAutoRefresh.BackColor = Color.FromArgb(192, 0, 0); 
+                    timer.Change(10, 850);
+                    CheckBoxAutoRefresh.BackColor = Color.FromArgb(192, 0, 0);
                 } else {
                     timer.Change(0, Timeout.Infinite);
                     CheckBoxAutoRefresh.BackColor = this.BackColor;
@@ -51,16 +51,26 @@ namespace CoreAudioConsole.Framework.Discover.Tester {
             };
         }
 
+        string lastResult = "";
         private void SafeEnum() {
-            Invoke(new DoSafeEnum(() => EnumDevices(DataFlow.All)));
+            Task.Run(() => {
+                string result = EnumDevices(DataFlow.All);
+                if(lastResult != result) {
+                    lastResult = result;
+                    this.Invoke(new MethodInvoker(() => {
+                        RichTextBoxOutput.Text = result.ToString();
+                    }));
+                }
+            });
         }
 
-        private void EnumDevices(DataFlow flow) {
-            TextBoxOutput.Text = "";
+        private string EnumDevices(DataFlow flow) {
             MMDeviceCollection deviceCollection = new MMDeviceEnumerator(Guid.NewGuid()).EnumerateAudioEndPoints(flow, DeviceState.Active);
             StringBuilder sb = new StringBuilder($"{DateTime.Now}{nl}{nl}");
             for(int i = 0; i < deviceCollection.Count; i++) {
                 MMDevice dev = deviceCollection[i];
+
+#if DEBUG
                 if(!isFirstTime) {
                     isFirstTime = true;
                     for(int j = 0; j < dev.Properties.Count; j++) {
@@ -78,15 +88,16 @@ namespace CoreAudioConsole.Framework.Discover.Tester {
                         Debug.WriteLine("");
                     }
                 }
+#endif
+
                 Part getPart = dev.DeviceTopology.GetConnector(0).ConnectedTo.Part;
                 tabLevel = 0;
                 sb.Append(WalkTreeBackwardsFromPart(getPart));
                 sb.Append(EnumSessions(dev));
                 sb.AppendLine($"{dashes}{nl}");
             }
-            TextBoxOutput.Text = sb.ToString();
-            TextBoxOutput.SelectionStart = 0;
-            TextBoxOutput.ScrollToCaret();
+
+            return sb.ToString();
         }
 
         private string EnumSessions(MMDevice dev) {
@@ -197,7 +208,7 @@ namespace CoreAudioConsole.Framework.Discover.Tester {
                 sfDlg.InitialDirectory = Environment.GetFolderPath(Environment.SpecialFolder.Desktop);
                 sfDlg.Title = "Save CoreAudioNET Report";
                 if(sfDlg.ShowDialog() == DialogResult.OK) {
-                    File.WriteAllText(sfDlg.FileName, TextBoxOutput.Text);
+                    File.WriteAllText(sfDlg.FileName, RichTextBoxOutput.Text);
                 }
             }
         }

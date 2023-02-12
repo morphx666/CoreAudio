@@ -30,7 +30,7 @@ namespace CoreAudioConsole.Framework.Discover.Tester {
             this.CheckBoxAutoRefresh = new System.Windows.Forms.CheckBox();
             this.ButtonRefresh = new System.Windows.Forms.Button();
             this.ButtonClose = new System.Windows.Forms.Button();
-            this.TextBoxOutput = new System.Windows.Forms.TextBox();
+            this.RichTextBoxOutput = new System.Windows.Forms.RichTextBox();
             this.SuspendLayout();
             // 
             // ButtonSave
@@ -79,7 +79,7 @@ namespace CoreAudioConsole.Framework.Discover.Tester {
             this.ButtonClose.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.ButtonClose.FlatAppearance.BorderColor = System.Drawing.Color.Gray;
             this.ButtonClose.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.ButtonClose.Location = new System.Drawing.Point(1046, 635);
+            this.ButtonClose.Location = new System.Drawing.Point(1046, 634);
             this.ButtonClose.Margin = new System.Windows.Forms.Padding(3, 5, 3, 5);
             this.ButtonClose.Name = "ButtonClose";
             this.ButtonClose.Size = new System.Drawing.Size(143, 36);
@@ -87,23 +87,18 @@ namespace CoreAudioConsole.Framework.Discover.Tester {
             this.ButtonClose.Text = "Close";
             this.ButtonClose.UseVisualStyleBackColor = true;
             // 
-            // TextBoxOutput
+            // RichTextBoxOutput
             // 
-            this.TextBoxOutput.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.TextBoxOutput.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(33)))), ((int)(((byte)(33)))), ((int)(((byte)(33)))));
-            this.TextBoxOutput.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.TextBoxOutput.Font = new System.Drawing.Font("Consolas", 10.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.TextBoxOutput.ForeColor = System.Drawing.Color.Gainsboro;
-            this.TextBoxOutput.Location = new System.Drawing.Point(16, 19);
-            this.TextBoxOutput.Margin = new System.Windows.Forms.Padding(3, 5, 3, 5);
-            this.TextBoxOutput.Multiline = true;
-            this.TextBoxOutput.Name = "TextBoxOutput";
-            this.TextBoxOutput.ReadOnly = true;
-            this.TextBoxOutput.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
-            this.TextBoxOutput.Size = new System.Drawing.Size(1173, 604);
-            this.TextBoxOutput.TabIndex = 0;
+            this.RichTextBoxOutput.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(33)))), ((int)(((byte)(33)))), ((int)(((byte)(33)))));
+            this.RichTextBoxOutput.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.RichTextBoxOutput.Font = new System.Drawing.Font("Consolas", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.RichTextBoxOutput.ForeColor = System.Drawing.Color.WhiteSmoke;
+            this.RichTextBoxOutput.Location = new System.Drawing.Point(16, 12);
+            this.RichTextBoxOutput.Name = "RichTextBoxOutput";
+            this.RichTextBoxOutput.ReadOnly = true;
+            this.RichTextBoxOutput.Size = new System.Drawing.Size(1173, 614);
+            this.RichTextBoxOutput.TabIndex = 4;
+            this.RichTextBoxOutput.Text = "";
             // 
             // FomMain
             // 
@@ -111,11 +106,11 @@ namespace CoreAudioConsole.Framework.Discover.Tester {
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(33)))), ((int)(((byte)(33)))), ((int)(((byte)(33)))));
             this.ClientSize = new System.Drawing.Size(1203, 685);
+            this.Controls.Add(this.RichTextBoxOutput);
             this.Controls.Add(this.ButtonSave);
             this.Controls.Add(this.CheckBoxAutoRefresh);
             this.Controls.Add(this.ButtonRefresh);
             this.Controls.Add(this.ButtonClose);
-            this.Controls.Add(this.TextBoxOutput);
             this.Font = new System.Drawing.Font("Segoe UI", 10.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.ForeColor = System.Drawing.Color.WhiteSmoke;
             this.Margin = new System.Windows.Forms.Padding(3, 5, 3, 5);
@@ -123,7 +118,6 @@ namespace CoreAudioConsole.Framework.Discover.Tester {
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "CoreAudioNET Tester";
             this.ResumeLayout(false);
-            this.PerformLayout();
 
         }
 
@@ -132,7 +126,7 @@ namespace CoreAudioConsole.Framework.Discover.Tester {
         private System.Windows.Forms.CheckBox CheckBoxAutoRefresh;
         private System.Windows.Forms.Button ButtonRefresh;
         private System.Windows.Forms.Button ButtonClose;
-        private TextBox TextBoxOutput;
+        private RichTextBox RichTextBoxOutput;
     }
 }
 
