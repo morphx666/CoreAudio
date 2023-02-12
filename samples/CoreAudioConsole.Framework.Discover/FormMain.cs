@@ -117,7 +117,7 @@ namespace CoreAudioConsole.Framework.Discover.Tester {
 
         private string WalkTreeBackwardsFromPart(Part part) {
             string tabs = new string('\t', tabLevel);
-            StringBuilder sb = new StringBuilder($"{tabs}{part.SubTypeName} {(part.Name == "" ? "(Unnamed)" : part.Name)} ({part.PartType}){nl}");
+            StringBuilder sb = new StringBuilder($"{tabs}{part.SubTypeName}: {(part.Name == "" ? "(Unnamed)" : part.Name)} ({part.PartType}){nl}");
             // If part.GetSubTypeName = "UNDEFINED" Then Debugger.Break();
 
             if(part.PartType == PartType.Connector) tabLevel += 1;

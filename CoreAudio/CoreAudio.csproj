@@ -1,8 +1,8 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
     <PropertyGroup>
-        <AssemblyVersion>2022.11.3.109</AssemblyVersion>
-        <FileVersion>2022.11.3.109</FileVersion>
+        <AssemblyVersion>2023.2.12.115</AssemblyVersion>
+        <FileVersion>2023.2.12.115</FileVersion>
         <LangVersion>9</LangVersion>
         <Nullable>enable</Nullable>
         <Title>CoreAudio</Title>
@@ -21,8 +21,13 @@
     <PropertyGroup Condition=" '$(Configuration)' == 'Release' ">
       <Prefer32bit>false</Prefer32bit>
     </PropertyGroup>
+
     <ItemGroup>
-        <None Include="coreaudio.png" Pack="true" PackagePath="" />
+      <None Remove="coreaudio.png" />
+      <None Remove="CoreAudio.sln.docstates.suo" />
+      <None Remove="CoreAudio.suo" />
+      <None Remove="CoreAudioApi.suo" />
+      <None Remove="coreaudio_key.pfx" />
     </ItemGroup>
     <ItemGroup>
         <PackageReference Include="System.Runtime.InteropServices" Version="4.3.0" />

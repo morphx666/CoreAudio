@@ -26,30 +26,12 @@ namespace CoreAudioConsole.Framework.Discover.Tester {
         /// the contents of this method with the code editor.
         /// </summary>
         private void InitializeComponent() {
-            this.TextBoxOutput = new System.Windows.Forms.TextBox();
             this.ButtonSave = new System.Windows.Forms.Button();
             this.CheckBoxAutoRefresh = new System.Windows.Forms.CheckBox();
             this.ButtonRefresh = new System.Windows.Forms.Button();
             this.ButtonClose = new System.Windows.Forms.Button();
+            this.TextBoxOutput = new System.Windows.Forms.TextBox();
             this.SuspendLayout();
-            // 
-            // TextBoxOutput
-            // 
-            this.TextBoxOutput.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.TextBoxOutput.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(33)))), ((int)(((byte)(33)))), ((int)(((byte)(33)))));
-            this.TextBoxOutput.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.TextBoxOutput.Font = new System.Drawing.Font("Consolas", 10.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.TextBoxOutput.ForeColor = System.Drawing.Color.Gainsboro;
-            this.TextBoxOutput.Location = new System.Drawing.Point(16, 19);
-            this.TextBoxOutput.Margin = new System.Windows.Forms.Padding(3, 5, 3, 5);
-            this.TextBoxOutput.Multiline = true;
-            this.TextBoxOutput.Name = "TextBoxOutput";
-            this.TextBoxOutput.ReadOnly = true;
-            this.TextBoxOutput.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
-            this.TextBoxOutput.Size = new System.Drawing.Size(1173, 604);
-            this.TextBoxOutput.TabIndex = 0;
             // 
             // ButtonSave
             // 
@@ -105,6 +87,24 @@ namespace CoreAudioConsole.Framework.Discover.Tester {
             this.ButtonClose.Text = "Close";
             this.ButtonClose.UseVisualStyleBackColor = true;
             // 
+            // TextBoxOutput
+            // 
+            this.TextBoxOutput.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.TextBoxOutput.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(33)))), ((int)(((byte)(33)))), ((int)(((byte)(33)))));
+            this.TextBoxOutput.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.TextBoxOutput.Font = new System.Drawing.Font("Consolas", 10.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.TextBoxOutput.ForeColor = System.Drawing.Color.Gainsboro;
+            this.TextBoxOutput.Location = new System.Drawing.Point(16, 19);
+            this.TextBoxOutput.Margin = new System.Windows.Forms.Padding(3, 5, 3, 5);
+            this.TextBoxOutput.Multiline = true;
+            this.TextBoxOutput.Name = "TextBoxOutput";
+            this.TextBoxOutput.ReadOnly = true;
+            this.TextBoxOutput.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
+            this.TextBoxOutput.Size = new System.Drawing.Size(1173, 604);
+            this.TextBoxOutput.TabIndex = 0;
+            // 
             // FomMain
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(10F, 25F);
@@ -128,12 +128,11 @@ namespace CoreAudioConsole.Framework.Discover.Tester {
         }
 
         #endregion
-
-        private System.Windows.Forms.TextBox TextBoxOutput;
         private System.Windows.Forms.Button ButtonSave;
         private System.Windows.Forms.CheckBox CheckBoxAutoRefresh;
         private System.Windows.Forms.Button ButtonRefresh;
         private System.Windows.Forms.Button ButtonClose;
+        private TextBox TextBoxOutput;
     }
 }
 

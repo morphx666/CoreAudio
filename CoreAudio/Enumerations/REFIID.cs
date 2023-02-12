@@ -47,5 +47,6 @@ namespace CoreAudio {
         public static Guid IIdIDeviceTopology = typeof(IDeviceTopology).GUID;
 
         public static Guid IIdIPart = typeof(IPart).GUID;
+        public static Guid IIdIConnector = typeof(IConnector).GUID;
     }
 }

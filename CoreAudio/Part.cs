@@ -26,8 +26,9 @@ using CoreAudio.Interfaces;
 
 namespace CoreAudio {
     public class Part : IDisposable {
-        IPart part;
-        readonly AudioVolumeLevel? audioVolumeLevel;
+        Connector? connector;
+        readonly IPart part;
+        AudioVolumeLevel? audioVolumeLevel = null;
         AudioMute? audioMute;
         AudioPeakMeter? audioPeakMeter;
         AudioLoudness? audioLoudness;
@@ -53,17 +54,16 @@ namespace CoreAudio {
         }
 
         private AudioVolumeLevel? GetAudioVolumeLevel() {
-            return audioVolumeLevel;
-        }
-
-        void GetAudioVolumeLevel(AudioVolumeLevel? audioVolumeLevel) {
-            part.Activate(CLSCTX.ALL, ref RefIId.IIdIAudioVolumeLevel, out var result);
-            if(result is IAudioVolumeLevel level) {
-                audioVolumeLevel = new AudioVolumeLevel(level);
-                _AudioVolumeLevelChangeNotification = new ControlChangeNotify(this);
-                Marshal.ThrowExceptionForHR(part.RegisterControlChangeCallback(ref RefIId.IIdIAudioVolumeLevel,
-                    _AudioVolumeLevelChangeNotification));
+            if(audioVolumeLevel == null) {
+                part.Activate(CLSCTX.ALL, ref RefIId.IIdIAudioVolumeLevel, out var result);
+                if(result is IAudioVolumeLevel level) {
+                    audioVolumeLevel = new AudioVolumeLevel(level);
+                    _AudioVolumeLevelChangeNotification = new ControlChangeNotify(this);
+                    Marshal.ThrowExceptionForHR(part.RegisterControlChangeCallback(ref RefIId.IIdIAudioVolumeLevel,
+                        _AudioVolumeLevelChangeNotification));
+                }
             }
+            return audioVolumeLevel;
         }
 
         void GetAudioMute() {
@@ -201,7 +201,7 @@ namespace CoreAudio {
         public AudioVolumeLevel? AudioVolumeLevel {
             get {
                 if(audioVolumeLevel == null)
-                    GetAudioVolumeLevel(GetAudioVolumeLevel());
+                    GetAudioVolumeLevel();
 
                 return audioVolumeLevel;
             }
@@ -231,6 +231,20 @@ namespace CoreAudio {
                     GetAudioLoudness();
 
                 return audioLoudness;
+            }
+        }
+
+        public Connector? Connector {
+            get {
+                if(connector == null) {
+                    var pUnk = Marshal.GetIUnknownForObject(part);
+                    var res = Marshal.QueryInterface(pUnk, ref RefIId.IIdIConnector, out var ppv);
+                    if(ppv != IntPtr.Zero)
+                        connector = new Connector((IConnector)Marshal.GetObjectForIUnknown(ppv));
+                    else
+                        connector = null;
+                }
+                return connector;
             }
         }
 

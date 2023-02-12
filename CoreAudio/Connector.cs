@@ -26,7 +26,7 @@ using CoreAudio.Interfaces;
 
 namespace CoreAudio {
     public class Connector {
-        IConnector connector;
+        readonly IConnector connector;
         Part? part;
 
         internal Connector(IConnector connector) {
