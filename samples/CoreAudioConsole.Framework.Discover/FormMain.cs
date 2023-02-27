@@ -23,6 +23,8 @@ namespace CoreAudioConsole.Framework.Discover.Tester {
 
         private bool isFirstTime;
 
+        private Point rtbScrollPos = new Point();
+
         public FomMain() {
             InitializeComponent();
 
@@ -49,6 +51,11 @@ namespace CoreAudioConsole.Framework.Discover.Tester {
 
                 }
             };
+            RichTextBoxOutput.Click += (object s, EventArgs e) => {
+                RichTextBoxOutput.SuspendDrawing();
+                RichTextBoxOutput.SetScrollPos(rtbScrollPos);
+                RichTextBoxOutput.ResumeDrawing();
+            };
         }
 
         string lastResult = "";
@@ -58,7 +65,11 @@ namespace CoreAudioConsole.Framework.Discover.Tester {
                 if(lastResult != result) {
                     lastResult = result;
                     this.Invoke(new MethodInvoker(() => {
+                        rtbScrollPos = RichTextBoxOutput.GetScrollPos();
+                        RichTextBoxOutput.SuspendDrawing();
                         RichTextBoxOutput.Text = result.ToString();
+                        RichTextBoxOutput.SetScrollPos(rtbScrollPos);
+                        RichTextBoxOutput.ResumeDrawing();
                     }));
                 }
             });
