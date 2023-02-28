@@ -10,9 +10,9 @@
         <PackageProjectUrl>https://github.com/morphx666/CoreAudio</PackageProjectUrl>
         <RepositoryUrl>https://github.com/morphx666/CoreAudio</RepositoryUrl>
         <TargetFrameworks>net481;netstandard2.0;netstandard2.1</TargetFrameworks>
-        <PackageIcon>coreaudio.png</PackageIcon>
         <PackageReadmeFile>README.md</PackageReadmeFile>
         <PackageTags>audio; coreaudio;</PackageTags>
+        <PackageIcon>coreaudio.png</PackageIcon>
     </PropertyGroup>
 
     <PropertyGroup Condition=" '$(Configuration)' == 'Debug' ">
@@ -31,18 +31,10 @@
     </ItemGroup>
 
     <ItemGroup>
-      <None Include="..\README.md">
-        <Pack>True</Pack>
-        <PackagePath>\</PackagePath>
-      </None>
-    </ItemGroup>
-    <ItemGroup>
         <PackageReference Include="System.Runtime.InteropServices" Version="4.3.0" />
     </ItemGroup>
-    <ItemGroup>
-      <None Update="coreaudio.png">
-        <Pack>True</Pack>
-        <PackagePath>\</PackagePath>
-      </None>
-    </ItemGroup>
+	<ItemGroup>
+		<None Include="..\README.md" Pack="true" PackagePath="\"/>
+		<None Include="coreaudio.png" Pack="true" PackagePath="\"/>
+	</ItemGroup>
 </Project>
