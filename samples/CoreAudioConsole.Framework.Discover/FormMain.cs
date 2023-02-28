@@ -12,8 +12,7 @@ using System.Windows.Forms;
 
 namespace CoreAudioConsole.Framework.Discover.Tester {
     public partial class FomMain : Form {
-        private readonly string nl = Environment.NewLine;
-        private readonly string dashes = new string('-', 32);
+        private readonly string nl = @"\par ";// + Environment.NewLine;
 
         private System.Threading.Timer timer;
         private int tabLevel;
@@ -24,9 +23,22 @@ namespace CoreAudioConsole.Framework.Discover.Tester {
         private bool isFirstTime;
 
         private Point rtbScrollPos = new Point();
+        private const string rtf = @"{\rtf1\ansi {\colortbl;" +
+                                    @"\red245\green245\blue245;" + // cf1 = WhiteSmoke
+                                    @"\red000\green192\blue000;" + // cf2 = DarkGreen
+                                    @"\red192\green192\blue000;" + // cf3 = DarkYellow
+                                    @"\red192\green000\blue192;" + // cf4 = DarkMagenta
+                                    @"\red255\green000\blue000;" + // cf5 = Red
+                                    @"\red180\green100\blue180;" + // cf6 = LightMagenta
+                                    @"\red080\green080\blue255;" + // cf7 = Violet
+                                    @"\red080\green080\blue080;" + // cf8 = DarkGray
+                                    @"}%\par}";
 
         public FomMain() {
             InitializeComponent();
+
+            //RichTextBoxOutput.Text = $"A\tB";
+            //return;
 
             Load += (object s, EventArgs e) => {
                 timer = new System.Threading.Timer((_) => SafeEnum(), null, 10, Timeout.Infinite);
@@ -52,9 +64,7 @@ namespace CoreAudioConsole.Framework.Discover.Tester {
                 }
             };
             RichTextBoxOutput.Click += (object s, EventArgs e) => {
-                RichTextBoxOutput.SuspendDrawing();
                 RichTextBoxOutput.SetScrollPos(rtbScrollPos);
-                RichTextBoxOutput.ResumeDrawing();
             };
         }
 
@@ -67,7 +77,7 @@ namespace CoreAudioConsole.Framework.Discover.Tester {
                     this.Invoke(new MethodInvoker(() => {
                         rtbScrollPos = RichTextBoxOutput.GetScrollPos();
                         RichTextBoxOutput.SuspendDrawing();
-                        RichTextBoxOutput.Text = result.ToString();
+                        RichTextBoxOutput.Rtf = rtf.Replace("%", result.ToString());
                         RichTextBoxOutput.SetScrollPos(rtbScrollPos);
                         RichTextBoxOutput.ResumeDrawing();
                     }));
@@ -77,7 +87,7 @@ namespace CoreAudioConsole.Framework.Discover.Tester {
 
         private string EnumDevices(DataFlow flow) {
             MMDeviceCollection deviceCollection = new MMDeviceEnumerator(Guid.NewGuid()).EnumerateAudioEndPoints(flow, DeviceState.Active);
-            StringBuilder sb = new StringBuilder($"{DateTime.Now}{nl}{nl}");
+            StringBuilder sb = new StringBuilder($@"\cf2 {DateTime.Now}{nl}{nl}");
             for(int i = 0; i < deviceCollection.Count; i++) {
                 MMDevice dev = deviceCollection[i];
 
@@ -105,24 +115,28 @@ namespace CoreAudioConsole.Framework.Discover.Tester {
                 tabLevel = 0;
                 sb.Append(WalkTreeBackwardsFromPart(getPart));
                 sb.Append(EnumSessions(dev));
-                sb.AppendLine($"{dashes}{nl}");
+
+                string dashes = new string('—', RichTextBoxOutput.Width / 12);
+                sb.Append($@"\cf8 {dashes}{nl}{nl}");
             }
 
             return sb.ToString();
         }
 
         private string EnumSessions(MMDevice dev) {
-            string tabs = new string('\t', tabLevel + 1);
-            StringBuilder sb = new StringBuilder($"{tabs}SESSIONS{nl}");
+            string tabs = "";
+            for(int i = 0; i < tabLevel + 1; i++) tabs += @"\tab ";
+
+            StringBuilder sb = new StringBuilder($@"\cf4 {tabs}SESSIONS{nl}");
             SessionCollection sessions = dev.AudioSessionManager2.Sessions;
             for(int i = 0; i < sessions.Count; i++) {
                 using(AudioSessionControl2 audioSessionControl2 = sessions[i]) {
                     string name = audioSessionControl2.DisplayName;
-                    if(name.Contains(",")) name = name.Split(',')[0];
+                    if(name.Contains(',')) name = name.Split(',')[0];
                     if(name == "") name = "<No Name>";
-                    sb.AppendLine($"{tabs}{name} [{audioSessionControl2.ProcessID} | {audioSessionControl2.State}]:");
-                    sb.AppendLine($"{tabs}{'\t'}Volume: {audioSessionControl2.SimpleAudioVolume.MasterVolume:F2}dB");
-                    sb.AppendLine($"{tabs}{'\t'}Mute: {(!audioSessionControl2.SimpleAudioVolume.Mute ? "Not " : "")}Muted{nl}");
+                    sb.Append($@"\cf3 {tabs}{name} [{audioSessionControl2.ProcessID} | {audioSessionControl2.State}]:{nl}");
+                    sb.Append($@"\cf6 {tabs}\tab Volume: {audioSessionControl2.SimpleAudioVolume.MasterVolume:F2}dB{nl}");
+                    sb.Append($@"\cf6 {tabs}\tab Mute: {(!audioSessionControl2.SimpleAudioVolume.Mute ? "Not " : "")}Muted{nl}{nl}");
                 }
             }
             return sb.ToString();
@@ -138,8 +152,10 @@ namespace CoreAudioConsole.Framework.Discover.Tester {
         }
 
         private string WalkTreeBackwardsFromPart(Part part) {
-            string tabs = new string('\t', tabLevel);
-            StringBuilder sb = new StringBuilder($"{tabs}{part.SubTypeName}: {(part.Name == "" ? "(Unnamed)" : part.Name)} ({part.PartType}){nl}");
+            string tabs = "";
+            for(int i = 0; i < tabLevel; i++) tabs += @"\tab ";
+
+            StringBuilder sb = new StringBuilder($@"\cf1 {tabs}{part.SubTypeName}: \cf3 {(part.Name == "" ? "(Unnamed)" : part.Name)} ({part.PartType}){nl}");
             // If part.GetSubTypeName = "UNDEFINED" Then Debugger.Break();
 
             if(part.PartType == PartType.Connector) tabLevel += 1;
@@ -150,7 +166,7 @@ namespace CoreAudioConsole.Framework.Discover.Tester {
                         if(audioVolumeLevel != null) {
                             for(int i = 0; i < audioVolumeLevel.ChannelCount; i++) {
                                 PerChannelDbLevel.LevelRange levelRange = audioVolumeLevel.GetLevelRange(i);
-                                sb.AppendLine($"\t {tabs}Volume for channel {i} is {audioVolumeLevel.GetLevel(i):F2}dB (range is {levelRange.MinLevel:F2}dB to {levelRange.MaxLevel:F2}dB in increments of {levelRange.Stepping:F2}dB)");
+                                sb.Append($@"\cf6\tab {tabs}Volume for channel {i} is {audioVolumeLevel.GetLevel(i):F2}dB (range is {levelRange.MinLevel:F2}dB to {levelRange.MaxLevel:F2}dB in increments of {levelRange.Stepping:F2}dB){nl}");
                             }
                         }
 
@@ -158,14 +174,14 @@ namespace CoreAudioConsole.Framework.Discover.Tester {
                     }
 
                 case Guid r when r == KsNodeType.Speaker: {
-                        sb.AppendLine($"{tabs}Incoming Parts:");
+                        //sb.Append($@"\cf6 {tabs}Incoming Parts:{nl}");
                         break;
                     }
 
                 case Guid r when r == KsNodeType.Mute: {
                         AudioMute audioMute = part.AudioMute;
                         if(audioMute != null)
-                            sb.AppendLine($"{tabs}\t{(!audioMute.Mute ? "Not " : "")}Muted");
+                            sb.Append($@"\cf6 {tabs}\tab {(!audioMute.Mute ? "Not " : "")}Muted{nl}");
                         break;
                     }
 
@@ -175,7 +191,7 @@ namespace CoreAudioConsole.Framework.Discover.Tester {
                             int num = checked(audioPeakMeter.ChannelCount - 1);
                             int channel = 0;
                             while(channel <= num) {
-                                sb.AppendLine($"{tabs}\tLevel for channel {channel} is {audioPeakMeter.Level(channel)}dB");
+                                sb.Append($@"\cf6 {tabs}\tab Level for channel {channel} is {audioPeakMeter.Level(channel)}dB{nl}");
                                 checked { ++channel; }
                             }
                         }
@@ -185,22 +201,22 @@ namespace CoreAudioConsole.Framework.Discover.Tester {
                 case Guid r when r == KsNodeType.Loudness: {
                         var al = part.AudioLoudness;
                         if(al != null)
-                            sb.AppendLine($"{tabs}\t{(!al.Enabled ? "Not " : "")} Enabled");
+                            sb.Append($@"\cf6 {tabs}\tab {(!al.Enabled ? "Not " : "")} Enabled{nl}");
                         break;
                     }
 
                 default: {
                         if(part.PartType == PartType.Connector)
-                            sb.AppendLine($"\t{tabs}I/O Jack");
+                            sb.Append($@"\cf6 {tabs}\tab I/O Jack{nl}");
                         else
-                            sb.AppendLine($"\t{tabs}Undefined Part: {part.SubTypeName}");
+                            sb.Append($@"\cf6 {tabs}\tab Undefined Part: {part.SubTypeName}{nl}");
                         break;
                     }
             }
 
             var plIn = part.EnumPartsIncoming;
             if(plIn == null || plIn.Count == 0)
-                sb.AppendLine();
+                sb.Append(nl);
             else
                 for(int i = 0; i < plIn.Count; i++) {
                     var iPart = plIn.Part(i);

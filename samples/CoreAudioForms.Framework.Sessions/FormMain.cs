@@ -1,7 +1,6 @@
 ﻿using System;
 using CoreAudio;
 using CoreAudio.Interfaces;
-using System.Diagnostics;
 using System.Windows.Forms;
 
 namespace CoreAudioForms.Framework.Sessions {

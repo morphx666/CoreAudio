@@ -89,6 +89,9 @@ namespace CoreAudioConsole.Framework.Discover.Tester {
             // 
             // RichTextBoxOutput
             // 
+            this.RichTextBoxOutput.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.RichTextBoxOutput.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(33)))), ((int)(((byte)(33)))), ((int)(((byte)(33)))));
             this.RichTextBoxOutput.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.RichTextBoxOutput.Font = new System.Drawing.Font("Consolas", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));

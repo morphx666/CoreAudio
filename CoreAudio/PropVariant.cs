@@ -22,7 +22,6 @@
 
 using System;
 using System.Runtime.InteropServices;
-using System.Runtime.InteropServices.ComTypes;
 using CoreAudio.Interfaces;
 using FILETIME = System.Runtime.InteropServices.ComTypes.FILETIME;
 
