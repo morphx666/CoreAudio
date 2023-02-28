@@ -1,5 +1,4 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
-
     <PropertyGroup>
         <AssemblyVersion>2023.2.28.120</AssemblyVersion>
         <FileVersion>2023.2.28.120</FileVersion>
@@ -10,8 +9,10 @@
         <Description>Windows CoreAudio wrapper for .NET</Description>
         <PackageProjectUrl>https://github.com/morphx666/CoreAudio</PackageProjectUrl>
         <RepositoryUrl>https://github.com/morphx666/CoreAudio</RepositoryUrl>
-        <PackageIcon>coreaudio.png</PackageIcon>
         <TargetFrameworks>net481;netstandard2.0;netstandard2.1</TargetFrameworks>
+        <PackageIcon>coreaudio.png</PackageIcon>
+        <PackageReadmeFile>README.md</PackageReadmeFile>
+        <PackageTags>audio; coreaudio;</PackageTags>
     </PropertyGroup>
 
     <PropertyGroup Condition=" '$(Configuration)' == 'Debug' ">
@@ -23,13 +24,25 @@
     </PropertyGroup>
 
     <ItemGroup>
-      <None Remove="coreaudio.png" />
       <None Remove="CoreAudio.sln.docstates.suo" />
       <None Remove="CoreAudio.suo" />
       <None Remove="CoreAudioApi.suo" />
       <None Remove="coreaudio_key.pfx" />
     </ItemGroup>
+
+    <ItemGroup>
+      <None Include="..\README.md">
+        <Pack>True</Pack>
+        <PackagePath>\</PackagePath>
+      </None>
+    </ItemGroup>
     <ItemGroup>
         <PackageReference Include="System.Runtime.InteropServices" Version="4.3.0" />
+    </ItemGroup>
+    <ItemGroup>
+      <None Update="coreaudio.png">
+        <Pack>True</Pack>
+        <PackagePath>\</PackagePath>
+      </None>
     </ItemGroup>
 </Project>
