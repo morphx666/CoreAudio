@@ -13,10 +13,11 @@
         <PackageReadmeFile>README.md</PackageReadmeFile>
         <PackageTags>audio; coreaudio;</PackageTags>
         <PackageIcon>coreaudio.png</PackageIcon>
-        <PackageLicenseFile>LICENSE</PackageLicenseFile>
         <IncludeSymbols>True</IncludeSymbols>
         <SymbolPackageFormat>snupkg</SymbolPackageFormat>
         <RepositoryType>git</RepositoryType>
+        <PackageLicenseExpression>MIT</PackageLicenseExpression>
+		<PackageLicenseUrl>https://licenses.nuget.org/MIT</PackageLicenseUrl>
     </PropertyGroup>
 
     <PropertyGroup Condition=" '$(Configuration)' == 'Debug' ">
