@@ -20,18 +20,18 @@
     </PropertyGroup>
 
     <PropertyGroup Condition=" '$(Configuration)' == 'Debug' ">
-      <Prefer32bit>false</Prefer32bit>
+        <Prefer32bit>false</Prefer32bit>
     </PropertyGroup>
 
     <PropertyGroup Condition=" '$(Configuration)' == 'Release' ">
-      <Prefer32bit>false</Prefer32bit>
+        <Prefer32bit>false</Prefer32bit>
     </PropertyGroup>
 
     <ItemGroup>
-      <None Remove="CoreAudio.sln.docstates.suo" />
-      <None Remove="CoreAudio.suo" />
-      <None Remove="CoreAudioApi.suo" />
-      <None Remove="coreaudio_key.pfx" />
+        <None Remove="CoreAudio.sln.docstates.suo" />
+        <None Remove="CoreAudio.suo" />
+        <None Remove="CoreAudioApi.suo" />
+        <None Remove="coreaudio_key.pfx" />
     </ItemGroup>
 
     <ItemGroup>
