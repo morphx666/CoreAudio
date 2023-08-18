@@ -1,7 +1,7 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
     <PropertyGroup>
-        <AssemblyVersion>2023.2.28.120</AssemblyVersion>
-        <FileVersion>2023.2.28.120</FileVersion>
+        <AssemblyVersion>2023.8.18.121</AssemblyVersion>
+        <FileVersion>2023.8.18.121</FileVersion>
         <LangVersion>9</LangVersion>
         <Nullable>enable</Nullable>
         <Title>CoreAudio</Title>

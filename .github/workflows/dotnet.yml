@@ -28,7 +28,7 @@ jobs:
         version: 1.${{ github.run_number }}.0
 
     - name: Publish NuGet
-      if: ${{ github.event_name == 'push' && github.ref == 'refs/heads/master' }}
+      # if: ${{ github.event_name == 'push' && github.ref == 'refs/heads/master' }}
       uses: rohith/publish-nuget@v2
       with:
         PROJECT_FILE_PATH: ./CoreAudio/CoreAudio.csproj
