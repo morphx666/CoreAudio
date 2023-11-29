@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Diagnostics;
 using System.Drawing;
 using System.IO;
 using System.Runtime.InteropServices;
@@ -36,8 +37,6 @@ namespace CoreAudioForms.Framework.Sessions {
                 var r = SHGetFileInfo(fileName, 0, ref shInfo, (uint)Marshal.SizeOf(shInfo), SHGFI_ICON | (smallIcon ? SHGFI_SMALLICON : SHGFI_LARGEICON));
 
                 return shInfo.hIcon.ToInt32() == 0 ? null : Icon.FromHandle(shInfo.hIcon);
-            } else {
-                Console.WriteLine($"File not found: {fileName}");
             }
 
             return null;

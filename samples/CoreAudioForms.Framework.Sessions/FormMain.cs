@@ -2,10 +2,13 @@
 using CoreAudio;
 using CoreAudio.Interfaces;
 using System.Windows.Forms;
+using System.Drawing;
+using System.Threading.Tasks;
 
 namespace CoreAudioForms.Framework.Sessions {
     public partial class FormMain : Form {
         MMDevice selDevice;
+        private VU.Modes vuMode = VU.Modes.Bar;
 
         private class RenderDevice {
             public readonly string Name;
@@ -37,12 +40,11 @@ namespace CoreAudioForms.Framework.Sessions {
             }
 
             if(ComboBoxDevices.Items.Count > 0) ComboBoxDevices.SelectedIndex = selectedIndex;
-        }
 
-        private void UpdateMasterVolume(AudioVolumeNotificationData data) {
-            foreach(SessionUI s in TableLayoutPanelSessions.Controls) {
-                s.MasterVolume = data.MasterVolume;
-            }
+            this.FlowLayoutPanelSessions.Resize += (_, __) => ResizeUI();
+
+            this.BackColor = Color.FromArgb(55, 55, 55);
+            this.ForeColor = Color.Gainsboro;
         }
 
         private void EnumerateSessions() {
@@ -50,11 +52,9 @@ namespace CoreAudioForms.Framework.Sessions {
             selDevice.AudioEndpointVolume.OnVolumeNotification += new AudioEndpointVolumeNotificationDelegate(UpdateMasterVolume);
             SessionCollection sessions = selDevice.AudioSessionManager2.Sessions;
 
-            while(TableLayoutPanelSessions.Controls.Count > 0) {
-                TableLayoutPanelSessions.Controls[0].Dispose();
+            while(FlowLayoutPanelSessions.Controls.Count > 0) {
+                FlowLayoutPanelSessions.Controls[0].Dispose();
             }
-            TableLayoutPanelSessions.RowCount = 0;
-            TableLayoutPanelSessions.RowStyles[0].SizeType = SizeType.AutoSize;
 
             foreach(AudioSessionControl2 session in sessions) {
                 AddSeesion(session);
@@ -66,25 +66,62 @@ namespace CoreAudioForms.Framework.Sessions {
                 session.OnStateChanged += HandleSessionStateChanged;
 
                 SessionUI sui = new SessionUI();
-                sui.Width = TableLayoutPanelSessions.Width - TableLayoutPanelSessions.Padding.Horizontal - sui.Margin.Horizontal;
+                sui.BackColor = Color.FromArgb(46, 46, 46);
+                sui.VUDisplay.BorderColor = Color.FromArgb(66, 66, 66);
                 sui.SetSession(session, selDevice.AudioEndpointVolume.MasterVolumeLevelScalar);
-                sui.Anchor = AnchorStyles.Left | AnchorStyles.Right | AnchorStyles.Top;
-                TableLayoutPanelSessions.Controls.Add(sui);
+                sui.VUDisplay.Mode = vuMode;
+                sui.Click += (_, __) => {
+                    if(vuMode == VU.Modes.Bar) {
+                        vuMode = VU.Modes.Leds;
+                    } else {
+                        vuMode = VU.Modes.Bar;
+                    }
+
+                    ApplyGlobalVUMode(this);
+                };
+
+                ApplyVUMode(sui.VUDisplay);
+                FlowLayoutPanelSessions.Controls.Add(sui);
+                sui.Width = FlowLayoutPanelSessions.Width - FlowLayoutPanelSessions.Padding.Horizontal - sui.Margin.Horizontal;
             }
         }
 
         private void HandleSessionStateChanged(object sender, AudioSessionState newState) {
-            if(newState == AudioSessionState.AudioSessionStateExpired) {
-                AudioSessionControl2 session = (AudioSessionControl2)sender;
-                foreach(SessionUI sui in TableLayoutPanelSessions.Controls) {
-                    if(sui.Session.ProcessID == session.ProcessID) {
-                        this.Invoke((MethodInvoker)delegate {
-                            TableLayoutPanelSessions.Controls.Remove(sui);
-                        });
-                        break;
+            AudioSessionControl2 session = (AudioSessionControl2)sender;
+
+            switch(newState) {
+                case AudioSessionState.AudioSessionStateActive:
+                    foreach(SessionUI sui in FlowLayoutPanelSessions.Controls) {
+                        if(sui.Session.ProcessID == session.ProcessID) {
+                            sui.SetSession(session, selDevice.AudioEndpointVolume.MasterVolumeLevelScalar);
+                            break;
+                        }
                     }
-                }
+                    break;
+                case AudioSessionState.AudioSessionStateInactive:
+                    foreach(SessionUI sui in FlowLayoutPanelSessions.Controls) {
+                        if(sui.Session.ProcessID == session.ProcessID) {
+                            sui.UnsetSession();
+                            break;
+                        }
+                    }
+                    break;
+                case AudioSessionState.AudioSessionStateExpired:
+                    foreach(SessionUI sui in FlowLayoutPanelSessions.Controls) {
+                        if(sui.Session.ProcessID == session.ProcessID) {
+                            this.Invoke((MethodInvoker)delegate {
+                                FlowLayoutPanelSessions.Controls.Remove(sui);
+                            });
+
+                            break;
+                        }
+                    }
+                    break;
+                default:
+                    break;
             }
+
+            ResizeUI();
         }
 
         private void HandleSessionCreated(object sender, IAudioSessionControl2 newSession) {
@@ -101,5 +138,50 @@ namespace CoreAudioForms.Framework.Sessions {
                 }
             }
         }
+
+        private void UpdateMasterVolume(AudioVolumeNotificationData data) {
+            foreach(SessionUI s in FlowLayoutPanelSessions.Controls) {
+                s.MasterVolume = data.MasterVolume;
+            }
+        }
+
+        #region UI Stuff
+        private void ResizeUI() {
+            this.Invoke((MethodInvoker)delegate {
+                int m = 0;
+                if(FlowLayoutPanelSessions.VerticalScroll.Visible) {
+                    m = SystemInformation.VerticalScrollBarWidth;
+                }
+
+                foreach(SessionUI sui in FlowLayoutPanelSessions.Controls) {
+                    sui.Width = FlowLayoutPanelSessions.Width -
+                                FlowLayoutPanelSessions.Padding.Horizontal -
+                                sui.Margin.Horizontal - m;
+                }
+
+                FlowLayoutPanelSessions.Refresh(); // This prevents some weird artifacts
+            });
+        }
+
+        private void ApplyGlobalVUMode(Control parentControl) {
+            foreach(Control c in parentControl.Controls) {
+                if(c.HasChildren) {
+                    ApplyGlobalVUMode(c);
+                } else {
+                    if(c is VU vu) {
+                        ApplyVUMode(vu);
+                        break;
+                    }
+                }
+            }
+        }
+
+        private void ApplyVUMode(VU vu) {
+            vu.Mode = vuMode;
+            vu.BackColor = vuMode == VU.Modes.Leds ?
+                Color.FromArgb(33, 33, 33) :
+                Color.FromArgb(33, 33, 33);
+        }
+        #endregion
     }
 }

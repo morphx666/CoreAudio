@@ -23,19 +23,19 @@
         /// the contents of this method with the code editor.
         /// </summary>
         private void InitializeComponent() {
-            this.Label1 = new System.Windows.Forms.Label();
+            this.LabelDevice = new System.Windows.Forms.Label();
             this.ComboBoxDevices = new System.Windows.Forms.ComboBox();
-            this.TableLayoutPanelSessions = new System.Windows.Forms.TableLayoutPanel();
+            this.FlowLayoutPanelSessions = new System.Windows.Forms.FlowLayoutPanel();
             this.SuspendLayout();
             // 
-            // Label1
+            // LabelDevice
             // 
-            this.Label1.AutoSize = true;
-            this.Label1.Location = new System.Drawing.Point(12, 17);
-            this.Label1.Name = "Label1";
-            this.Label1.Size = new System.Drawing.Size(60, 23);
-            this.Label1.TabIndex = 0;
-            this.Label1.Text = "Device";
+            this.LabelDevice.AutoSize = true;
+            this.LabelDevice.Location = new System.Drawing.Point(12, 17);
+            this.LabelDevice.Name = "LabelDevice";
+            this.LabelDevice.Size = new System.Drawing.Size(60, 23);
+            this.LabelDevice.TabIndex = 0;
+            this.LabelDevice.Text = "Device";
             // 
             // ComboBoxDevices
             // 
@@ -45,34 +45,34 @@
             this.ComboBoxDevices.FormattingEnabled = true;
             this.ComboBoxDevices.Location = new System.Drawing.Point(76, 14);
             this.ComboBoxDevices.Name = "ComboBoxDevices";
-            this.ComboBoxDevices.Size = new System.Drawing.Size(479, 29);
+            this.ComboBoxDevices.Size = new System.Drawing.Size(643, 29);
             this.ComboBoxDevices.TabIndex = 1;
             // 
-            // TableLayoutPanelSessions
+            // FlowLayoutPanelSessions
             // 
-            this.TableLayoutPanelSessions.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            this.FlowLayoutPanelSessions.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.TableLayoutPanelSessions.AutoScroll = true;
-            this.TableLayoutPanelSessions.ColumnCount = 1;
-            this.TableLayoutPanelSessions.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50F));
-            this.TableLayoutPanelSessions.Location = new System.Drawing.Point(12, 45);
-            this.TableLayoutPanelSessions.Name = "TableLayoutPanelSessions";
-            this.TableLayoutPanelSessions.RowCount = 1;
-            this.TableLayoutPanelSessions.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50F));
-            this.TableLayoutPanelSessions.Size = new System.Drawing.Size(543, 493);
-            this.TableLayoutPanelSessions.TabIndex = 2;
+            this.FlowLayoutPanelSessions.AutoScroll = true;
+            this.FlowLayoutPanelSessions.FlowDirection = System.Windows.Forms.FlowDirection.TopDown;
+            this.FlowLayoutPanelSessions.Location = new System.Drawing.Point(16, 49);
+            this.FlowLayoutPanelSessions.Name = "FlowLayoutPanelSessions";
+            this.FlowLayoutPanelSessions.Padding = new System.Windows.Forms.Padding(8);
+            this.FlowLayoutPanelSessions.Size = new System.Drawing.Size(703, 489);
+            this.FlowLayoutPanelSessions.TabIndex = 2;
+            this.FlowLayoutPanelSessions.WrapContents = false;
             // 
             // FormMain
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(9F, 21F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(567, 550);
-            this.Controls.Add(this.TableLayoutPanelSessions);
+            this.ClientSize = new System.Drawing.Size(731, 550);
+            this.Controls.Add(this.FlowLayoutPanelSessions);
             this.Controls.Add(this.ComboBoxDevices);
-            this.Controls.Add(this.Label1);
+            this.Controls.Add(this.LabelDevice);
             this.Font = new System.Drawing.Font("Segoe UI", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.Name = "FormMain";
+            this.SizeGripStyle = System.Windows.Forms.SizeGripStyle.Show;
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "CoreAudio Sessions Sample";
             this.ResumeLayout(false);
@@ -82,9 +82,9 @@
 
         #endregion
 
-        private System.Windows.Forms.Label Label1;
+        private System.Windows.Forms.Label LabelDevice;
         private System.Windows.Forms.ComboBox ComboBoxDevices;
-        private System.Windows.Forms.TableLayoutPanel TableLayoutPanelSessions;
+        private System.Windows.Forms.FlowLayoutPanel FlowLayoutPanelSessions;
     }
 }
 
