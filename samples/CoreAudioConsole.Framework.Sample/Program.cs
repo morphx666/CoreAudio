@@ -33,11 +33,12 @@ namespace CoreAudioConsole.Framework.Sample {
                     int start = Console.CursorTop;
                     while(true) {
                         //Draw a VU meter
-                        int len = (int)(mi.MasterPeakValue * 79);
+                        int w = Console.WindowWidth - 1;
+                        int len = (int)(mi.MasterPeakValue * w);
                         Console.SetCursorPosition(0, start);
                         for(int j = 0; j < len; j++)
                             Console.Write("*");
-                        for(int j = 0; j < 79 - len; j++)
+                        for(int j = 0; j < w - len; j++)
                             Console.Write(" ");
                         Console.SetCursorPosition(0, start + 1);
                         Console.WriteLine("Mute   : {0}    ", vol.Mute);
