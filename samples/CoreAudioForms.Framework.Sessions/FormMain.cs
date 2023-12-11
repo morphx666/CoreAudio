@@ -3,12 +3,22 @@ using CoreAudio;
 using CoreAudio.Interfaces;
 using System.Windows.Forms;
 using System.Drawing;
-using System.Threading.Tasks;
 
 namespace CoreAudioForms.Framework.Sessions {
     public partial class FormMain : Form {
         MMDevice selDevice;
         private VU.Modes vuMode = VU.Modes.Bar;
+
+        #region Theme colors
+        private readonly Color formBackColor = Color.FromArgb(41, 48, 69);
+        private readonly Color formForeColor = Color.Gainsboro;
+        private readonly Color sessionBackColor = Color.FromArgb(9, 28, 50);
+        private readonly Color vuBorderColor = Color.FromArgb(74, 100, 136);
+        private readonly Color vuBackColor = Color.FromArgb(33, 33, 33);
+        private readonly Color vuForeColor = Color.FromArgb(34, 60, 91);
+        private readonly Color sessionTrackBarKnobColor = Color.FromArgb(34, 68, 91);
+        private readonly Color sessionTrackBarLineColor = Color.FromArgb(1, 1, 2);
+        #endregion
 
         private class RenderDevice {
             public readonly string Name;
@@ -43,8 +53,8 @@ namespace CoreAudioForms.Framework.Sessions {
 
             this.FlowLayoutPanelSessions.Resize += (_, __) => ResizeUI();
 
-            this.BackColor = Color.FromArgb(55, 55, 55);
-            this.ForeColor = Color.Gainsboro;
+            this.BackColor = formBackColor;
+            this.ForeColor = formForeColor;
         }
 
         private void EnumerateSessions() {
@@ -66,8 +76,11 @@ namespace CoreAudioForms.Framework.Sessions {
                 session.OnStateChanged += HandleSessionStateChanged;
 
                 SessionUI sui = new SessionUI();
-                sui.BackColor = Color.FromArgb(46, 46, 46);
-                sui.VUDisplay.BorderColor = Color.FromArgb(66, 66, 66);
+                sui.BackColor = sessionBackColor;
+                sui.VUDisplay.ForeColor = vuForeColor;
+                sui.VUDisplay.BorderColor = vuBorderColor;
+                sui.TrackBarVol.TrackerColor = sessionTrackBarKnobColor;
+                sui.TrackBarVol.TrackLineColor = sessionTrackBarLineColor;
                 sui.SetSession(session, selDevice.AudioEndpointVolume.MasterVolumeLevelScalar);
                 sui.VUDisplay.Mode = vuMode;
                 sui.Click += (_, __) => {
@@ -179,8 +192,8 @@ namespace CoreAudioForms.Framework.Sessions {
         private void ApplyVUMode(VU vu) {
             vu.Mode = vuMode;
             vu.BackColor = vuMode == VU.Modes.Leds ?
-                Color.FromArgb(33, 33, 33) :
-                Color.FromArgb(33, 33, 33);
+                vuBackColor :
+                vuBackColor;
         }
         #endregion
     }

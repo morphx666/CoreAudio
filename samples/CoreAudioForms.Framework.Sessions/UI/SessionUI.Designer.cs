@@ -25,9 +25,9 @@
         private void InitializeComponent() {
             this.PictureBoxIcon = new System.Windows.Forms.PictureBox();
             this.LabelName = new System.Windows.Forms.Label();
-            this.TrackBarVol = new XComponent.SliderBar.MACTrackBar();
             this.LabelSessionInfo = new System.Windows.Forms.Label();
             this.VUDisplay = new CoreAudioForms.Framework.Sessions.VU();
+            this.TrackBarVol = new XComponent.SliderBar.MACTrackBar();
             ((System.ComponentModel.ISupportInitialize)(this.PictureBoxIcon)).BeginInit();
             this.SuspendLayout();
             // 
@@ -50,33 +50,6 @@
             this.LabelName.Size = new System.Drawing.Size(96, 16);
             this.LabelName.TabIndex = 1;
             this.LabelName.Text = "Session Name";
-            // 
-            // TrackBarVol
-            // 
-            this.TrackBarVol.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.TrackBarVol.BackColor = System.Drawing.Color.Transparent;
-            this.TrackBarVol.BorderColor = System.Drawing.SystemColors.ActiveBorder;
-            this.TrackBarVol.Font = new System.Drawing.Font("Verdana", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.TrackBarVol.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(123)))), ((int)(((byte)(125)))), ((int)(((byte)(123)))));
-            this.TrackBarVol.IndentHeight = 6;
-            this.TrackBarVol.Location = new System.Drawing.Point(107, 71);
-            this.TrackBarVol.Margin = new System.Windows.Forms.Padding(4);
-            this.TrackBarVol.Maximum = 100;
-            this.TrackBarVol.Minimum = 0;
-            this.TrackBarVol.Name = "TrackBarVol";
-            this.TrackBarVol.Size = new System.Drawing.Size(283, 28);
-            this.TrackBarVol.TabIndex = 3;
-            this.TrackBarVol.TextTickStyle = System.Windows.Forms.TickStyle.None;
-            this.TrackBarVol.TickColor = System.Drawing.Color.FromArgb(((int)(((byte)(148)))), ((int)(((byte)(146)))), ((int)(((byte)(148)))));
-            this.TrackBarVol.TickFrequency = 10;
-            this.TrackBarVol.TickHeight = 4;
-            this.TrackBarVol.TickStyle = System.Windows.Forms.TickStyle.None;
-            this.TrackBarVol.TrackerColor = System.Drawing.Color.DarkSlateBlue;
-            this.TrackBarVol.TrackerSize = new System.Drawing.Size(16, 16);
-            this.TrackBarVol.TrackLineColor = System.Drawing.Color.FromArgb(((int)(((byte)(90)))), ((int)(((byte)(93)))), ((int)(((byte)(90)))));
-            this.TrackBarVol.TrackLineHeight = 3;
-            this.TrackBarVol.Value = 0;
             // 
             // LabelSessionInfo
             // 
@@ -115,6 +88,32 @@
             this.VUDisplay.Values = new int[] {
         0,
         0};
+            this.VUDisplay.Volume = 0F;
+            // 
+            // TrackBarVol
+            // 
+            this.TrackBarVol.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.TrackBarVol.BackColor = System.Drawing.Color.Transparent;
+            this.TrackBarVol.BorderColor = System.Drawing.SystemColors.ActiveBorder;
+            this.TrackBarVol.Font = new System.Drawing.Font("Verdana", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.TrackBarVol.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(123)))), ((int)(((byte)(125)))), ((int)(((byte)(123)))));
+            this.TrackBarVol.IndentHeight = 6;
+            this.TrackBarVol.Location = new System.Drawing.Point(107, 71);
+            this.TrackBarVol.Margin = new System.Windows.Forms.Padding(4);
+            this.TrackBarVol.Maximum = 100;
+            this.TrackBarVol.Minimum = 0;
+            this.TrackBarVol.Name = "TrackBarVol";
+            this.TrackBarVol.Size = new System.Drawing.Size(283, 28);
+            this.TrackBarVol.TabIndex = 3;
+            this.TrackBarVol.TextTickStyle = System.Windows.Forms.TickStyle.None;
+            this.TrackBarVol.TickColor = System.Drawing.Color.FromArgb(((int)(((byte)(148)))), ((int)(((byte)(146)))), ((int)(((byte)(148)))));
+            this.TrackBarVol.TickFrequency = 10;
+            this.TrackBarVol.TickHeight = 4;
+            this.TrackBarVol.TickStyle = System.Windows.Forms.TickStyle.None;
+            this.TrackBarVol.TrackerSize = new System.Drawing.Size(16, 16);
+            this.TrackBarVol.TrackLineHeight = 3;
+            this.TrackBarVol.Value = 0;
             // 
             // SessionUI
             // 
@@ -138,8 +137,8 @@
 
         private System.Windows.Forms.PictureBox PictureBoxIcon;
         private System.Windows.Forms.Label LabelName;
-        private XComponent.SliderBar.MACTrackBar TrackBarVol;
         internal VU VUDisplay;
         private System.Windows.Forms.Label LabelSessionInfo;
+        internal XComponent.SliderBar.MACTrackBar TrackBarVol;
     }
 }

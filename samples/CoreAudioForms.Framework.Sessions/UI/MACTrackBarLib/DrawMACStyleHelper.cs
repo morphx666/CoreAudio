@@ -119,8 +119,8 @@ namespace XComponent.SliderBar
 			Color color2;
 			Color color3;
 			Color color4;
-			System.Drawing.Drawing2D.LinearGradientBrush gradientBrush;
-			System.Drawing.Drawing2D.ColorBlend colorBlend = new System.Drawing.Drawing2D.ColorBlend();
+			LinearGradientBrush gradientBrush;
+			ColorBlend colorBlend = new ColorBlend();
 
 			color1 = drawColor;
 			color2 = ControlPaint.Light(color1);

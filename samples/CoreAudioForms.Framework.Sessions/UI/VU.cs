@@ -10,6 +10,7 @@ namespace CoreAudioForms.Framework.Sessions {
         private int channels;
         private int[] values;
         private CancellationTokenSource cts;
+        private Color barFullLevelColor = Color.FromArgb(44, 44, 44);
         private float[] ledsRanges = new float[] { 50.0f, 35.0f, 15.0f };
         private Color[] ledsColorsOff = new Color[] { Color.DarkGreen, Color.DarkGoldenrod, Color.DarkRed };
         private Color[] ledsColorsOn = new Color[] { Color.LightGreen, Color.Yellow, Color.Red };
@@ -28,6 +29,8 @@ namespace CoreAudioForms.Framework.Sessions {
 
             this.BorderStyle = BorderStyle.None;
         }
+
+        public float Volume { get; set; }
 
         [Description("Value Levels for each Channel"), Category("Behavior")]
         public int[] Values {
@@ -113,11 +116,13 @@ namespace CoreAudioForms.Framework.Sessions {
             size.Height /= Channels;
 
             for(int i = 0; i < Channels; i++) {
-                int b = (int)Math.Floor(size.Width * (float)values[i] / 100.0f);
+                int fullLevel = (int)Math.Floor(size.Width * values[i] / 100.0f);
+                int adjLevel = (int)Math.Floor(size.Width * values[i] * Volume / 100.0f);
 
                 switch(Mode) {
                     case Modes.Bar:
-                        g.FillRectangle(new SolidBrush(ForeColor), 2, 1 + size.Height * i + (i + 1), b, size.Height);
+                        g.FillRectangle(new SolidBrush(barFullLevelColor), 2, 1 + size.Height * i + (i + 1), fullLevel, size.Height);
+                        g.FillRectangle(new SolidBrush(ForeColor), 2, 1 + size.Height * i + (i + 1), adjLevel, size.Height);
                         break;
                     case Modes.Leds:
                         for(int j = 0; j < size.Width; j += 2) {
@@ -127,7 +132,7 @@ namespace CoreAudioForms.Framework.Sessions {
                             for(int k = 0; k < ledsRanges.Length; k++) {
                                 range += ledsRanges[k];
                                 if(p < range) {
-                                    g.FillRectangle(new SolidBrush(b > j ? ledsColorsOn[k] : ledsColorsOff[k]),
+                                    g.FillRectangle(new SolidBrush(fullLevel > j ? ledsColorsOn[k] : ledsColorsOff[k]),
                                         2 + j,
                                         1 + size.Height * i + (i + 1),
                                         1,

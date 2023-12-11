@@ -186,6 +186,7 @@ namespace CoreAudioForms.Framework.Sessions {
                 Invoke(new SimpleVolumeChangedDelegate(UpdateUI), new object[] { sender, newVolume, newMute });
             else
                 TrackBarVol.Value = (int)(newVolume * masterVolume * 100);
+            VUDisplay.Volume = newVolume * masterVolume;
         }
 
         private void Render(object sender, PaintEventArgs e) {
