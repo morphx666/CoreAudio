@@ -67,12 +67,17 @@
             this.VUDisplay.BarBackColor = System.Drawing.SystemColors.Control;
             this.VUDisplay.BorderColor = System.Drawing.SystemColors.ActiveBorder;
             this.VUDisplay.Channels = 2;
+            this.VUDisplay.Cursor = System.Windows.Forms.Cursors.Hand;
             this.VUDisplay.ForeColor = System.Drawing.SystemColors.Highlight;
+            this.VUDisplay.LedsAdjColorsOn = new System.Drawing.Color[] {
+        System.Drawing.Color.LightGreen,
+        System.Drawing.Color.Yellow,
+        System.Drawing.Color.Red};
             this.VUDisplay.LedsColorsOff = new System.Drawing.Color[] {
         System.Drawing.Color.DarkGreen,
         System.Drawing.Color.DarkGoldenrod,
         System.Drawing.Color.DarkRed};
-            this.VUDisplay.LedsColorsOn = new System.Drawing.Color[] {
+            this.VUDisplay.LedsFullColorsOn = new System.Drawing.Color[] {
         System.Drawing.Color.LightGreen,
         System.Drawing.Color.Yellow,
         System.Drawing.Color.Red};
@@ -111,7 +116,9 @@
             this.TrackBarVol.TickFrequency = 10;
             this.TrackBarVol.TickHeight = 4;
             this.TrackBarVol.TickStyle = System.Windows.Forms.TickStyle.None;
+            this.TrackBarVol.TrackerColor = System.Drawing.Color.FromArgb(((int)(((byte)(24)))), ((int)(((byte)(130)))), ((int)(((byte)(198)))));
             this.TrackBarVol.TrackerSize = new System.Drawing.Size(16, 16);
+            this.TrackBarVol.TrackLineColor = System.Drawing.Color.FromArgb(((int)(((byte)(90)))), ((int)(((byte)(93)))), ((int)(((byte)(90)))));
             this.TrackBarVol.TrackLineHeight = 3;
             this.TrackBarVol.Value = 0;
             // 

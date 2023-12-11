@@ -12,8 +12,9 @@ namespace CoreAudioForms.Framework.Sessions {
         private CancellationTokenSource cts;
         private Color barFullLevelColor = Color.FromArgb(44, 44, 44);
         private float[] ledsRanges = new float[] { 50.0f, 35.0f, 15.0f };
-        private Color[] ledsColorsOff = new Color[] { Color.DarkGreen, Color.DarkGoldenrod, Color.DarkRed };
-        private Color[] ledsColorsOn = new Color[] { Color.LightGreen, Color.Yellow, Color.Red };
+        private Color[] ledsColorsOff = new Color[] { ControlPaint.Dark(Color.DarkGreen), ControlPaint.Dark(Color.DarkGoldenrod), ControlPaint.Dark(Color.DarkRed) };
+        private Color[] ledsFullColorsOn = new Color[] { ControlPaint.Dark(Color.LightGreen), ControlPaint.Dark(Color.Yellow), ControlPaint.Dark(Color.Red) };
+        private Color[] ledsAdjColorsOn = new Color[] { Color.LightGreen, Color.Yellow, Color.Red };
 
         public enum Modes {
             Bar,
@@ -74,12 +75,21 @@ namespace CoreAudioForms.Framework.Sessions {
         [Description("Mode"), Category("Appearance")]
         public Modes Mode { get; set; } = Modes.Bar;
 
-        [Description("Leds Colors On"), Category("Appearance")]
-        public Color[] LedsColorsOn {
-            get => ledsColorsOn;
+        [Description("Leds Colors On (Full Scale)"), Category("Appearance")]
+        public Color[] LedsFullColorsOn {
+            get => ledsFullColorsOn;
             set {
                 if(value.Length != ledsColorsOff.Length) return;
-                ledsColorsOn = value;
+                ledsFullColorsOn = value;
+            }
+        }
+
+        [Description("Leds Colors On (Volume Adjusted)"), Category("Appearance")]
+        public Color[] LedsAdjColorsOn {
+            get => ledsAdjColorsOn;
+            set {
+                if(value.Length != ledsColorsOff.Length) return;
+                ledsAdjColorsOn = value;
             }
         }
 
@@ -87,7 +97,7 @@ namespace CoreAudioForms.Framework.Sessions {
         public Color[] LedsColorsOff {
             get => ledsColorsOff;
             set {
-                if(value.Length != ledsColorsOn.Length) return;
+                if(value.Length != ledsFullColorsOn.Length) return;
                 ledsColorsOff = value;
             }
         }
@@ -132,11 +142,28 @@ namespace CoreAudioForms.Framework.Sessions {
                             for(int k = 0; k < ledsRanges.Length; k++) {
                                 range += ledsRanges[k];
                                 if(p < range) {
-                                    g.FillRectangle(new SolidBrush(fullLevel > j ? ledsColorsOn[k] : ledsColorsOff[k]),
-                                        2 + j,
-                                        1 + size.Height * i + (i + 1),
-                                        1,
-                                        size.Height);
+                                    if(fullLevel > j) {
+                                        g.FillRectangle(new SolidBrush(ledsFullColorsOn[k]),
+                                            2 + j,
+                                            1 + size.Height * i + (i + 1),
+                                            1,
+                                            size.Height);
+                                    } else {
+                                        g.FillRectangle(new SolidBrush(ledsColorsOff[k]),
+                                            2 + j,
+                                            1 + size.Height * i + (i + 1),
+                                            1,
+                                            size.Height);
+                                    }
+
+                                    if(adjLevel > j) {
+                                        g.FillRectangle(new SolidBrush(ledsAdjColorsOn[k]),
+                                            2 + j,
+                                            1 + size.Height * i + (i + 1),
+                                            1,
+                                            size.Height);
+                                    }
+
                                     break;
                                 }
                             }

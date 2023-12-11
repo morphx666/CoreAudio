@@ -129,6 +129,7 @@ namespace CoreAudioForms.Framework.Sessions {
                 OnSessionVolumeChanged?.Invoke(masterVolume + (v - 1.0f));
             } else {
                 session.SimpleAudioVolume.MasterVolume = v;
+                VUDisplay.Volume = v * masterVolume;
             }
         }
 

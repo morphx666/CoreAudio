@@ -18,6 +18,10 @@ namespace CoreAudioForms.Framework.Sessions {
         private readonly Color vuForeColor = Color.FromArgb(34, 60, 91);
         private readonly Color sessionTrackBarKnobColor = Color.FromArgb(34, 68, 91);
         private readonly Color sessionTrackBarLineColor = Color.FromArgb(1, 1, 2);
+
+        private Color[] ledsColorsOff = new Color[] { ControlPaint.Dark(Color.DarkGreen), ControlPaint.Dark(Color.DarkGoldenrod), ControlPaint.Dark(Color.DarkRed) };
+        private Color[] ledsFullColorsOn = new Color[] { ControlPaint.Dark(Color.LightGreen), ControlPaint.Dark(Color.Yellow), ControlPaint.Dark(Color.Red) };
+        private Color[] ledsAdjColorsOn = new Color[] { Color.LightGreen, Color.Yellow, Color.Red };
         #endregion
 
         private class RenderDevice {
@@ -77,12 +81,18 @@ namespace CoreAudioForms.Framework.Sessions {
 
                 SessionUI sui = new SessionUI();
                 sui.BackColor = sessionBackColor;
+
                 sui.VUDisplay.ForeColor = vuForeColor;
                 sui.VUDisplay.BorderColor = vuBorderColor;
+                sui.VUDisplay.LedsColorsOff = ledsColorsOff;
+                sui.VUDisplay.LedsFullColorsOn = ledsFullColorsOn;
+                sui.VUDisplay.LedsAdjColorsOn = ledsAdjColorsOn;
+                sui.VUDisplay.Mode = vuMode;
+
                 sui.TrackBarVol.TrackerColor = sessionTrackBarKnobColor;
                 sui.TrackBarVol.TrackLineColor = sessionTrackBarLineColor;
+
                 sui.SetSession(session, selDevice.AudioEndpointVolume.MasterVolumeLevelScalar);
-                sui.VUDisplay.Mode = vuMode;
                 sui.Click += (_, __) => {
                     if(vuMode == VU.Modes.Bar) {
                         vuMode = VU.Modes.Leds;
