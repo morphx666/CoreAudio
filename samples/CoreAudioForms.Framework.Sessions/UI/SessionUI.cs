@@ -21,6 +21,9 @@ namespace CoreAudioForms.Framework.Sessions {
         private float masterVolume = 1.0f;
         private CancellationTokenSource cts;
 
+        public delegate void UpdateDeviceMasterVolumeDelegate(float newVolume);
+        public event UpdateDeviceMasterVolumeDelegate OnSessionVolumeChanged;
+
         private int channels;
         private int[] newValues;
         private int[] lastValues;
@@ -37,7 +40,6 @@ namespace CoreAudioForms.Framework.Sessions {
             SetSessionNameFont();
 
             foreach(Control c in this.Controls) {
-                //if(!(c is TrackBar)) c.Click += (_, __) => this.OnClick(__);
                 if(!(c is MACTrackBar)) c.Click += (_, __) => this.OnClick(__);
             }
 
@@ -122,7 +124,12 @@ namespace CoreAudioForms.Framework.Sessions {
         }
 
         private void UpdateVolume() {
-            session.SimpleAudioVolume.MasterVolume = TrackBarVol.Value / 100.0f;
+            float v = (TrackBarVol.Value / masterVolume) / 100.0f;
+            if(v > 1.0f) {
+                OnSessionVolumeChanged?.Invoke(masterVolume + (v - 1.0f));
+            } else {
+                session.SimpleAudioVolume.MasterVolume = v;
+            }
         }
 
         #region UI Stuff
@@ -185,7 +192,7 @@ namespace CoreAudioForms.Framework.Sessions {
             if(InvokeRequired)
                 Invoke(new SimpleVolumeChangedDelegate(UpdateUI), new object[] { sender, newVolume, newMute });
             else
-                TrackBarVol.Value = (int)(newVolume * masterVolume * 100);
+                TrackBarVol.Value = (int)(newVolume * masterVolume * 100.0f);
             VUDisplay.Volume = newVolume * masterVolume;
         }
 

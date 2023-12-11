@@ -6,7 +6,7 @@ using System.Drawing;
 
 namespace CoreAudioForms.Framework.Sessions {
     public partial class FormMain : Form {
-        MMDevice selDevice;
+        private MMDevice selDevice;
         private VU.Modes vuMode = VU.Modes.Bar;
 
         #region Theme colors
@@ -59,7 +59,7 @@ namespace CoreAudioForms.Framework.Sessions {
 
         private void EnumerateSessions() {
             selDevice = ((RenderDevice)ComboBoxDevices.SelectedItem).Device;
-            selDevice.AudioEndpointVolume.OnVolumeNotification += new AudioEndpointVolumeNotificationDelegate(UpdateMasterVolume);
+            selDevice.AudioEndpointVolume.OnVolumeNotification += new AudioEndpointVolumeNotificationDelegate(UpdateSessionsMasterVolume);
             SessionCollection sessions = selDevice.AudioSessionManager2.Sessions;
 
             while(FlowLayoutPanelSessions.Controls.Count > 0) {
@@ -91,6 +91,17 @@ namespace CoreAudioForms.Framework.Sessions {
                     }
 
                     ApplyGlobalVUMode(this);
+                };
+                sui.OnSessionVolumeChanged += (float newVolume) => { // FIXME: The volume handling between the UI,
+                                                                     // the master volume and the sessions' volumes
+                                                                     // should be simplified. Right now it's a spaghetti of a mess.
+                    if(newVolume > 1.0f) {
+                        newVolume = 1.0f;
+                    } else if(newVolume < 0.0f) {
+                        newVolume = 0.0f;
+                    }
+                    selDevice.AudioEndpointVolume.MasterVolumeLevelScalar = newVolume;
+                    UpdateSessionsMasterVolume(new AudioVolumeNotificationData(Guid.Empty, false, newVolume, new float[] { newVolume }));
                 };
 
                 ApplyVUMode(sui.VUDisplay);
@@ -152,9 +163,9 @@ namespace CoreAudioForms.Framework.Sessions {
             }
         }
 
-        private void UpdateMasterVolume(AudioVolumeNotificationData data) {
-            foreach(SessionUI s in FlowLayoutPanelSessions.Controls) {
-                s.MasterVolume = data.MasterVolume;
+        private void UpdateSessionsMasterVolume(AudioVolumeNotificationData data) {
+            foreach(SessionUI sui in FlowLayoutPanelSessions.Controls) {
+                sui.MasterVolume = data.MasterVolume;
             }
         }
 
