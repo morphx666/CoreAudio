@@ -16,5 +16,6 @@ You may also refer to the [included samples](https://github.com/morphx666/CoreAu
 ---
 
 Sample application demonstrating how to handle sessions
-![image](https://github.com/morphx666/CoreAudio/assets/12353675/ad56a0e2-d1e1-4ee3-bbce-c397801a38bd)
+![image](https://github.com/morphx666/CoreAudio/assets/12353675/b0f43862-c653-4e04-86f8-d8862fb734eb)
+
 
