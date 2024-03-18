@@ -30,114 +30,145 @@
         {
             this.components = new System.ComponentModel.Container();
             this.UpdateTimer = new System.Windows.Forms.Timer(this.components);
-            this.lblRight = new System.Windows.Forms.Label();
-            this.lblLeft = new System.Windows.Forms.Label();
-            this.lblMaster = new System.Windows.Forms.Label();
-            this.pbRight = new System.Windows.Forms.ProgressBar();
-            this.pbLeft = new System.Windows.Forms.ProgressBar();
-            this.pbMaster = new System.Windows.Forms.ProgressBar();
-            this.lblVolume = new System.Windows.Forms.Label();
-            this.tbMaster = new System.Windows.Forms.TrackBar();
-            ((System.ComponentModel.ISupportInitialize)(this.tbMaster)).BeginInit();
+            this.LabelRightPeak = new System.Windows.Forms.Label();
+            this.LabelLeftPeak = new System.Windows.Forms.Label();
+            this.LabelMasterPeak = new System.Windows.Forms.Label();
+            this.ProgressBarRight = new System.Windows.Forms.ProgressBar();
+            this.ProgressBarLeft = new System.Windows.Forms.ProgressBar();
+            this.ProgressBarMaster = new System.Windows.Forms.ProgressBar();
+            this.LabelMasterVolume = new System.Windows.Forms.Label();
+            this.TrackBarMaster = new System.Windows.Forms.TrackBar();
+            this.CheckBoxMute = new System.Windows.Forms.CheckBox();
+            ((System.ComponentModel.ISupportInitialize)(this.TrackBarMaster)).BeginInit();
             this.SuspendLayout();
             // 
             // UpdateTimer
             // 
             this.UpdateTimer.Enabled = true;
-            this.UpdateTimer.Tick += new System.EventHandler(this.Update_Timer_Tick);
+            this.UpdateTimer.Tick += new System.EventHandler(this.UpdateTimer_Tick);
             // 
-            // lblRight
+            // LabelRightPeak
             // 
-            this.lblRight.AutoSize = true;
-            this.lblRight.Location = new System.Drawing.Point(101, 77);
-            this.lblRight.Name = "lblRight";
-            this.lblRight.Size = new System.Drawing.Size(60, 13);
-            this.lblRight.TabIndex = 9;
-            this.lblRight.Text = "Right Peak";
+            this.LabelRightPeak.AutoSize = true;
+            this.LabelRightPeak.Location = new System.Drawing.Point(152, 84);
+            this.LabelRightPeak.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.LabelRightPeak.Name = "LabelRightPeak";
+            this.LabelRightPeak.Size = new System.Drawing.Size(90, 23);
+            this.LabelRightPeak.TabIndex = 9;
+            this.LabelRightPeak.Text = "Right Peak";
             // 
-            // lblLeft
+            // LabelLeftPeak
             // 
-            this.lblLeft.AutoSize = true;
-            this.lblLeft.Location = new System.Drawing.Point(101, 42);
-            this.lblLeft.Name = "lblLeft";
-            this.lblLeft.Size = new System.Drawing.Size(53, 13);
-            this.lblLeft.TabIndex = 10;
-            this.lblLeft.Text = "Left Peak";
+            this.LabelLeftPeak.AutoSize = true;
+            this.LabelLeftPeak.Location = new System.Drawing.Point(152, 49);
+            this.LabelLeftPeak.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.LabelLeftPeak.Name = "LabelLeftPeak";
+            this.LabelLeftPeak.Size = new System.Drawing.Size(78, 23);
+            this.LabelLeftPeak.TabIndex = 10;
+            this.LabelLeftPeak.Text = "Left Peak";
             // 
-            // lblMaster
+            // LabelMasterPeak
             // 
-            this.lblMaster.AutoSize = true;
-            this.lblMaster.Location = new System.Drawing.Point(101, 8);
-            this.lblMaster.Name = "lblMaster";
-            this.lblMaster.Size = new System.Drawing.Size(67, 13);
-            this.lblMaster.TabIndex = 11;
-            this.lblMaster.Text = "Master Peak";
+            this.LabelMasterPeak.AutoSize = true;
+            this.LabelMasterPeak.Location = new System.Drawing.Point(152, 14);
+            this.LabelMasterPeak.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.LabelMasterPeak.Name = "LabelMasterPeak";
+            this.LabelMasterPeak.Size = new System.Drawing.Size(102, 23);
+            this.LabelMasterPeak.TabIndex = 11;
+            this.LabelMasterPeak.Text = "Master Peak";
             // 
-            // pbRight
+            // ProgressBarRight
             // 
-            this.pbRight.Location = new System.Drawing.Point(174, 77);
-            this.pbRight.Name = "pbRight";
-            this.pbRight.Size = new System.Drawing.Size(160, 13);
-            this.pbRight.Step = 1;
-            this.pbRight.TabIndex = 6;
+            this.ProgressBarRight.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.ProgressBarRight.Location = new System.Drawing.Point(261, 84);
+            this.ProgressBarRight.Margin = new System.Windows.Forms.Padding(4, 6, 4, 6);
+            this.ProgressBarRight.Name = "ProgressBarRight";
+            this.ProgressBarRight.Size = new System.Drawing.Size(240, 23);
+            this.ProgressBarRight.Step = 1;
+            this.ProgressBarRight.TabIndex = 6;
             // 
-            // pbLeft
+            // ProgressBarLeft
             // 
-            this.pbLeft.Location = new System.Drawing.Point(174, 42);
-            this.pbLeft.Name = "pbLeft";
-            this.pbLeft.Size = new System.Drawing.Size(160, 13);
-            this.pbLeft.Step = 1;
-            this.pbLeft.TabIndex = 7;
+            this.ProgressBarLeft.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.ProgressBarLeft.Location = new System.Drawing.Point(261, 49);
+            this.ProgressBarLeft.Margin = new System.Windows.Forms.Padding(4, 6, 4, 6);
+            this.ProgressBarLeft.Name = "ProgressBarLeft";
+            this.ProgressBarLeft.Size = new System.Drawing.Size(240, 23);
+            this.ProgressBarLeft.Step = 1;
+            this.ProgressBarLeft.TabIndex = 7;
             // 
-            // pbMaster
+            // ProgressBarMaster
             // 
-            this.pbMaster.Location = new System.Drawing.Point(174, 8);
-            this.pbMaster.Name = "pbMaster";
-            this.pbMaster.Size = new System.Drawing.Size(160, 13);
-            this.pbMaster.Step = 1;
-            this.pbMaster.TabIndex = 8;
+            this.ProgressBarMaster.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.ProgressBarMaster.Location = new System.Drawing.Point(261, 14);
+            this.ProgressBarMaster.Margin = new System.Windows.Forms.Padding(4, 6, 4, 6);
+            this.ProgressBarMaster.Name = "ProgressBarMaster";
+            this.ProgressBarMaster.Size = new System.Drawing.Size(240, 23);
+            this.ProgressBarMaster.Step = 1;
+            this.ProgressBarMaster.TabIndex = 8;
             // 
-            // lblVolume
+            // LabelMasterVolume
             // 
-            this.lblVolume.AutoSize = true;
-            this.lblVolume.Location = new System.Drawing.Point(12, 93);
-            this.lblVolume.Name = "lblVolume";
-            this.lblVolume.Size = new System.Drawing.Size(77, 13);
-            this.lblVolume.TabIndex = 5;
-            this.lblVolume.Text = "Master Volume";
+            this.LabelMasterVolume.AutoSize = true;
+            this.LabelMasterVolume.Location = new System.Drawing.Point(13, 175);
+            this.LabelMasterVolume.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.LabelMasterVolume.Name = "LabelMasterVolume";
+            this.LabelMasterVolume.Size = new System.Drawing.Size(125, 23);
+            this.LabelMasterVolume.TabIndex = 5;
+            this.LabelMasterVolume.Text = "Master Volume";
             // 
-            // tbMaster
+            // TrackBarMaster
             // 
-            this.tbMaster.LargeChange = 20;
-            this.tbMaster.Location = new System.Drawing.Point(30, 2);
-            this.tbMaster.Maximum = 100;
-            this.tbMaster.Name = "tbMaster";
-            this.tbMaster.Orientation = System.Windows.Forms.Orientation.Vertical;
-            this.tbMaster.Size = new System.Drawing.Size(45, 88);
-            this.tbMaster.SmallChange = 5;
-            this.tbMaster.TabIndex = 4;
-            this.tbMaster.TickFrequency = 10;
-            this.tbMaster.TickStyle = System.Windows.Forms.TickStyle.Both;
-            this.tbMaster.Scroll += new System.EventHandler(this.Master_Scroll);
+            this.TrackBarMaster.LargeChange = 20;
+            this.TrackBarMaster.Location = new System.Drawing.Point(45, 11);
+            this.TrackBarMaster.Margin = new System.Windows.Forms.Padding(4, 6, 4, 6);
+            this.TrackBarMaster.Maximum = 100;
+            this.TrackBarMaster.Name = "TrackBarMaster";
+            this.TrackBarMaster.Orientation = System.Windows.Forms.Orientation.Vertical;
+            this.TrackBarMaster.Size = new System.Drawing.Size(56, 135);
+            this.TrackBarMaster.SmallChange = 5;
+            this.TrackBarMaster.TabIndex = 4;
+            this.TrackBarMaster.TickFrequency = 10;
+            this.TrackBarMaster.TickStyle = System.Windows.Forms.TickStyle.Both;
+            this.TrackBarMaster.Scroll += new System.EventHandler(this.TrackBarMaster_Scroll);
+            // 
+            // CheckBoxMute
+            // 
+            this.CheckBoxMute.AutoSize = true;
+            this.CheckBoxMute.Location = new System.Drawing.Point(60, 149);
+            this.CheckBoxMute.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
+            this.CheckBoxMute.Name = "CheckBoxMute";
+            this.CheckBoxMute.Size = new System.Drawing.Size(18, 17);
+            this.CheckBoxMute.TabIndex = 12;
+            this.CheckBoxMute.UseVisualStyleBackColor = true;
+            this.CheckBoxMute.CheckedChanged += new System.EventHandler(this.CheckBoxMute_CheckedChanged);
             // 
             // FormMain
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(9F, 23F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(348, 117);
-            this.Controls.Add(this.lblRight);
-            this.Controls.Add(this.lblLeft);
-            this.Controls.Add(this.lblMaster);
-            this.Controls.Add(this.pbRight);
-            this.Controls.Add(this.pbLeft);
-            this.Controls.Add(this.pbMaster);
-            this.Controls.Add(this.lblVolume);
-            this.Controls.Add(this.tbMaster);
+            this.ClientSize = new System.Drawing.Size(522, 209);
+            this.Controls.Add(this.CheckBoxMute);
+            this.Controls.Add(this.LabelRightPeak);
+            this.Controls.Add(this.LabelLeftPeak);
+            this.Controls.Add(this.LabelMasterPeak);
+            this.Controls.Add(this.ProgressBarRight);
+            this.Controls.Add(this.ProgressBarLeft);
+            this.Controls.Add(this.ProgressBarMaster);
+            this.Controls.Add(this.LabelMasterVolume);
+            this.Controls.Add(this.TrackBarMaster);
+            this.Font = new System.Drawing.Font("Segoe UI", 10.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.Margin = new System.Windows.Forms.Padding(4, 6, 4, 6);
             this.MaximizeBox = false;
+            this.MaximumSize = new System.Drawing.Size(2000, 256);
+            this.MinimumSize = new System.Drawing.Size(540, 256);
             this.Name = "FormMain";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "CoreAudio Volume Sample";
-            ((System.ComponentModel.ISupportInitialize)(this.tbMaster)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.TrackBarMaster)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -146,14 +177,15 @@
         #endregion
 
         private System.Windows.Forms.Timer UpdateTimer;
-        private System.Windows.Forms.Label lblRight;
-        private System.Windows.Forms.Label lblLeft;
-        private System.Windows.Forms.Label lblMaster;
-        private System.Windows.Forms.ProgressBar pbRight;
-        private System.Windows.Forms.ProgressBar pbLeft;
-        private System.Windows.Forms.ProgressBar pbMaster;
-        private System.Windows.Forms.Label lblVolume;
-        private System.Windows.Forms.TrackBar tbMaster;
+        private System.Windows.Forms.Label LabelRightPeak;
+        private System.Windows.Forms.Label LabelLeftPeak;
+        private System.Windows.Forms.Label LabelMasterPeak;
+        private System.Windows.Forms.ProgressBar ProgressBarRight;
+        private System.Windows.Forms.ProgressBar ProgressBarLeft;
+        private System.Windows.Forms.ProgressBar ProgressBarMaster;
+        private System.Windows.Forms.Label LabelMasterVolume;
+        private System.Windows.Forms.TrackBar TrackBarMaster;
+        private System.Windows.Forms.CheckBox CheckBoxMute;
     }
 }
 

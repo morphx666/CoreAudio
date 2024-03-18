@@ -25,9 +25,9 @@ using CoreAudio.Interfaces;
 
 namespace CoreAudio {
     public class AudioEndPointVolumeVolumeRange {
-        float volumeMindB;
-        float volumeMaxdB;
-        float volumeIncrementdB;
+        readonly float volumeMindB;
+        readonly float volumeMaxdB;
+        readonly float volumeIncrementdB;
 
         internal AudioEndPointVolumeVolumeRange(IAudioEndpointVolume parent) {
             Marshal.ThrowExceptionForHR(parent.GetVolumeRange(out volumeMindB, out volumeMaxdB, out volumeIncrementdB));

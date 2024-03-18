@@ -20,15 +20,18 @@
   3. This notice may not be removed or altered from any source distribution.
 */
 
+using System;
 using System.Runtime.InteropServices;
 using CoreAudio.Interfaces;
 
 namespace CoreAudio {
     public class AudioMute {
-        IAudioMute audioMute;
+        readonly IAudioMute audioMute;
+        internal readonly Guid eventContext;
 
-        internal AudioMute(IAudioMute audioMute) {
+        internal AudioMute(IAudioMute audioMute, Guid eventContext) {
             this.audioMute = audioMute;
+            this.eventContext = eventContext;
         }
 
         public bool Mute {
@@ -36,7 +39,7 @@ namespace CoreAudio {
                 Marshal.ThrowExceptionForHR(audioMute.GetMute(out var muted));
                 return muted;
             }
-            set => Marshal.ThrowExceptionForHR(audioMute.SetMute(value, out var eventContext));
+            set => Marshal.ThrowExceptionForHR(audioMute.SetMute(value, eventContext));
         }
     }
 }

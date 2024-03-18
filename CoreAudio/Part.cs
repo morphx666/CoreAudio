@@ -32,6 +32,7 @@ namespace CoreAudio {
         AudioMute? audioMute;
         AudioPeakMeter? audioPeakMeter;
         AudioLoudness? audioLoudness;
+        internal  Guid eventContext = Guid.Empty;
 
         public delegate void PartNotificationDelegate(object sender);
 
@@ -49,8 +50,9 @@ namespace CoreAudio {
             this.part = part;
         }
 
-        internal void FireNotification(uint dwSenderProcessId, ref Guid pguidEventContext) {
+        internal void FireNotification(uint dwSenderProcessId, ref Guid eventContext) {
             OnPartNotification?.Invoke(this);
+            this.eventContext = eventContext;
         }
 
         private AudioVolumeLevel? GetAudioVolumeLevel() {
@@ -69,7 +71,7 @@ namespace CoreAudio {
         void GetAudioMute() {
             part.Activate(CLSCTX.ALL, ref RefIId.IIdIAudioMute, out var result);
             if(result is IAudioMute mute) {
-                audioMute = new AudioMute(mute);
+                audioMute = new AudioMute(mute, eventContext);
                 _AudioMuteChangeNotification = new ControlChangeNotify(this);
                 Marshal.ThrowExceptionForHR(
                     part.RegisterControlChangeCallback(ref RefIId.IIdIAudioMute, _AudioMuteChangeNotification));
@@ -89,7 +91,7 @@ namespace CoreAudio {
         void GetAudioLoudness() {
             part.Activate(CLSCTX.ALL, ref RefIId.IIdIAudioLoudness, out var result);
             if(result is IAudioLoudness loudness) {
-                audioLoudness = new AudioLoudness(loudness);
+                audioLoudness = new AudioLoudness(loudness, eventContext);
                 _AudioLoudnessChangeNotification = new ControlChangeNotify(this);
                 Marshal.ThrowExceptionForHR(part.RegisterControlChangeCallback(ref RefIId.IIdIAudioLoudness,
                     _AudioLoudnessChangeNotification));

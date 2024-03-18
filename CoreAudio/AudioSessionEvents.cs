@@ -27,49 +27,49 @@ using CoreAudio.Interfaces;
 
 namespace CoreAudio {
     internal class AudioSessionEvents : IAudioSessionEvents {
-        _IAudioSessionControl parent;
+        IIAudioSessionControl parent;
 
-        internal AudioSessionEvents(_IAudioSessionControl parent) {
+        internal AudioSessionEvents(IIAudioSessionControl parent) {
             this.parent = parent;
         }
 
         [PreserveSig]
-        public int OnDisplayNameChanged([MarshalAs(UnmanagedType.LPWStr)] string NewDisplayName, ref Guid EventContext) {
-            parent.FireDisplayNameChanged(NewDisplayName, EventContext);
+        public int OnDisplayNameChanged([MarshalAs(UnmanagedType.LPWStr)] string newDisplayName, ref Guid eventContext) {
+            parent.FireDisplayNameChanged(newDisplayName, eventContext);
             return 0;
         }
 
         [PreserveSig]
-        public int OnIconPathChanged([MarshalAs(UnmanagedType.LPWStr)] string NewIconPath, ref Guid EventContext) {
-            parent.FireOnIconPathChanged(NewIconPath, EventContext);
+        public int OnIconPathChanged([MarshalAs(UnmanagedType.LPWStr)] string newIconPath, ref Guid eventContext) {
+            parent.FireOnIconPathChanged(newIconPath, eventContext);
             return 0;
         }
 
         [PreserveSig]
-        public int OnSimpleVolumeChanged(float NewVolume, bool newMute, ref Guid EventContext) {
-            parent.FireSimpleVolumeChanged(NewVolume, newMute, EventContext);
+        public int OnSimpleVolumeChanged(float newVolume, bool newMute, ref Guid eventContext) {
+            parent.FireSimpleVolumeChanged(newVolume, newMute, eventContext);
             return 0;
         }
 
         [PreserveSig]
-        public int OnChannelVolumeChanged(uint ChannelCount, IntPtr NewChannelVolumeArray, uint ChangedChannel, ref Guid EventContext) {
-            parent.FireChannelVolumeChanged(ChannelCount, NewChannelVolumeArray, ChangedChannel, EventContext);
+        public int OnChannelVolumeChanged(uint channelCount, IntPtr newChannelVolumeArray, uint changedChannel, ref Guid eventContext) {
+            parent.FireChannelVolumeChanged(channelCount, newChannelVolumeArray, changedChannel, eventContext);
             return 0;
         }
 
         [PreserveSig]
-        public int OnGroupingParamChanged(ref Guid NewGroupingParam, ref Guid EventContext) {
+        public int OnGroupingParamChanged(ref Guid newGroupingParam, ref Guid eventContext) {
             return 0;
         }
 
         [PreserveSig]
-        public int OnStateChanged(AudioSessionState NewState) {
-            parent.FireStateChanged(NewState);
+        public int OnStateChanged(AudioSessionState newState) {
+            parent.FireStateChanged(newState);
             return 0;
         }
 
         [PreserveSig]
-        public int OnSessionDisconnected(AudioSessionDisconnectReason DisconnectReason) {
+        public int OnSessionDisconnected(AudioSessionDisconnectReason disconnectReason) {
             return 0;
         }
     }

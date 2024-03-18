@@ -25,7 +25,7 @@ using CoreAudio.Interfaces;
 
 namespace CoreAudio {
     public class AudioMeterInformationChannels {
-        IAudioMeterInformation audioMeterInformation;
+        readonly IAudioMeterInformation audioMeterInformation;
 
         public int Count {
             get {

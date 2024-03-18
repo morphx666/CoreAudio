@@ -28,10 +28,9 @@ using System.Runtime.InteropServices;
 using CoreAudio.Interfaces;
 
 namespace CoreAudio {
-    public class MMDeviceCollection
-        : IEnumerable<MMDevice> {
+    public class MMDeviceCollection : IEnumerable<MMDevice> {
         readonly IMMDeviceCollection mMDeviceCollection;
-        public readonly Guid eventContext;
+        internal readonly Guid eventContext;
         public int Count {
             get {
                 Marshal.ThrowExceptionForHR(mMDeviceCollection.GetCount(out var result));

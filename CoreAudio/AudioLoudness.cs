@@ -20,23 +20,26 @@
   3. This notice may not be removed or altered from any source distribution.
 */
 
+using System;
 using System.Runtime.InteropServices;
 using CoreAudio.Interfaces;
 
 namespace CoreAudio {
     public class AudioLoudness {
-        IAudioLoudness audioLoudness;
+        readonly IAudioLoudness audioLoudness;
+        internal readonly Guid eventContext;
 
-        internal AudioLoudness(IAudioLoudness audioLoudness) {
+        internal AudioLoudness(IAudioLoudness audioLoudness, Guid eventContext) {
             this.audioLoudness = audioLoudness;
+            this.eventContext = eventContext;
         }
 
         public bool Enabled {
             get {
-                Marshal.ThrowExceptionForHR(audioLoudness.GetEnabled(out var enabled));
+                Marshal.ThrowExceptionForHR(audioLoudness.GetEnabled(out bool enabled));
                 return enabled;
             }
-            set => Marshal.ThrowExceptionForHR(audioLoudness.SetEnabled(value, out var eventContext));
+            set => Marshal.ThrowExceptionForHR(audioLoudness.SetEnabled(value, eventContext));
         }
     }
 }

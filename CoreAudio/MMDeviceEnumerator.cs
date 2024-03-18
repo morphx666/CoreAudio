@@ -25,15 +25,15 @@ using System.Runtime.InteropServices;
 using CoreAudio.Interfaces;
 
 namespace CoreAudio {
-    //Marked as internal, since on its own its no good
+    ////Marked as internal, since on its own its no good
     [ComImport, Guid("BCDE0395-E52F-467C-8E3D-C4579291692E")]
-    internal class _MMDeviceEnumerator {
+    internal class CMMDeviceEnumerator {
     }
 
     //Small wrapper class
     public class MMDeviceEnumerator {
-        IMMDeviceEnumerator _realEnumerator;
-        public readonly Guid eventContext;
+        readonly IMMDeviceEnumerator _realEnumerator;
+        internal readonly Guid eventContext;
 
         public MMDeviceCollection EnumerateAudioEndPoints(DataFlow dataFlow, DeviceState dwStateMask) {
             Marshal.ThrowExceptionForHR(_realEnumerator.EnumAudioEndpoints(dataFlow, dwStateMask, out var result));
@@ -71,9 +71,11 @@ namespace CoreAudio {
             if(Environment.OSVersion.Version.Major < 6) {
                 throw new NotSupportedException("This functionality is only supported on Windows Vista or newer");
             } else {
-                _realEnumerator = (IMMDeviceEnumerator)new _MMDeviceEnumerator();
+                _realEnumerator = (IMMDeviceEnumerator)new CMMDeviceEnumerator();
                 this.eventContext = eventContext;
             }
         }
+
+        public MMDeviceEnumerator() : this(Guid.Empty) { }
     }
 }

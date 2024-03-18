@@ -28,6 +28,6 @@ namespace CoreAudio.Interfaces {
      InterfaceType(ComInterfaceType.InterfaceIsIUnknown)]
     internal interface IControlChangeNotify {
         [PreserveSig]
-        int OnNotify(uint dwSenderProcessId, ref Guid pguidEventContext);
+        int OnNotify(uint dwSenderProcessId, ref Guid eventContext);
     }
 }

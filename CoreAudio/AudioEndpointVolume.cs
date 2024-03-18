@@ -27,13 +27,13 @@ using CoreAudio.Interfaces;
 namespace CoreAudio {
 
     public class AudioEndpointVolume : IDisposable {
-        IAudioEndpointVolume audioEndPointVolume;
-        AudioEndpointVolumeChannels channels;
-        AudioEndpointVolumeStepInformation stepInformation;
-        AudioEndPointVolumeVolumeRange volumeRange;
-        EEndpointHardwareSupport hardwareSupport;
+        readonly IAudioEndpointVolume audioEndPointVolume;
+        readonly AudioEndpointVolumeChannels channels;
+        readonly AudioEndpointVolumeStepInformation stepInformation;
+        readonly AudioEndPointVolumeVolumeRange volumeRange;
+        readonly EEndpointHardwareSupport hardwareSupport;
         AudioEndpointVolumeCallback? callBack;
-        public readonly Guid eventContext;
+        internal readonly Guid eventContext;
         public event AudioEndpointVolumeNotificationDelegate? OnVolumeNotification;
 
         public AudioEndPointVolumeVolumeRange VolumeRange => volumeRange;
@@ -71,7 +71,7 @@ namespace CoreAudio {
         public void VolumeStepUp() {
             Marshal.ThrowExceptionForHR(audioEndPointVolume.VolumeStepUp(eventContext));
         }
-      
+
         public void VolumeStepDown() {
             Marshal.ThrowExceptionForHR(audioEndPointVolume.VolumeStepDown(eventContext));
         }

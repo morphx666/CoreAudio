@@ -30,7 +30,7 @@ using CoreAudio.Interfaces;
 namespace CoreAudio {
     public class SessionCollection : IEnumerable<AudioSessionControl2> {
         readonly IAudioSessionEnumerator audioSessionEnumerator;
-        public readonly Guid eventContext;
+        internal readonly Guid eventContext;
         internal SessionCollection(IAudioSessionEnumerator realEnumerator, Guid eventContext) {
             audioSessionEnumerator = realEnumerator;
             this.eventContext = eventContext;

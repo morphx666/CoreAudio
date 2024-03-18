@@ -69,7 +69,7 @@ namespace CoreAudioConsole.Framework.Sample {
                 }
             }
 
-            //If we end up here there where no open audio sessions to monitor.
+            // If we end up here there where no open audio sessions to monitor.
             Console.WriteLine("No Audio sessions found");
         }
     }

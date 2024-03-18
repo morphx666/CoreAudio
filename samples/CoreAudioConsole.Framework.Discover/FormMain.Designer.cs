@@ -101,7 +101,7 @@ namespace CoreAudioConsole.Framework.Discover.Tester {
             this.RichTextBoxOutput.ReadOnly = true;
             this.RichTextBoxOutput.Size = new System.Drawing.Size(1173, 614);
             this.RichTextBoxOutput.TabIndex = 4;
-            this.RichTextBoxOutput.Text = "";
+            this.RichTextBoxOutput.Text = "—";
             // 
             // FomMain
             // 

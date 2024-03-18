@@ -116,8 +116,9 @@ namespace CoreAudioConsole.Framework.Discover.Tester {
                 sb.Append(WalkTreeBackwardsFromPart(getPart));
                 sb.Append(EnumSessions(dev));
 
-                string dashes = new string('—', RichTextBoxOutput.Width / 12);
-                sb.Append($@"\cf8 {dashes}{nl}{nl}");
+                sb.Append($@"\cf8 ");
+                sb.Append('—', RichTextBoxOutput.Width / 12);
+                sb.Append($"{nl}{nl}");
             }
 
             return sb.ToString();
@@ -162,56 +163,56 @@ namespace CoreAudioConsole.Framework.Discover.Tester {
 
             switch(part.SubType) {
                 case Guid r when r == KsNodeType.Volume: {
-                        AudioVolumeLevel audioVolumeLevel = part.AudioVolumeLevel;
-                        if(audioVolumeLevel != null) {
-                            for(int i = 0; i < audioVolumeLevel.ChannelCount; i++) {
-                                PerChannelDbLevel.LevelRange levelRange = audioVolumeLevel.GetLevelRange(i);
-                                sb.Append($@"\cf6\tab {tabs}Volume for channel {i} is {audioVolumeLevel.GetLevel(i):F2}dB (range is {levelRange.MinLevel:F2}dB to {levelRange.MaxLevel:F2}dB in increments of {levelRange.Stepping:F2}dB){nl}");
-                            }
+                    AudioVolumeLevel audioVolumeLevel = part.AudioVolumeLevel;
+                    if(audioVolumeLevel != null) {
+                        for(int i = 0; i < audioVolumeLevel.ChannelCount; i++) {
+                            PerChannelDbLevel.LevelRange levelRange = audioVolumeLevel.GetLevelRange(i);
+                            sb.Append($@"\cf6\tab {tabs}Volume for channel {i} is {audioVolumeLevel.GetLevel(i):F2}dB (range is {levelRange.MinLevel:F2}dB to {levelRange.MaxLevel:F2}dB in increments of {levelRange.Stepping:F2}dB){nl}");
                         }
-
-                        break;
                     }
+
+                    break;
+                }
 
                 case Guid r when r == KsNodeType.Speaker: {
-                        //sb.Append($@"\cf6 {tabs}Incoming Parts:{nl}");
-                        break;
-                    }
+                    //sb.Append($@"\cf6 {tabs}Incoming Parts:{nl}");
+                    break;
+                }
 
                 case Guid r when r == KsNodeType.Mute: {
-                        AudioMute audioMute = part.AudioMute;
-                        if(audioMute != null)
-                            sb.Append($@"\cf6 {tabs}\tab {(!audioMute.Mute ? "Not " : "")}Muted{nl}");
-                        break;
-                    }
+                    AudioMute audioMute = part.AudioMute;
+                    if(audioMute != null)
+                        sb.Append($@"\cf6 {tabs}\tab {(!audioMute.Mute ? "Not " : "")}Muted{nl}");
+                    break;
+                }
 
                 case Guid r when r == KsNodeType.PeakMeter: {
-                        AudioPeakMeter audioPeakMeter = part.AudioPeakMeter;
-                        if(audioPeakMeter != null) {
-                            int num = checked(audioPeakMeter.ChannelCount - 1);
-                            int channel = 0;
-                            while(channel <= num) {
-                                sb.Append($@"\cf6 {tabs}\tab Level for channel {channel} is {audioPeakMeter.Level(channel)}dB{nl}");
-                                checked { ++channel; }
-                            }
+                    AudioPeakMeter audioPeakMeter = part.AudioPeakMeter;
+                    if(audioPeakMeter != null) {
+                        int num = checked(audioPeakMeter.ChannelCount - 1);
+                        int channel = 0;
+                        while(channel <= num) {
+                            sb.Append($@"\cf6 {tabs}\tab Level for channel {channel} is {audioPeakMeter.Level(channel)}dB{nl}");
+                            checked { ++channel; }
                         }
-                        break;
                     }
+                    break;
+                }
 
                 case Guid r when r == KsNodeType.Loudness: {
-                        var al = part.AudioLoudness;
-                        if(al != null)
-                            sb.Append($@"\cf6 {tabs}\tab {(!al.Enabled ? "Not " : "")} Enabled{nl}");
-                        break;
-                    }
+                    var al = part.AudioLoudness;
+                    if(al != null)
+                        sb.Append($@"\cf6 {tabs}\tab {(!al.Enabled ? "Not " : "")} Enabled{nl}");
+                    break;
+                }
 
                 default: {
-                        if(part.PartType == PartType.Connector)
-                            sb.Append($@"\cf6 {tabs}\tab I/O Jack{nl}");
-                        else
-                            sb.Append($@"\cf6 {tabs}\tab Undefined Part: {part.SubTypeName}{nl}");
-                        break;
-                    }
+                    if(part.PartType == PartType.Connector)
+                        sb.Append($@"\cf6 {tabs}\tab I/O Jack{nl}");
+                    else
+                        sb.Append($@"\cf6 {tabs}\tab Undefined Part: {part.SubTypeName}{nl}");
+                    break;
+                }
             }
 
             var plIn = part.EnumPartsIncoming;

@@ -25,8 +25,9 @@ using CoreAudio.Interfaces;
 
 namespace CoreAudio {
     public class AudioEndpointVolumeChannels {
-        IAudioEndpointVolume audioEndPointVolume;
-        AudioEndpointVolumeChannel[] _Channels;
+        readonly IAudioEndpointVolume audioEndPointVolume;
+        readonly AudioEndpointVolumeChannel[] _Channels;
+
         public int Count {
             get {
                 Marshal.ThrowExceptionForHR(audioEndPointVolume.GetChannelCount(out var result));

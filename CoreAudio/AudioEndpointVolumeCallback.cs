@@ -31,7 +31,7 @@ namespace CoreAudio {
     // (where the functionality is really wanted, would cause the OnNotify function 
     // to show up in the public API. 
     internal class AudioEndpointVolumeCallback : IAudioEndpointVolumeCallback {
-        AudioEndpointVolume parent;
+        readonly AudioEndpointVolume parent;
 
         internal AudioEndpointVolumeCallback(AudioEndpointVolume parent) {
             this.parent = parent;
@@ -46,8 +46,8 @@ namespace CoreAudio {
             //remaining floats are read from memory.
             //
             var data = Marshal.PtrToStructure<Interfaces.AudioVolumeNotificationData>(NotifyData);
-            if (data.GuidEventContext == parent.eventContext)
-                return 0; //S_OK
+            //if (data.GuidEventContext == parent.eventContext)
+            //    return 0; //S_OK
 
             //Determine offset in structure of the first float
             var Offset = Marshal.OffsetOf<Interfaces.AudioVolumeNotificationData>("ChannelVolume");
@@ -62,7 +62,7 @@ namespace CoreAudio {
             }
 
             //Create combined structure and Fire Event in parent class.
-            AudioVolumeNotificationData NotificationData = new AudioVolumeNotificationData(data.GuidEventContext, data.Muted, data.MasterVolume, voldata);
+            AudioVolumeNotificationData NotificationData = new(data.GuidEventContext, data.Muted, data.MasterVolume, voldata);
             parent.FireNotification(NotificationData);
             return 0; //S_OK
         }

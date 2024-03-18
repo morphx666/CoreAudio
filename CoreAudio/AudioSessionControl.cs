@@ -26,21 +26,21 @@ using System.Runtime.InteropServices;
 using CoreAudio.Interfaces;
 
 namespace CoreAudio {
-    internal interface _IAudioSessionControl {
-        void FireDisplayNameChanged([MarshalAs(UnmanagedType.LPWStr)] string NewDisplayName, Guid EventContext);
+    internal interface IIAudioSessionControl {
+        void FireDisplayNameChanged([MarshalAs(UnmanagedType.LPWStr)] string newDisplayName, Guid eventContext);
 
-        void FireOnIconPathChanged([MarshalAs(UnmanagedType.LPWStr)] string NewIconPath, Guid EventContext);
+        void FireOnIconPathChanged([MarshalAs(UnmanagedType.LPWStr)] string newIconPath, Guid eventContext);
 
-        void FireSimpleVolumeChanged(float NewVolume, bool newMute, Guid EventContext);
+        void FireSimpleVolumeChanged(float newVolume, bool newMute, Guid eventContext);
 
-        void FireChannelVolumeChanged(uint ChannelCount, IntPtr NewChannelVolumeArray, uint ChangedChannel, Guid EventContext);
+        void FireChannelVolumeChanged(uint channelCount, IntPtr newChannelVolumeArray, uint changedChannel, Guid eventContext);
 
-        void FireStateChanged(AudioSessionState NewState);
+        void FireStateChanged(AudioSessionState newState);
 
-        void FireSessionDisconnected(AudioSessionDisconnectReason DisconnectReason);
+        void FireSessionDisconnected(AudioSessionDisconnectReason disconnectReason);
     }
 
-    public class AudioSessionControl : _IAudioSessionControl, IDisposable {
+    public class AudioSessionControl : IIAudioSessionControl, IDisposable {
         internal IAudioSessionControl _AudioSessionControl;
         internal AudioMeterInformation? _AudioMeterInformation;
         internal SimpleAudioVolume? _SimpleAudioVolume;
@@ -65,7 +65,7 @@ namespace CoreAudio {
         public event SessionDisconnectedDelegate? OnSessionDisconnected;
         #endregion
 
-        AudioSessionEvents? audioSessionEvents;
+        readonly AudioSessionEvents? audioSessionEvents;
 
         internal AudioSessionControl(IAudioSessionControl realAudioSessionControl) {
             if(realAudioSessionControl is IAudioMeterInformation _meters)
@@ -78,30 +78,30 @@ namespace CoreAudio {
             Marshal.ThrowExceptionForHR(_AudioSessionControl.RegisterAudioSessionNotification(audioSessionEvents));
         }
 
-        void _IAudioSessionControl.FireDisplayNameChanged([MarshalAs(UnmanagedType.LPWStr)] string NewDisplayName, Guid EventContext) {
-            OnDisplayNameChanged?.Invoke(this, NewDisplayName);
+        void IIAudioSessionControl.FireDisplayNameChanged([MarshalAs(UnmanagedType.LPWStr)] string newDisplayName, Guid eventContext) {
+            OnDisplayNameChanged?.Invoke(this, newDisplayName);
         }
 
-        void _IAudioSessionControl.FireOnIconPathChanged([MarshalAs(UnmanagedType.LPWStr)] string NewIconPath, Guid EventContext) {
-            OnIconPathChanged?.Invoke(this, NewIconPath);
+        void IIAudioSessionControl.FireOnIconPathChanged([MarshalAs(UnmanagedType.LPWStr)] string newIconPath, Guid eventContext) {
+            OnIconPathChanged?.Invoke(this, newIconPath);
         }
 
-        void _IAudioSessionControl.FireSimpleVolumeChanged(float NewVolume, bool newMute, Guid EventContext) {
-            OnSimpleVolumeChanged?.Invoke(this, NewVolume, newMute);
+        void IIAudioSessionControl.FireSimpleVolumeChanged(float newVolume, bool newMute, Guid eventContext) {
+            OnSimpleVolumeChanged?.Invoke(this, newVolume, newMute);
         }
 
-        void _IAudioSessionControl.FireChannelVolumeChanged(uint ChannelCount, IntPtr NewChannelVolumeArray, uint ChangedChannel, Guid EventContext) {
-            float[] volume = new float[ChannelCount - 1];
-            Marshal.Copy(NewChannelVolumeArray, volume, 0, (int)ChannelCount);
-            OnChannelVolumeChanged?.Invoke(this, (int)ChannelCount, volume, (int)ChangedChannel);
+        void IIAudioSessionControl.FireChannelVolumeChanged(uint channelCount, IntPtr newChannelVolumeArray, uint changedChannel, Guid eventContext) {
+            float[] volume = new float[channelCount - 1];
+            Marshal.Copy(newChannelVolumeArray, volume, 0, (int)channelCount);
+            OnChannelVolumeChanged?.Invoke(this, (int)channelCount, volume, (int)changedChannel);
         }
 
-        void _IAudioSessionControl.FireStateChanged(AudioSessionState NewState) {
-            OnStateChanged?.Invoke(this, NewState);
+        void IIAudioSessionControl.FireStateChanged(AudioSessionState newState) {
+            OnStateChanged?.Invoke(this, newState);
         }
 
-        void _IAudioSessionControl.FireSessionDisconnected(AudioSessionDisconnectReason DisconnectReason) {
-            OnSessionDisconnected?.Invoke(this, DisconnectReason);
+        void IIAudioSessionControl.FireSessionDisconnected(AudioSessionDisconnectReason disconnectReason) {
+            OnSessionDisconnected?.Invoke(this, disconnectReason);
         }
 
         public AudioMeterInformation? AudioMeterInformation => _AudioMeterInformation;

@@ -26,10 +26,10 @@ using System.Runtime.InteropServices;
 using CoreAudio.Interfaces;
 
 namespace CoreAudio {
-    public class AudioSessionControl2 : _IAudioSessionControl, IDisposable {
-        IAudioSessionControl2 audioSessionControl2;
-        AudioMeterInformation? audioMeterInformation;
-        SimpleAudioVolume? simpleAudioVolume;
+    public class AudioSessionControl2 : IIAudioSessionControl, IDisposable {
+        readonly IAudioSessionControl2 audioSessionControl2;
+        readonly AudioMeterInformation? audioMeterInformation;
+        readonly SimpleAudioVolume? simpleAudioVolume;
 
         #region events
 
@@ -58,7 +58,7 @@ namespace CoreAudio {
 
         public event SessionDisconnectedDelegate? OnSessionDisconnected;
 
-        public readonly Guid eventContext;
+        internal readonly Guid eventContext;
 
         #endregion
 
@@ -77,36 +77,33 @@ namespace CoreAudio {
             Marshal.ThrowExceptionForHR(audioSessionControl2.RegisterAudioSessionNotification(audioSessionEvents));
         }
 
-        void _IAudioSessionControl.FireDisplayNameChanged([MarshalAs(UnmanagedType.LPWStr)] string NewDisplayName, Guid EventContext) {
-            if(EventContext != eventContext)
-                OnDisplayNameChanged?.Invoke(this, NewDisplayName);
+        void IIAudioSessionControl.FireDisplayNameChanged([MarshalAs(UnmanagedType.LPWStr)] string newDisplayName, Guid eventContext) {
+            if(eventContext != this.eventContext)
+                OnDisplayNameChanged?.Invoke(this, newDisplayName);
         }
 
-        void _IAudioSessionControl.FireOnIconPathChanged([MarshalAs(UnmanagedType.LPWStr)] string NewIconPath, Guid EventContext) {
-            if(EventContext != eventContext)
-                OnIconPathChanged?.Invoke(this, NewIconPath);
+        void IIAudioSessionControl.FireOnIconPathChanged([MarshalAs(UnmanagedType.LPWStr)] string newIconPath, Guid eventContext) {
+            if(eventContext != this.eventContext)
+                OnIconPathChanged?.Invoke(this, newIconPath);
         }
 
-        void _IAudioSessionControl.FireSimpleVolumeChanged(float NewVolume, bool newMute, Guid EventContext) {
-            if(EventContext != eventContext)
+        void IIAudioSessionControl.FireSimpleVolumeChanged(float NewVolume, bool newMute, Guid eventContext) {
+            if(eventContext != this.eventContext)
                 OnSimpleVolumeChanged?.Invoke(this, NewVolume, newMute);
         }
 
-        void _IAudioSessionControl.FireChannelVolumeChanged(uint ChannelCount, IntPtr NewChannelVolumeArray, uint ChangedChannel,
-            Guid EventContext)
-        {
-            if (EventContext == eventContext)
-                return;
-            float[] volume = new float[ChannelCount];
-            Marshal.Copy(NewChannelVolumeArray, volume, 0, (int)ChannelCount);
-            OnChannelVolumeChanged?.Invoke(this, (int)ChannelCount, volume, (int)ChangedChannel);
+        void IIAudioSessionControl.FireChannelVolumeChanged(uint channelCount, IntPtr newChannelVolumeArray, uint changedChannel, Guid eventContext) {
+            if(eventContext == this.eventContext) return;
+            float[] volume = new float[channelCount];
+            Marshal.Copy(newChannelVolumeArray, volume, 0, (int)channelCount);
+            OnChannelVolumeChanged?.Invoke(this, (int)channelCount, volume, (int)changedChannel);
         }
 
-        void _IAudioSessionControl.FireStateChanged(AudioSessionState newState) {
+        void IIAudioSessionControl.FireStateChanged(AudioSessionState newState) {
             OnStateChanged?.Invoke(this, newState);
         }
 
-        void _IAudioSessionControl.FireSessionDisconnected(AudioSessionDisconnectReason disconnectReason) {
+        void IIAudioSessionControl.FireSessionDisconnected(AudioSessionDisconnectReason disconnectReason) {
             OnSessionDisconnected?.Invoke(this, disconnectReason);
         }
 

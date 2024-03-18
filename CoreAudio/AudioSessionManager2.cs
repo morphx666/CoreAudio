@@ -31,7 +31,7 @@ namespace CoreAudio {
 
         public delegate void SessionCreatedDelegate(object sender, IAudioSessionControl2 newSession);
         public event SessionCreatedDelegate? OnSessionCreated;
-        public readonly Guid eventContext;
+        internal readonly Guid eventContext;
 
         AudioSessionNotification? _AudioSessionNotification;
 

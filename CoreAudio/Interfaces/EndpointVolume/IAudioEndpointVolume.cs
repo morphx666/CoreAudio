@@ -34,31 +34,31 @@ namespace CoreAudio.Interfaces {
         [PreserveSig]
         int GetChannelCount(out int pnChannelCount);
         [PreserveSig]
-        int SetMasterVolumeLevel(float fLevelDB, Guid pguidEventContext);
+        int SetMasterVolumeLevel(float fLevelDB, Guid eventContext);
         [PreserveSig]
-        int SetMasterVolumeLevelScalar(float fLevel, Guid pguidEventContext);
+        int SetMasterVolumeLevelScalar(float fLevel, Guid eventContext);
         [PreserveSig]
         int GetMasterVolumeLevel(out float pfLevelDB);
         [PreserveSig]
         int GetMasterVolumeLevelScalar(out float pfLevel);
         [PreserveSig]
-        int SetChannelVolumeLevel(uint nChannel, float fLevelDB, Guid pguidEventContext);
+        int SetChannelVolumeLevel(uint nChannel, float fLevelDB, Guid eventContext);
         [PreserveSig]
-        int SetChannelVolumeLevelScalar(uint nChannel, float fLevel, Guid pguidEventContext);
+        int SetChannelVolumeLevelScalar(uint nChannel, float fLevel, Guid eventContext);
         [PreserveSig]
         int GetChannelVolumeLevel(uint nChannel, out float pfLevelDB);
         [PreserveSig]
         int GetChannelVolumeLevelScalar(uint nChannel, out float pfLevel);
         [PreserveSig]
-        int SetMute([MarshalAs(UnmanagedType.Bool)] bool bMute, Guid pguidEventContext);
+        int SetMute([MarshalAs(UnmanagedType.Bool)] bool bMute, Guid eventContext);
         [PreserveSig]
         int GetMute(out bool pbMute);
         [PreserveSig]
         int GetVolumeStepInfo(out uint pnStep, out uint pnStepCount);
         [PreserveSig]
-        int VolumeStepUp(Guid pguidEventContext);
+        int VolumeStepUp(Guid eventContext);
         [PreserveSig]
-        int VolumeStepDown(Guid pguidEventContext);
+        int VolumeStepDown(Guid eventContext);
         [PreserveSig]
         int QueryHardwareSupport(out uint pdwHardwareSupportMask);
         [PreserveSig]

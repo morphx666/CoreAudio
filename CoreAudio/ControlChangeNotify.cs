@@ -38,9 +38,9 @@ namespace CoreAudio {
         public bool IsAllocated => rcwHandle.IsAllocated;
 
         [PreserveSig]
-        public int OnNotify(uint dwSenderProcessId, ref Guid pguidEventContext) {
+        public int OnNotify(uint dwSenderProcessId, ref Guid eventContext) {
             if(Process.GetCurrentProcess().Id != dwSenderProcessId)
-                parent.FireNotification(dwSenderProcessId, ref pguidEventContext);
+                parent.FireNotification(dwSenderProcessId, ref eventContext);
             return 0;
         }
 

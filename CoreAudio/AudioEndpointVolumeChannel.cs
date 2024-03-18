@@ -26,8 +26,8 @@ using CoreAudio.Interfaces;
 
 namespace CoreAudio {
     public class AudioEndpointVolumeChannel {
-        uint _Channel;
-        IAudioEndpointVolume audioEndpointVolume;
+        readonly uint _Channel;
+        readonly IAudioEndpointVolume audioEndpointVolume;
 
         internal AudioEndpointVolumeChannel(IAudioEndpointVolume parent, int channel) {
             _Channel = (uint)channel;

@@ -25,9 +25,9 @@ using CoreAudio.Interfaces;
 
 namespace CoreAudio {
     public class AudioMeterInformation {
-        IAudioMeterInformation audioMeterInformation;
-        EEndpointHardwareSupport hardwareSupport;
-        AudioMeterInformationChannels channels;
+        readonly IAudioMeterInformation audioMeterInformation;
+        readonly EEndpointHardwareSupport hardwareSupport;
+        readonly AudioMeterInformationChannels channels;
 
         internal AudioMeterInformation(IAudioMeterInformation realInterface) {
             audioMeterInformation = realInterface;

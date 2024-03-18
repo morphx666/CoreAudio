@@ -25,8 +25,9 @@ using CoreAudio.Interfaces;
 
 namespace CoreAudio {
     public class AudioEndpointVolumeStepInformation {
-        uint step;
-        uint stepCount;
+        readonly uint step;
+        readonly uint stepCount;
+
         internal AudioEndpointVolumeStepInformation(IAudioEndpointVolume parent) {
             Marshal.ThrowExceptionForHR(parent.GetVolumeStepInfo(out step, out stepCount));
         }
