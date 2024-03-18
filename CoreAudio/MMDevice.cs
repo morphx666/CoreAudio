@@ -27,14 +27,13 @@ using CoreAudio.Interfaces;
 namespace CoreAudio {
     public class MMDevice : IDisposable {
         #region Variables
-
         readonly IMMDevice realDevice;
         PropertyStore? propertyStore;
         AudioMeterInformation? audioMeterInformation;
         AudioEndpointVolume? audioEndPointVolume;
         AudioSessionManager2? audioSessionManager2;
         DeviceTopology? deviceTopology;
-        private Guid eventContext;
+        internal Guid eventContext;
         #endregion
 
         #region Init

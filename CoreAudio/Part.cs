@@ -32,7 +32,7 @@ namespace CoreAudio {
         AudioMute? audioMute;
         AudioPeakMeter? audioPeakMeter;
         AudioLoudness? audioLoudness;
-        internal  Guid eventContext = Guid.Empty;
+        internal Guid eventContext = Guid.Empty;
 
         public delegate void PartNotificationDelegate(object sender);
 

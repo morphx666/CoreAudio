@@ -10,7 +10,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
-namespace CoreAudioConsole.Framework.Discover.Tester {
+namespace CoreAudioForms.Framework.Discover.Tester {
     public partial class FomMain : Form {
         private readonly string nl = @"\par ";// + Environment.NewLine;
 
@@ -117,7 +117,7 @@ namespace CoreAudioConsole.Framework.Discover.Tester {
                 sb.Append(EnumSessions(dev));
 
                 sb.Append($@"\cf8 ");
-                sb.Append('—', RichTextBoxOutput.Width / 12);
+                sb.Append('—', RichTextBoxOutput.Width / 10 - 15);
                 sb.Append($"{nl}{nl}");
             }
 

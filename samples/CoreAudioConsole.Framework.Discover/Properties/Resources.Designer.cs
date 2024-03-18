@@ -8,7 +8,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace CoreAudioConsole.Framework.Discover.Properties {
+namespace CoreAudioForms.Framework.Discover.Properties {
     using System;
     
     
@@ -39,7 +39,7 @@ namespace CoreAudioConsole.Framework.Discover.Properties {
         internal static global::System.Resources.ResourceManager ResourceManager {
             get {
                 if (object.ReferenceEquals(resourceMan, null)) {
-                    global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("CoreAudioConsole.Framework.Discover.Properties.Resources", typeof(Resources).Assembly);
+                    global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("CoreAudioForms.Framework.Discover.Properties.Resources", typeof(Resources).Assembly);
                     resourceMan = temp;
                 }
                 return resourceMan;

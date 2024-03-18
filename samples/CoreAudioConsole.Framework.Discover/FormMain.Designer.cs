@@ -1,7 +1,7 @@
 ﻿using System.Drawing;
 using System.Windows.Forms;
 
-namespace CoreAudioConsole.Framework.Discover.Tester {
+namespace CoreAudioForms.Framework.Discover.Tester {
     partial class FomMain {
         /// <summary>
         /// Required designer variable.

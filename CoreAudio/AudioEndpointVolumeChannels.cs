@@ -27,8 +27,8 @@ using CoreAudio.Interfaces;
 namespace CoreAudio {
     public class AudioEndpointVolumeChannels {
         readonly IAudioEndpointVolume audioEndPointVolume;
-        readonly AudioEndpointVolumeChannel[] _Channels;
-        Guid eventContext;
+        readonly AudioEndpointVolumeChannel[] channels;
+        internal Guid eventContext;
 
         public int Count {
             get {
@@ -37,16 +37,17 @@ namespace CoreAudio {
             }
         }
 
-        public AudioEndpointVolumeChannel this[int index] => _Channels[index];
+        public AudioEndpointVolumeChannel this[int index] => channels[index];
 
         internal AudioEndpointVolumeChannels(IAudioEndpointVolume parent, ref Guid eventContext) {
-            int ChannelCount;
+            int channelCount;
             audioEndPointVolume = parent;
+            this.eventContext = eventContext;
 
-            ChannelCount = Count;
-            _Channels = new AudioEndpointVolumeChannel[ChannelCount];
-            for(var i = 0; i < ChannelCount; i++) {
-                _Channels[i] = new AudioEndpointVolumeChannel(audioEndPointVolume, i, ref eventContext);
+            channelCount = Count;
+            channels = new AudioEndpointVolumeChannel[channelCount];
+            for(var i = 0; i < channelCount; i++) {
+                channels[i] = new AudioEndpointVolumeChannel(audioEndPointVolume, i, ref eventContext);
             }
         }
 

@@ -28,7 +28,7 @@ namespace CoreAudio {
     public class AudioEndpointVolumeChannel {
         readonly uint channel;
         readonly IAudioEndpointVolume audioEndpointVolume;
-        Guid eventContext;
+        internal Guid eventContext;
 
         internal AudioEndpointVolumeChannel(IAudioEndpointVolume parent, int channel, ref Guid eventContext) {
             audioEndpointVolume = parent;

@@ -4,18 +4,18 @@ using System.Windows.Forms;
 
 namespace CoreAudioForms.Framework.Sample {
     public partial class FormMain : Form {
-        private readonly MMDevice _device;
+        private readonly MMDevice device;
 
         public FormMain() {
             InitializeComponent();
 
             var devEnum = new MMDeviceEnumerator(Guid.NewGuid());
-            _device = devEnum.GetDefaultAudioEndpoint(DataFlow.Render, Role.Multimedia);
+            device = devEnum.GetDefaultAudioEndpoint(DataFlow.Render, Role.Multimedia);
             
-            TrackBarMaster.Value = (int)(_device.AudioEndpointVolume.MasterVolumeLevelScalar * 100);
-            CheckBoxMute.Checked = _device.AudioEndpointVolume.Mute;
+            TrackBarMaster.Value = (int)(device.AudioEndpointVolume.MasterVolumeLevelScalar * 100);
+            CheckBoxMute.Checked = device.AudioEndpointVolume.Mute;
 
-            _device.AudioEndpointVolume.OnVolumeNotification += new AudioEndpointVolumeNotificationDelegate(AudioEndpointVolume_OnVolumeNotification);
+            device.AudioEndpointVolume.OnVolumeNotification += new AudioEndpointVolumeNotificationDelegate(AudioEndpointVolume_OnVolumeNotification);
         }
 
         private void AudioEndpointVolume_OnVolumeNotification(AudioVolumeNotificationData data) {
@@ -30,17 +30,17 @@ namespace CoreAudioForms.Framework.Sample {
         }
 
         private void UpdateTimer_Tick(object sender, EventArgs e) {
-            ProgressBarMaster.Value = (int)(_device.AudioMeterInformation.MasterPeakValue * 100.0f);
-            ProgressBarLeft.Value = (int)(_device.AudioMeterInformation.PeakValues[0] * 100.0f);
-            ProgressBarRight.Value = (int)(_device.AudioMeterInformation.PeakValues[1] * 100.0f);
+            ProgressBarMaster.Value = (int)(device.AudioMeterInformation.MasterPeakValue * 100.0f);
+            ProgressBarLeft.Value = (int)(device.AudioMeterInformation.PeakValues[0] * 100.0f);
+            ProgressBarRight.Value = (int)(device.AudioMeterInformation.PeakValues[1] * 100.0f);
         }
 
         private void CheckBoxMute_CheckedChanged(object sender, EventArgs e) {
-            _device.AudioEndpointVolume.Mute = CheckBoxMute.Checked;
+            device.AudioEndpointVolume.Mute = CheckBoxMute.Checked;
         }
 
         private void TrackBarMaster_Scroll(object sender, EventArgs e) {
-            _device.AudioEndpointVolume.MasterVolumeLevelScalar = (TrackBarMaster.Value / 100.0f);
+            device.AudioEndpointVolume.MasterVolumeLevelScalar = (TrackBarMaster.Value / 100.0f);
         }
     }
 }

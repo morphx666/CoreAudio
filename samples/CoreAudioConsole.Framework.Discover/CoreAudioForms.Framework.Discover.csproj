@@ -6,8 +6,8 @@
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
     <ProjectGuid>{F95C6BB8-63FE-42A5-9CA8-2D5A6DBF002C}</ProjectGuid>
     <OutputType>WinExe</OutputType>
-    <RootNamespace>CoreAudioConsole.Framework.Discover</RootNamespace>
-    <AssemblyName>CoreAudioConsole.Framework.Discover</AssemblyName>
+    <RootNamespace>CoreAudioForms.Framework.Discover</RootNamespace>
+    <AssemblyName>CoreAudioForms.Framework.Discover</AssemblyName>
     <TargetFrameworkVersion>v4.8.1</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>

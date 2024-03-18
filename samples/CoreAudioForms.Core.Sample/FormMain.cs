@@ -17,12 +17,18 @@ namespace CoreAudioForms.Core.Sample {
             MMDeviceEnumerator devEnum = new MMDeviceEnumerator(Guid.NewGuid());
             device = devEnum.GetDefaultAudioEndpoint(DataFlow.Render, Role.Multimedia);
             device.AudioEndpointVolume.OnVolumeNotification += (AudioVolumeNotificationData data) =>
-                this.Invoke((MethodInvoker)delegate { TrackBarMaster.Value = (int)(data.MasterVolume * 100); });
+                this.Invoke((MethodInvoker)delegate { 
+                    TrackBarMaster.Value = (int)(data.MasterVolume * 100); 
+                    CheckBoxMute.Checked = data.Muted;
+                });
 
             TrackBarMaster.Value = (int)(device.AudioEndpointVolume.MasterVolumeLevelScalar * 100);
 
             TrackBarMaster.Scroll += (object ss, EventArgs e) =>
                 device.AudioEndpointVolume.MasterVolumeLevelScalar = (TrackBarMaster.Value / 100.0f);
+
+            CheckBoxMute.CheckedChanged += (object ss, EventArgs e) => 
+                device.AudioEndpointVolume.Mute = CheckBoxMute.Checked;
 
             Task.Run(() => {
                 var UpdateUI = new MethodInvoker(() => {

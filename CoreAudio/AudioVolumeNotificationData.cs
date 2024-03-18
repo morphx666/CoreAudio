@@ -24,7 +24,7 @@ using System;
 
 namespace CoreAudio {
     public class AudioVolumeNotificationData {
-        Guid eventContext;
+        internal Guid eventContext;
         readonly bool muted;
         readonly float masterVolume;
         readonly int channels;
@@ -46,6 +46,10 @@ namespace CoreAudio {
             this.masterVolume = masterVolume;
             this.channels = channelVolume.Length;
             this.channelVolume = channelVolume;
+        }
+
+        public AudioVolumeNotificationData(bool muted, float masterVolume, float[] channelVolume) :
+            this(Guid.Empty, muted, masterVolume, channelVolume) {
         }
     }
 }

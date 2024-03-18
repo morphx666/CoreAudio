@@ -21,7 +21,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Framework", "Framework", "{
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CoreAudioForms.Framework.Sessions", "samples\CoreAudioForms.Framework.Sessions\CoreAudioForms.Framework.Sessions.csproj", "{826914C2-0BD8-4C8E-807F-95F5853A94D3}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CoreAudioConsole.Framework.Discover", "samples\CoreAudioConsole.Framework.Discover\CoreAudioConsole.Framework.Discover.csproj", "{F95C6BB8-63FE-42A5-9CA8-2D5A6DBF002C}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CoreAudioForms.Framework.Discover", "samples\CoreAudioConsole.Framework.Discover\CoreAudioForms.Framework.Discover.csproj", "{F95C6BB8-63FE-42A5-9CA8-2D5A6DBF002C}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

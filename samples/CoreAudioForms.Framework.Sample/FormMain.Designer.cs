@@ -1,7 +1,5 @@
-﻿namespace CoreAudioForms.Framework.Sample
-{
-    partial class FormMain
-    {
+﻿namespace CoreAudioForms.Framework.Sample {
+    partial class FormMain {
         /// <summary>
         /// Required designer variable.
         /// </summary>
@@ -11,10 +9,8 @@
         /// Clean up any resources being used.
         /// </summary>
         /// <param name="disposing">true if managed resources should be disposed; otherwise, false.</param>
-        protected override void Dispose(bool disposing)
-        {
-            if (disposing && (components != null))
-            {
+        protected override void Dispose(bool disposing) {
+            if(disposing && (components != null)) {
                 components.Dispose();
             }
             base.Dispose(disposing);
@@ -26,8 +22,7 @@
         /// Required method for Designer support - do not modify
         /// the contents of this method with the code editor.
         /// </summary>
-        private void InitializeComponent()
-        {
+        private void InitializeComponent() {
             this.components = new System.ComponentModel.Container();
             this.UpdateTimer = new System.Windows.Forms.Timer(this.components);
             this.LabelRightPeak = new System.Windows.Forms.Label();
@@ -45,6 +40,7 @@
             // UpdateTimer
             // 
             this.UpdateTimer.Enabled = true;
+            this.UpdateTimer.Interval = 30;
             this.UpdateTimer.Tick += new System.EventHandler(this.UpdateTimer_Tick);
             // 
             // LabelRightPeak
@@ -79,7 +75,7 @@
             // 
             // ProgressBarRight
             // 
-            this.ProgressBarRight.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            this.ProgressBarRight.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
             | System.Windows.Forms.AnchorStyles.Right)));
             this.ProgressBarRight.Location = new System.Drawing.Point(261, 84);
             this.ProgressBarRight.Margin = new System.Windows.Forms.Padding(4, 6, 4, 6);
@@ -90,7 +86,7 @@
             // 
             // ProgressBarLeft
             // 
-            this.ProgressBarLeft.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            this.ProgressBarLeft.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
             | System.Windows.Forms.AnchorStyles.Right)));
             this.ProgressBarLeft.Location = new System.Drawing.Point(261, 49);
             this.ProgressBarLeft.Margin = new System.Windows.Forms.Padding(4, 6, 4, 6);
@@ -101,7 +97,7 @@
             // 
             // ProgressBarMaster
             // 
-            this.ProgressBarMaster.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            this.ProgressBarMaster.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
             | System.Windows.Forms.AnchorStyles.Right)));
             this.ProgressBarMaster.Location = new System.Drawing.Point(261, 14);
             this.ProgressBarMaster.Margin = new System.Windows.Forms.Padding(4, 6, 4, 6);

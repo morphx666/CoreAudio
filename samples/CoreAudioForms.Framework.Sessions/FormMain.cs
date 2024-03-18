@@ -111,7 +111,7 @@ namespace CoreAudioForms.Framework.Sessions {
                         newVolume = 0.0f;
                     }
                     selDevice.AudioEndpointVolume.MasterVolumeLevelScalar = newVolume;
-                    UpdateSessionsMasterVolume(new AudioVolumeNotificationData(Guid.Empty, false, newVolume, new float[] { newVolume }));
+                    UpdateSessionsMasterVolume(new AudioVolumeNotificationData(false, newVolume, new float[] { newVolume }));
                 };
 
                 ApplyVUMode(sui.VUDisplay);
