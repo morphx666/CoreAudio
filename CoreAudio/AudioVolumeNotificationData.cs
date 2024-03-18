@@ -24,7 +24,7 @@ using System;
 
 namespace CoreAudio {
     public class AudioVolumeNotificationData {
-        readonly Guid eventContext;
+        Guid eventContext;
         readonly bool muted;
         readonly float masterVolume;
         readonly int channels;

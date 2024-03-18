@@ -20,6 +20,7 @@
   3. This notice may not be removed or altered from any source distribution.
 */
 
+using System;
 using System.Runtime.InteropServices;
 using CoreAudio.Interfaces;
 
@@ -27,6 +28,7 @@ namespace CoreAudio {
     public class AudioEndpointVolumeChannels {
         readonly IAudioEndpointVolume audioEndPointVolume;
         readonly AudioEndpointVolumeChannel[] _Channels;
+        Guid eventContext;
 
         public int Count {
             get {
@@ -37,14 +39,14 @@ namespace CoreAudio {
 
         public AudioEndpointVolumeChannel this[int index] => _Channels[index];
 
-        internal AudioEndpointVolumeChannels(IAudioEndpointVolume parent) {
+        internal AudioEndpointVolumeChannels(IAudioEndpointVolume parent, ref Guid eventContext) {
             int ChannelCount;
             audioEndPointVolume = parent;
 
             ChannelCount = Count;
             _Channels = new AudioEndpointVolumeChannel[ChannelCount];
             for(var i = 0; i < ChannelCount; i++) {
-                _Channels[i] = new AudioEndpointVolumeChannel(audioEndPointVolume, i);
+                _Channels[i] = new AudioEndpointVolumeChannel(audioEndPointVolume, i, ref eventContext);
             }
         }
 

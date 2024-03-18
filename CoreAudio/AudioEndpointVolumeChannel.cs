@@ -26,28 +26,30 @@ using CoreAudio.Interfaces;
 
 namespace CoreAudio {
     public class AudioEndpointVolumeChannel {
-        readonly uint _Channel;
+        readonly uint channel;
         readonly IAudioEndpointVolume audioEndpointVolume;
+        Guid eventContext;
 
-        internal AudioEndpointVolumeChannel(IAudioEndpointVolume parent, int channel) {
-            _Channel = (uint)channel;
+        internal AudioEndpointVolumeChannel(IAudioEndpointVolume parent, int channel, ref Guid eventContext) {
             audioEndpointVolume = parent;
+            this.channel = (uint)channel;
+            this.eventContext = eventContext;
         }
 
         public float VolumeLevel {
             get {
-                Marshal.ThrowExceptionForHR(audioEndpointVolume.GetChannelVolumeLevel(_Channel, out var result));
+                Marshal.ThrowExceptionForHR(audioEndpointVolume.GetChannelVolumeLevel(channel, out var result));
                 return result;
             }
-            set => Marshal.ThrowExceptionForHR(audioEndpointVolume.SetChannelVolumeLevel(_Channel, value, Guid.Empty));
+            set => Marshal.ThrowExceptionForHR(audioEndpointVolume.SetChannelVolumeLevel(channel, value, ref eventContext));
         }
 
         public float VolumeLevelScalar {
             get {
-                Marshal.ThrowExceptionForHR(audioEndpointVolume.GetChannelVolumeLevelScalar(_Channel, out var result));
+                Marshal.ThrowExceptionForHR(audioEndpointVolume.GetChannelVolumeLevelScalar(channel, out var result));
                 return result;
             }
-            set => Marshal.ThrowExceptionForHR(audioEndpointVolume.SetChannelVolumeLevelScalar(_Channel, value, Guid.Empty));
+            set => Marshal.ThrowExceptionForHR(audioEndpointVolume.SetChannelVolumeLevelScalar(channel, value, ref eventContext));
         }
 
     }

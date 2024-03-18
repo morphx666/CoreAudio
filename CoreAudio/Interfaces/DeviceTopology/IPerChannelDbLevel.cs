@@ -38,6 +38,6 @@ namespace CoreAudio.Interfaces {
         [PreserveSig]
         int SetLevelUniform(float level, out Guid eventContext);
         [PreserveSig]
-        int SetLevelAllChannels(float[] levelsDB, ulong channels, Guid eventContext);
+        int SetLevelAllChannels(float[] levelsDB, ulong channels, ref Guid eventContext);
     }
 }

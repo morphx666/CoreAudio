@@ -58,41 +58,41 @@ namespace CoreAudio {
 
         public event SessionDisconnectedDelegate? OnSessionDisconnected;
 
-        internal readonly Guid eventContext;
+        internal Guid eventContext;
 
         #endregion
 
         AudioSessionEvents? audioSessionEvents;
 
-        internal AudioSessionControl2(IAudioSessionControl2 realAudioSessionControl2, Guid eventContext) {
+        internal AudioSessionControl2(IAudioSessionControl2 realAudioSessionControl2, ref Guid eventContext) {
             audioSessionControl2 = realAudioSessionControl2;
             this.eventContext = eventContext;
             if(audioSessionControl2 is IAudioMeterInformation meters)
                 audioMeterInformation = new AudioMeterInformation(meters);
 
             if(audioSessionControl2 is ISimpleAudioVolume volume)
-                simpleAudioVolume = new SimpleAudioVolume(volume, eventContext);
+                simpleAudioVolume = new SimpleAudioVolume(volume, ref eventContext);
 
             audioSessionEvents = new AudioSessionEvents(this);
             Marshal.ThrowExceptionForHR(audioSessionControl2.RegisterAudioSessionNotification(audioSessionEvents));
         }
 
-        void IIAudioSessionControl.FireDisplayNameChanged([MarshalAs(UnmanagedType.LPWStr)] string newDisplayName, Guid eventContext) {
+        void IIAudioSessionControl.FireDisplayNameChanged([MarshalAs(UnmanagedType.LPWStr)] string newDisplayName, ref Guid eventContext) {
             if(eventContext != this.eventContext)
                 OnDisplayNameChanged?.Invoke(this, newDisplayName);
         }
 
-        void IIAudioSessionControl.FireOnIconPathChanged([MarshalAs(UnmanagedType.LPWStr)] string newIconPath, Guid eventContext) {
+        void IIAudioSessionControl.FireOnIconPathChanged([MarshalAs(UnmanagedType.LPWStr)] string newIconPath, ref Guid eventContext) {
             if(eventContext != this.eventContext)
                 OnIconPathChanged?.Invoke(this, newIconPath);
         }
 
-        void IIAudioSessionControl.FireSimpleVolumeChanged(float NewVolume, bool newMute, Guid eventContext) {
+        void IIAudioSessionControl.FireSimpleVolumeChanged(float NewVolume, bool newMute, ref Guid eventContext) {
             if(eventContext != this.eventContext)
                 OnSimpleVolumeChanged?.Invoke(this, NewVolume, newMute);
         }
 
-        void IIAudioSessionControl.FireChannelVolumeChanged(uint channelCount, IntPtr newChannelVolumeArray, uint changedChannel, Guid eventContext) {
+        void IIAudioSessionControl.FireChannelVolumeChanged(uint channelCount, IntPtr newChannelVolumeArray, uint changedChannel, ref Guid eventContext) {
             if(eventContext == this.eventContext) return;
             float[] volume = new float[channelCount];
             Marshal.Copy(newChannelVolumeArray, volume, 0, (int)channelCount);

@@ -34,23 +34,23 @@ namespace CoreAudio.Interfaces {
         [PreserveSig]
         int GetChannelCount(out int pnChannelCount);
         [PreserveSig]
-        int SetMasterVolumeLevel(float fLevelDB, Guid eventContext);
+        int SetMasterVolumeLevel(float fLevelDB, ref Guid eventContext);
         [PreserveSig]
-        int SetMasterVolumeLevelScalar(float fLevel, Guid eventContext);
+        int SetMasterVolumeLevelScalar(float fLevel, ref Guid eventContext);
         [PreserveSig]
         int GetMasterVolumeLevel(out float pfLevelDB);
         [PreserveSig]
         int GetMasterVolumeLevelScalar(out float pfLevel);
         [PreserveSig]
-        int SetChannelVolumeLevel(uint nChannel, float fLevelDB, Guid eventContext);
+        int SetChannelVolumeLevel(uint nChannel, float fLevelDB, ref Guid eventContext);
         [PreserveSig]
-        int SetChannelVolumeLevelScalar(uint nChannel, float fLevel, Guid eventContext);
+        int SetChannelVolumeLevelScalar(uint nChannel, float fLevel, ref Guid eventContext);
         [PreserveSig]
         int GetChannelVolumeLevel(uint nChannel, out float pfLevelDB);
         [PreserveSig]
         int GetChannelVolumeLevelScalar(uint nChannel, out float pfLevel);
         [PreserveSig]
-        int SetMute([MarshalAs(UnmanagedType.Bool)] bool bMute, Guid eventContext);
+        int SetMute([MarshalAs(UnmanagedType.Bool)] bool bMute, ref Guid eventContext);
         [PreserveSig]
         int GetMute(out bool pbMute);
         [PreserveSig]

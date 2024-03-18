@@ -28,7 +28,7 @@ namespace CoreAudio {
     public class SimpleAudioVolume {
         ISimpleAudioVolume simpleAudioVolume;
         private Guid eventContext;
-        internal SimpleAudioVolume(ISimpleAudioVolume realSimpleVolume, Guid eventContext) {
+        internal SimpleAudioVolume(ISimpleAudioVolume realSimpleVolume, ref Guid eventContext) {
             simpleAudioVolume = realSimpleVolume;
             this.eventContext = eventContext;
         }

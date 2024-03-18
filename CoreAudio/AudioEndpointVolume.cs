@@ -33,7 +33,7 @@ namespace CoreAudio {
         readonly AudioEndPointVolumeVolumeRange volumeRange;
         readonly EEndpointHardwareSupport hardwareSupport;
         AudioEndpointVolumeCallback? callBack;
-        internal readonly Guid eventContext;
+        internal Guid eventContext;
         public event AudioEndpointVolumeNotificationDelegate? OnVolumeNotification;
 
         public AudioEndPointVolumeVolumeRange VolumeRange => volumeRange;
@@ -49,7 +49,7 @@ namespace CoreAudio {
                 Marshal.ThrowExceptionForHR(audioEndPointVolume.GetMasterVolumeLevel(out var result));
                 return result;
             }
-            set => Marshal.ThrowExceptionForHR(audioEndPointVolume.SetMasterVolumeLevel(value, eventContext));
+            set => Marshal.ThrowExceptionForHR(audioEndPointVolume.SetMasterVolumeLevel(value, ref eventContext));
         }
 
         public float MasterVolumeLevelScalar {
@@ -57,7 +57,7 @@ namespace CoreAudio {
                 Marshal.ThrowExceptionForHR(audioEndPointVolume.GetMasterVolumeLevelScalar(out var result));
                 return result;
             }
-            set => Marshal.ThrowExceptionForHR(audioEndPointVolume.SetMasterVolumeLevelScalar(value, eventContext));
+            set => Marshal.ThrowExceptionForHR(audioEndPointVolume.SetMasterVolumeLevelScalar(value, ref eventContext));
         }
 
         public bool Mute {
@@ -65,7 +65,7 @@ namespace CoreAudio {
                 Marshal.ThrowExceptionForHR(audioEndPointVolume.GetMute(out var result));
                 return result;
             }
-            set => Marshal.ThrowExceptionForHR(audioEndPointVolume.SetMute(value, eventContext));
+            set => Marshal.ThrowExceptionForHR(audioEndPointVolume.SetMute(value, ref eventContext));
         }
 
         public void VolumeStepUp() {
@@ -76,10 +76,10 @@ namespace CoreAudio {
             Marshal.ThrowExceptionForHR(audioEndPointVolume.VolumeStepDown(eventContext));
         }
 
-        internal AudioEndpointVolume(IAudioEndpointVolume realEndpointVolume, Guid eventContext) {
+        internal AudioEndpointVolume(IAudioEndpointVolume realEndpointVolume, ref Guid eventContext) {
             audioEndPointVolume = realEndpointVolume;
             this.eventContext = eventContext;
-            channels = new AudioEndpointVolumeChannels(audioEndPointVolume);
+            channels = new AudioEndpointVolumeChannels(audioEndPointVolume, ref eventContext);
             stepInformation = new AudioEndpointVolumeStepInformation(audioEndPointVolume);
             Marshal.ThrowExceptionForHR(audioEndPointVolume.QueryHardwareSupport(out var hardwareSupp));
             hardwareSupport = (EEndpointHardwareSupport)hardwareSupp;

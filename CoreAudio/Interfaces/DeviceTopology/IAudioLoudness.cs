@@ -28,6 +28,6 @@ namespace CoreAudio.Interfaces {
      InterfaceType(ComInterfaceType.InterfaceIsIUnknown)]
     internal interface IAudioLoudness {
         int GetEnabled([Out, MarshalAs(UnmanagedType.Bool)] out bool enabled);
-        int SetEnabled([MarshalAs(UnmanagedType.Bool)] bool enabled, Guid eventContext);
+        int SetEnabled([MarshalAs(UnmanagedType.Bool)] bool enabled, ref Guid eventContext);
     }
 }

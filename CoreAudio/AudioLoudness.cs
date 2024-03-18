@@ -27,9 +27,9 @@ using CoreAudio.Interfaces;
 namespace CoreAudio {
     public class AudioLoudness {
         readonly IAudioLoudness audioLoudness;
-        internal readonly Guid eventContext;
+        internal Guid eventContext;
 
-        internal AudioLoudness(IAudioLoudness audioLoudness, Guid eventContext) {
+        internal AudioLoudness(IAudioLoudness audioLoudness, ref Guid eventContext) {
             this.audioLoudness = audioLoudness;
             this.eventContext = eventContext;
         }
@@ -39,7 +39,7 @@ namespace CoreAudio {
                 Marshal.ThrowExceptionForHR(audioLoudness.GetEnabled(out bool enabled));
                 return enabled;
             }
-            set => Marshal.ThrowExceptionForHR(audioLoudness.SetEnabled(value, eventContext));
+            set => Marshal.ThrowExceptionForHR(audioLoudness.SetEnabled(value, ref eventContext));
         }
     }
 }

@@ -33,16 +33,16 @@ namespace CoreAudio {
     //Small wrapper class
     public class MMDeviceEnumerator {
         readonly IMMDeviceEnumerator _realEnumerator;
-        internal readonly Guid eventContext;
+        internal Guid eventContext;
 
         public MMDeviceCollection EnumerateAudioEndPoints(DataFlow dataFlow, DeviceState dwStateMask) {
             Marshal.ThrowExceptionForHR(_realEnumerator.EnumAudioEndpoints(dataFlow, dwStateMask, out var result));
-            return new MMDeviceCollection(result, eventContext);
+            return new MMDeviceCollection(result, ref eventContext);
         }
 
         public MMDevice GetDefaultAudioEndpoint(DataFlow dataFlow, Role role) {
             Marshal.ThrowExceptionForHR(_realEnumerator.GetDefaultAudioEndpoint(dataFlow, role, out var device));
-            return new MMDevice(device, eventContext);
+            return new MMDevice(device, ref eventContext);
         }
 
         public void SetDefaultAudioEndpoint(MMDevice device) {
@@ -52,7 +52,7 @@ namespace CoreAudio {
 
         public MMDevice GetDevice(string ID) {
             Marshal.ThrowExceptionForHR(_realEnumerator.GetDevice(ID, out var device));
-            return new MMDevice(device, eventContext);
+            return new MMDevice(device, ref eventContext);
         }
 
         internal int RegisterEndpointNotificationCallback(IMMNotificationClient client) {

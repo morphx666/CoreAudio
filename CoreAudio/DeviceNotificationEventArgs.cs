@@ -8,9 +8,9 @@ namespace CoreAudio {
             DeviceId = deviceId;
         }
 
-        public bool TryGetDevice(out MMDevice? device) {
+        public bool TryGetDevice(out MMDevice? device, Guid eventContext) {
             try {
-                var deviceEnumerator = new MMDeviceEnumerator(Guid.Empty);
+                var deviceEnumerator = new MMDeviceEnumerator(eventContext);
                 device = deviceEnumerator.GetDevice(DeviceId);
                 return true;
             } catch(Exception) {
@@ -18,6 +18,10 @@ namespace CoreAudio {
             }
 
             return false;
+        }
+
+        public bool TryGetDevice(out MMDevice? device) {
+            return TryGetDevice(out device, Guid.Empty);
         }
     }
 }

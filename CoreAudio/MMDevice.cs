@@ -46,7 +46,7 @@ namespace CoreAudio {
 
         void GetAudioSessionManager2() {
             Marshal.ThrowExceptionForHR(realDevice.Activate(ref RefIId.IIdIAudioSessionManager2, CLSCTX.ALL, IntPtr.Zero, out var result));
-            audioSessionManager2 = new AudioSessionManager2((IAudioSessionManager2)result, eventContext);
+            audioSessionManager2 = new AudioSessionManager2((IAudioSessionManager2)result, ref eventContext);
         }
 
         void GetAudioMeterInformation() {
@@ -56,7 +56,7 @@ namespace CoreAudio {
 
         void GetAudioEndpointVolume() {
             Marshal.ThrowExceptionForHR(realDevice.Activate(ref RefIId.IIdIAudioEndpointVolume, CLSCTX.ALL, IntPtr.Zero, out var result));
-            audioEndPointVolume = new AudioEndpointVolume((IAudioEndpointVolume)result, eventContext);
+            audioEndPointVolume = new AudioEndpointVolume((IAudioEndpointVolume)result, ref eventContext);
         }
 
         void GetDeviceTopology() {
@@ -189,7 +189,7 @@ namespace CoreAudio {
         #endregion
 
         #region Constructor
-        internal MMDevice(IMMDevice realDevice, Guid eventContext) {
+        internal MMDevice(IMMDevice realDevice, ref Guid eventContext) {
             this.realDevice = realDevice;
             this.eventContext = eventContext;
         }

@@ -27,7 +27,7 @@ namespace CoreAudio.Interfaces {
     [Guid("DF45AEEA-B74A-4B6B-AFAD-2366B6AA012E"),
      InterfaceType(ComInterfaceType.InterfaceIsIUnknown)]
     internal interface IAudioMute {
-        int SetMute([MarshalAs(UnmanagedType.Bool)] bool muted, Guid eventContext);
+        int SetMute([MarshalAs(UnmanagedType.Bool)] bool muted, ref Guid eventContext);
         int GetMute([Out, MarshalAs(UnmanagedType.Bool)] out bool muted);
     }
 }

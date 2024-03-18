@@ -30,7 +30,7 @@ using CoreAudio.Interfaces;
 namespace CoreAudio {
     public class MMDeviceCollection : IEnumerable<MMDevice> {
         readonly IMMDeviceCollection mMDeviceCollection;
-        internal readonly Guid eventContext;
+        internal Guid eventContext;
         public int Count {
             get {
                 Marshal.ThrowExceptionForHR(mMDeviceCollection.GetCount(out var result));
@@ -41,11 +41,11 @@ namespace CoreAudio {
         public MMDevice this[int index] {
             get {
                 mMDeviceCollection.Item((uint)index, out IMMDevice result);
-                return new MMDevice(result, eventContext);
+                return new MMDevice(result, ref eventContext);
             }
         }
 
-        internal MMDeviceCollection(IMMDeviceCollection parent, Guid eventContext) {
+        internal MMDeviceCollection(IMMDeviceCollection parent, ref Guid eventContext) {
             mMDeviceCollection = parent;
             this.eventContext = eventContext;
         }

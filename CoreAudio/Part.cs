@@ -71,7 +71,7 @@ namespace CoreAudio {
         void GetAudioMute() {
             part.Activate(CLSCTX.ALL, ref RefIId.IIdIAudioMute, out var result);
             if(result is IAudioMute mute) {
-                audioMute = new AudioMute(mute, eventContext);
+                audioMute = new AudioMute(mute, ref eventContext);
                 _AudioMuteChangeNotification = new ControlChangeNotify(this);
                 Marshal.ThrowExceptionForHR(
                     part.RegisterControlChangeCallback(ref RefIId.IIdIAudioMute, _AudioMuteChangeNotification));
@@ -91,7 +91,7 @@ namespace CoreAudio {
         void GetAudioLoudness() {
             part.Activate(CLSCTX.ALL, ref RefIId.IIdIAudioLoudness, out var result);
             if(result is IAudioLoudness loudness) {
-                audioLoudness = new AudioLoudness(loudness, eventContext);
+                audioLoudness = new AudioLoudness(loudness, ref eventContext);
                 _AudioLoudnessChangeNotification = new ControlChangeNotify(this);
                 Marshal.ThrowExceptionForHR(part.RegisterControlChangeCallback(ref RefIId.IIdIAudioLoudness,
                     _AudioLoudnessChangeNotification));

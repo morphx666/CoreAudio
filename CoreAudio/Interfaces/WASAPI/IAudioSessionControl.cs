@@ -32,15 +32,15 @@ namespace CoreAudio.Interfaces {
         [PreserveSig]
         int GetDisplayName([MarshalAs(UnmanagedType.LPWStr)] out string name);
         [PreserveSig]
-        int SetDisplayName([MarshalAs(UnmanagedType.LPWStr)] string value, Guid EventContext);
+        int SetDisplayName([MarshalAs(UnmanagedType.LPWStr)] string value, ref Guid eventContext);
         [PreserveSig]
         int GetIconPath([MarshalAs(UnmanagedType.LPWStr)] out string Path);
         [PreserveSig]
-        int SetIconPath([MarshalAs(UnmanagedType.LPWStr)] string Value, Guid EventContext);
+        int SetIconPath([MarshalAs(UnmanagedType.LPWStr)] string Value, ref Guid eventContext);
         [PreserveSig]
         int GetGroupingParam(out Guid GroupingParam);
         [PreserveSig]
-        int SetGroupingParam(Guid Override, Guid Eventcontext);
+        int SetGroupingParam(Guid Override, ref Guid eventContext);
         [PreserveSig]
         int RegisterAudioSessionNotification(IAudioSessionEvents NewNotifications);
         [PreserveSig]

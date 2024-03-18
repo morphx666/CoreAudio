@@ -30,8 +30,8 @@ using CoreAudio.Interfaces;
 namespace CoreAudio {
     public class SessionCollection : IEnumerable<AudioSessionControl2> {
         readonly IAudioSessionEnumerator audioSessionEnumerator;
-        internal readonly Guid eventContext;
-        internal SessionCollection(IAudioSessionEnumerator realEnumerator, Guid eventContext) {
+        internal Guid eventContext;
+        internal SessionCollection(IAudioSessionEnumerator realEnumerator, ref Guid eventContext) {
             audioSessionEnumerator = realEnumerator;
             this.eventContext = eventContext;
         }
@@ -39,7 +39,7 @@ namespace CoreAudio {
         public AudioSessionControl2 this[int index] {
             get {
                 Marshal.ThrowExceptionForHR(audioSessionEnumerator.GetSession(index, out IAudioSessionControl2 _Result));
-                return new AudioSessionControl2(_Result, eventContext);
+                return new AudioSessionControl2(_Result, ref eventContext);
             }
         }
 

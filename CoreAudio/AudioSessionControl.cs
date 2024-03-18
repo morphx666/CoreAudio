@@ -27,13 +27,13 @@ using CoreAudio.Interfaces;
 
 namespace CoreAudio {
     internal interface IIAudioSessionControl {
-        void FireDisplayNameChanged([MarshalAs(UnmanagedType.LPWStr)] string newDisplayName, Guid eventContext);
+        void FireDisplayNameChanged([MarshalAs(UnmanagedType.LPWStr)] string newDisplayName, ref Guid eventContext);
 
-        void FireOnIconPathChanged([MarshalAs(UnmanagedType.LPWStr)] string newIconPath, Guid eventContext);
+        void FireOnIconPathChanged([MarshalAs(UnmanagedType.LPWStr)] string newIconPath, ref Guid eventContext);
 
-        void FireSimpleVolumeChanged(float newVolume, bool newMute, Guid eventContext);
+        void FireSimpleVolumeChanged(float newVolume, bool newMute, ref Guid eventContext);
 
-        void FireChannelVolumeChanged(uint channelCount, IntPtr newChannelVolumeArray, uint changedChannel, Guid eventContext);
+        void FireChannelVolumeChanged(uint channelCount, IntPtr newChannelVolumeArray, uint changedChannel, ref Guid eventContext);
 
         void FireStateChanged(AudioSessionState newState);
 
@@ -67,30 +67,30 @@ namespace CoreAudio {
 
         readonly AudioSessionEvents? audioSessionEvents;
 
-        internal AudioSessionControl(IAudioSessionControl realAudioSessionControl) {
+        internal AudioSessionControl(IAudioSessionControl realAudioSessionControl, ref Guid eventContext) {
             if(realAudioSessionControl is IAudioMeterInformation _meters)
                 _AudioMeterInformation = new AudioMeterInformation(_meters);
             if(realAudioSessionControl is ISimpleAudioVolume _volume)
-                _SimpleAudioVolume = new SimpleAudioVolume(_volume, Guid.Empty);
+                _SimpleAudioVolume = new SimpleAudioVolume(_volume, ref eventContext);
             _AudioSessionControl = realAudioSessionControl;
 
             audioSessionEvents = new AudioSessionEvents(this);
             Marshal.ThrowExceptionForHR(_AudioSessionControl.RegisterAudioSessionNotification(audioSessionEvents));
         }
 
-        void IIAudioSessionControl.FireDisplayNameChanged([MarshalAs(UnmanagedType.LPWStr)] string newDisplayName, Guid eventContext) {
+        void IIAudioSessionControl.FireDisplayNameChanged([MarshalAs(UnmanagedType.LPWStr)] string newDisplayName, ref Guid eventContext) {
             OnDisplayNameChanged?.Invoke(this, newDisplayName);
         }
 
-        void IIAudioSessionControl.FireOnIconPathChanged([MarshalAs(UnmanagedType.LPWStr)] string newIconPath, Guid eventContext) {
+        void IIAudioSessionControl.FireOnIconPathChanged([MarshalAs(UnmanagedType.LPWStr)] string newIconPath, ref Guid eventContext) {
             OnIconPathChanged?.Invoke(this, newIconPath);
         }
 
-        void IIAudioSessionControl.FireSimpleVolumeChanged(float newVolume, bool newMute, Guid eventContext) {
+        void IIAudioSessionControl.FireSimpleVolumeChanged(float newVolume, bool newMute, ref Guid eventContext) {
             OnSimpleVolumeChanged?.Invoke(this, newVolume, newMute);
         }
 
-        void IIAudioSessionControl.FireChannelVolumeChanged(uint channelCount, IntPtr newChannelVolumeArray, uint changedChannel, Guid eventContext) {
+        void IIAudioSessionControl.FireChannelVolumeChanged(uint channelCount, IntPtr newChannelVolumeArray, uint changedChannel, ref Guid eventContext) {
             float[] volume = new float[channelCount - 1];
             Marshal.Copy(newChannelVolumeArray, volume, 0, (int)channelCount);
             OnChannelVolumeChanged?.Invoke(this, (int)channelCount, volume, (int)changedChannel);

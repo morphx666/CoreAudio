@@ -35,25 +35,25 @@ namespace CoreAudio {
 
         [PreserveSig]
         public int OnDisplayNameChanged([MarshalAs(UnmanagedType.LPWStr)] string newDisplayName, ref Guid eventContext) {
-            parent.FireDisplayNameChanged(newDisplayName, eventContext);
+            parent.FireDisplayNameChanged(newDisplayName, ref eventContext);
             return 0;
         }
 
         [PreserveSig]
         public int OnIconPathChanged([MarshalAs(UnmanagedType.LPWStr)] string newIconPath, ref Guid eventContext) {
-            parent.FireOnIconPathChanged(newIconPath, eventContext);
+            parent.FireOnIconPathChanged(newIconPath, ref eventContext);
             return 0;
         }
 
         [PreserveSig]
         public int OnSimpleVolumeChanged(float newVolume, bool newMute, ref Guid eventContext) {
-            parent.FireSimpleVolumeChanged(newVolume, newMute, eventContext);
+            parent.FireSimpleVolumeChanged(newVolume, newMute, ref eventContext);
             return 0;
         }
 
         [PreserveSig]
         public int OnChannelVolumeChanged(uint channelCount, IntPtr newChannelVolumeArray, uint changedChannel, ref Guid eventContext) {
-            parent.FireChannelVolumeChanged(channelCount, newChannelVolumeArray, changedChannel, eventContext);
+            parent.FireChannelVolumeChanged(channelCount, newChannelVolumeArray, changedChannel, ref eventContext);
             return 0;
         }
 
