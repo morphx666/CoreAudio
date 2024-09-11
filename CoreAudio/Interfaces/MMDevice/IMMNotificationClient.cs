@@ -29,14 +29,14 @@ namespace CoreAudio.Interfaces {
     InterfaceType(ComInterfaceType.InterfaceIsIUnknown)]
     internal interface IMMNotificationClient {
         [PreserveSig]
-        void OnDeviceStateChanged([In, MarshalAs(UnmanagedType.LPWStr)] string pwstrDeviceId, DeviceState dwNewState);
+        void OnDeviceStateChanged([In, MarshalAs(UnmanagedType.LPWStr)] string deviceId, DeviceState dwNewState);
         [PreserveSig]
-        void OnDeviceAdded([In, MarshalAs(UnmanagedType.LPWStr)] string pwstrDeviceId);
+        void OnDeviceAdded([In, MarshalAs(UnmanagedType.LPWStr)] string deviceId);
         [PreserveSig]
-        void OnDeviceRemoved([In, MarshalAs(UnmanagedType.LPWStr)] string pwstrDeviceId);
+        void OnDeviceRemoved([In, MarshalAs(UnmanagedType.LPWStr)] string deviceId);
         [PreserveSig]
-        void OnDefaultDeviceChanged(DataFlow flow, Role role, [In, MarshalAs(UnmanagedType.LPWStr)] string pwstrDeviceId);
+        void OnDefaultDeviceChanged(DataFlow flow, Role role, [In, MarshalAs(UnmanagedType.LPWStr)] string deviceId);
         [PreserveSig]
-        void OnPropertyValueChanged([In, MarshalAs(UnmanagedType.LPWStr)] string pwstrDeviceId, PropertyKey key);
+        void OnPropertyValueChanged([In, MarshalAs(UnmanagedType.LPWStr)] string deviceId, PropertyKey key);
     }
 }

@@ -31,6 +31,7 @@ namespace CoreAudio {
     public class MMDeviceCollection : IEnumerable<MMDevice> {
         readonly IMMDeviceCollection mMDeviceCollection;
         internal Guid eventContext;
+
         public int Count {
             get {
                 Marshal.ThrowExceptionForHR(mMDeviceCollection.GetCount(out var result));
