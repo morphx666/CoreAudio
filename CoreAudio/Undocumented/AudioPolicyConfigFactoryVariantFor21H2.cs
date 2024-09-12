@@ -27,7 +27,7 @@ namespace CoreAudio.Undocumented {
             MMDevice? device = null;
 
             int r = GetPersistedDefaultAudioEndpoint(processId, flow, role, out string deviceId);
-            if(r == 0 || deviceId != "") {
+            if(r == 0 && deviceId != "") {
                 foreach(MMDevice dev in deviceEnumerator.EnumerateAudioEndPoints(flow, state)) {
                     if(deviceId.Contains(dev.ID)) {
                         device = dev;

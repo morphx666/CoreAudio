@@ -1,30 +1,12 @@
 ﻿using CoreAudio;
-using CoreAudio.Interfaces.Undocumented;
-using CoreAudio.Undocumented;
 using System;
 using System.Diagnostics;
-using System.Linq;
 
 namespace CoreAudioForms.Core.Sample {
     class Program {
         static void Main(string[] args) {
             MMDeviceEnumerator devEnum = new MMDeviceEnumerator(Guid.NewGuid());
             MMDevice device = devEnum.GetDefaultAudioEndpoint(DataFlow.Render, Role.Multimedia);
-
-            Process[] processes = Process.GetProcessesByName("VLC");
-            if(processes.Length > 0) {
-                IAudioPolicyConfigFactory apc = AudioPolicyConfigFactory.Create();
-                MMDevice dev = apc.GetPersistedDefaultAudioEndpoint(devEnum, processes[0].Id, DataFlow.Render, Role.Multimedia);
-                
-                Debugger.Break();
-
-                foreach(MMDevice edev in devEnum.EnumerateAudioEndPoints(DataFlow.Render, DeviceState.Active)) {
-                    if(edev.DeviceFriendlyName.Contains("Headphones") {
-                        apc.SetPersistedDefaultAudioEndpoint(processes[0].Id, DataFlow.Render, Role.Multimedia, edev);
-                        break;
-                    }
-                }
-            }
             
             foreach(var session in device.AudioSessionManager2.Sessions) {
                 if(session.State == AudioSessionState.AudioSessionStateActive) {
