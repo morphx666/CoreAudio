@@ -6,7 +6,6 @@ using System.Runtime.InteropServices;
 namespace CoreAudio.Undocumented {
     public class AudioPolicyConfigFactory {
         public static IAudioPolicyConfigFactory Create() {
-
             int osBuildNumber = int.Parse(RuntimeInformation.OSDescription.Split('.').Last());
 
             if(osBuildNumber >= 21390) { // Windows 10 21H2

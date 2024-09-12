@@ -1,42 +1,52 @@
 ﻿using CoreAudio;
+using CoreAudio.Interfaces.Undocumented;
+using CoreAudio.Undocumented;
 using System;
 using System.Diagnostics;
+using System.Linq;
 
 namespace CoreAudioForms.Core.Sample {
     class Program {
         static void Main(string[] args) {
-            MMDeviceEnumerator DevEnum = new MMDeviceEnumerator(Guid.NewGuid());
-            MMDevice device = DevEnum.GetDefaultAudioEndpoint(DataFlow.Render, Role.Multimedia);
-            // Note the AudioSession manager did not have a method to enumerate all sessions in windows Vista
-            // this will only work on Win7 and newer.
+            MMDeviceEnumerator devEnum = new MMDeviceEnumerator(Guid.NewGuid());
+            MMDevice device = devEnum.GetDefaultAudioEndpoint(DataFlow.Render, Role.Multimedia);
+
+            Process[] processes = Process.GetProcessesByName("VLC");
+            if(processes.Length > 0) {
+                IAudioPolicyConfigFactory apc = AudioPolicyConfigFactory.Create();
+                MMDevice dev = apc.GetPersistedDefaultAudioEndpoint(devEnum, processes[0].Id, DataFlow.Render, Role.Multimedia);
+                
+                Debugger.Break();
+
+                foreach(MMDevice edev in devEnum.EnumerateAudioEndPoints(DataFlow.Render, DeviceState.Active)) {
+                    if(edev.DeviceFriendlyName.Contains("Headphones") {
+                        apc.SetPersistedDefaultAudioEndpoint(processes[0].Id, DataFlow.Render, Role.Multimedia, edev);
+                        break;
+                    }
+                }
+            }
+            
             foreach(var session in device.AudioSessionManager2.Sessions) {
                 if(session.State == AudioSessionState.AudioSessionStateActive) {
                     Console.CursorVisible = false;
-
-                    WriteLine("DisplayName", session.DisplayName);
-                    WriteLine("State", session.State.ToString());
-                    WriteLine("IconPath", session.IconPath);
-                    WriteLine("SessionIdentifier", session.SessionIdentifier);
-                    WriteLine("SessionInstanceIdentifier", session.SessionInstanceIdentifier);
-                    WriteLine("ProcessID", session.ProcessID.ToString());
-                    WriteLine("IsSystemIsSystemSoundsSession", session.IsSystemSoundsSession.ToString());
-
-                    Process p = Process.GetProcessById((int)session.ProcessID);
-                    WriteLine("ProcessName", p.ProcessName);
-                    WriteLine("MainWindowTitle", p.MainWindowTitle);
-
-                    Console.ForegroundColor = ConsoleColor.DarkYellow;
-                    Console.WriteLine("\n---[Hotkeys]---");
-                    WriteLine("M", "Toggle Mute");
-                    WriteLine("↑", "Lower volume");
-                    WriteLine("↓", "Raise volume");
-                    WriteLine("Q", "Quit\n");
+                    PrintSessionInfo(session);
 
                     AudioMeterInformation mi = session.AudioMeterInformation;
                     SimpleAudioVolume vol = session.SimpleAudioVolume;
 
+                    (int cw, int ch) = (Console.WindowWidth, Console.WindowHeight);
                     int start = Console.CursorTop;
                     while(true) {
+                        if(cw != Console.WindowWidth || ch != Console.WindowHeight) {
+                            Console.Clear();
+                            PrintSessionInfo(session);
+
+                            start = Console.CursorTop;
+                            Console.SetCursorPosition(0, start);
+                            cw = Console.WindowWidth;
+                            ch = Console.WindowHeight;
+                        }
+
                         //Draw a VU meter
                         int w = Console.WindowWidth - 1;
                         int len = (int)(mi.MasterPeakValue * w);
@@ -81,6 +91,27 @@ namespace CoreAudioForms.Core.Sample {
             Console.WriteLine("No Audio sessions found");
             Console.ReadKey(true);
             ResetConsole();
+        }
+
+        private static void PrintSessionInfo(AudioSessionControl2 session) {
+            WriteLine("DisplayName", session.DisplayName);
+            WriteLine("State", session.State.ToString());
+            WriteLine("IconPath", session.IconPath);
+            WriteLine("SessionIdentifier", session.SessionIdentifier);
+            WriteLine("SessionInstanceIdentifier", session.SessionInstanceIdentifier);
+            WriteLine("ProcessID", session.ProcessID.ToString());
+            WriteLine("IsSystemIsSystemSoundsSession", session.IsSystemSoundsSession.ToString());
+
+            Process p = Process.GetProcessById((int)session.ProcessID);
+            WriteLine("ProcessName", p.ProcessName);
+            WriteLine("MainWindowTitle", p.MainWindowTitle);
+
+            Console.ForegroundColor = ConsoleColor.DarkYellow;
+            Console.WriteLine("\n---[Hotkeys]---");
+            WriteLine("M", "Toggle Mute");
+            WriteLine("↑", "Lower volume");
+            WriteLine("↓", "Raise volume");
+            WriteLine("Q", "Quit\n");
         }
 
         static void WriteLine(string key, string value) {

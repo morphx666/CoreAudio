@@ -33,5 +33,8 @@ namespace CoreAudio.Interfaces.Undocumented {
         int GetPersistedDefaultAudioEndpoint(int processId, DataFlow flow, Role role, [Out, MarshalAs(UnmanagedType.HString)] out string deviceId);
         [PreserveSig]
         int ClearAllPersistedApplicationDefaultEndpoints();
+
+        MMDevice? GetPersistedDefaultAudioEndpoint(MMDeviceEnumerator deviceEnumerator, int processId, DataFlow flow, Role role, DeviceState state = DeviceState.MaskAll);
+        void SetPersistedDefaultAudioEndpoint(int processId, DataFlow flow, Role role, MMDevice device);
     }
 }
