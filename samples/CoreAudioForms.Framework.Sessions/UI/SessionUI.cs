@@ -69,11 +69,17 @@ namespace CoreAudioForms.Framework.Sessions {
 
         private void SafeSetSession() {
             if(this.InvokeRequired)
-                this.Invoke((MethodInvoker)delegate {
-                    UpdateSessionUI();
-                });
+                this.Invoke((MethodInvoker)delegate { UpdateSessionUI(); });
             else {
                 UpdateSessionUI();
+            }
+        }
+
+        private void SafeUpdateSessionLabels() {
+            if(this.InvokeRequired)
+                this.Invoke((MethodInvoker)delegate { UpdateSessionLabels(); });
+            else {
+                UpdateSessionLabels();
             }
         }
 
@@ -136,20 +142,28 @@ namespace CoreAudioForms.Framework.Sessions {
         #region UI Stuff
         private void StartRenderer() {
             Task.Run(async () => {
-                int m = 5;
-                int r = 30;
-                int t = 0;
+                int delay = 5;
+                int vuDelay = 30;
+                int vuCounter = 0;
+                int labelsDelay = 1000;
+                int labelsCounter = 0;
+
+                if(session.DisplayName.ToLower().Contains("firefox")) {
+                    Console.WriteLine("RUNNING");
+                }
 
                 while(!this.IsDisposed) {
-                    await Task.Delay(m);
+                    await Task.Delay(delay);
 
                     for(int i = 0; i < channels; i++) {
                         volPeakHistory[i].Enqueue(session.AudioMeterInformation.PeakValues[i]);
                         if(volPeakHistory[i].Count > historySize) volPeakHistory[i].TryDequeue(out float _);
                     }
 
-                    t += m;
-                    if(t >= r) {
+                    vuCounter += delay;
+                    if(vuCounter >= vuDelay) {
+                        vuCounter = 0;
+
                         for(int i = 0; i < channels; i++) {
                             newValues[i] = Math.Min((int)(volPeakHistory[i].Average() * 100), 100);
                             if(newValues[i] != lastValues[i]) {
@@ -157,6 +171,12 @@ namespace CoreAudioForms.Framework.Sessions {
                                 lastValues[i] = newValues[i];
                             }
                         }
+                    }
+
+                    labelsCounter += delay;
+                    if(labelsCounter >= labelsDelay) {
+                        labelsCounter = 0;
+                        SafeUpdateSessionLabels();
                     }
                 }
             }, cts.Token);
@@ -166,26 +186,35 @@ namespace CoreAudioForms.Framework.Sessions {
             LabelName.Font = new Font(this.Font, FontStyle.Bold);
             LabelSessionInfo.Font = new Font(this.Font.FontFamily, this.Font.Size - 2, FontStyle.Regular);
 
-            VUDisplay.Top = LabelName.Height + LabelSessionInfo.Height + 4;
+            VUDisplay.Top = LabelName.Height + LabelSessionInfo.Height + 8;
             TrackBarVol.Top = VUDisplay.Bottom + 4;
 
             this.Height = Math.Max(PictureBoxIcon.Bottom, VUDisplay.Bottom) + 8;
         }
 
         private void UpdateSessionUI() {
-            Process p = Process.GetProcessById((int)session.ProcessID);
-            LabelName.Text = session.IsSystemSoundsSession ? "System Sounds" : session.DisplayName;
-            if(LabelName.Text == "") LabelName.Text = p.ProcessName;
-            LabelSessionInfo.Text = channels == 0 ? "" : p.MainWindowTitle;
-
-            Bitmap bmp = GetSessionIcon(p, session);
-            if(bmp != null) PictureBoxIcon.Image = bmp;
+            UpdateSessionLabels();
 
             session.OnSimpleVolumeChanged += new SimpleVolumeChangedDelegate(UpdateUI);
             TrackBarVol.Scroll += (_, __) => UpdateVolume();
 
             InitChannels();
             UpdateUI(null, session.SimpleAudioVolume.MasterVolume, session.SimpleAudioVolume.Mute);
+        }
+
+        private void UpdateSessionLabels() {
+            using(Process p = Process.GetProcessById((int)session.ProcessID)) {
+                LabelName.Text = session.IsSystemSoundsSession ? "System Sounds" : session.DisplayName;
+                if(LabelName.Text == "") LabelName.Text = p.ProcessName;
+
+                string sessionInfo = channels == 0 ? "" : p.MainWindowTitle;
+                if(sessionInfo != LabelSessionInfo.Text) {
+                    LabelSessionInfo.Text = sessionInfo;
+
+                    Bitmap bmp = GetSessionIcon(p, session);
+                    if(bmp != null) PictureBoxIcon.Image = bmp;
+                }
+            }
         }
 
         private void UpdateUI(object sender, float newVolume, bool newMute) {

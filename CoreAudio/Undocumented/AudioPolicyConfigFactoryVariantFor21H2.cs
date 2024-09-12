@@ -1,5 +1,6 @@
 ﻿using CoreAudio.Interfaces.Undocumented;
 using System;
+using System.Runtime.InteropServices;
 
 namespace CoreAudio.Undocumented {
     class AudioPolicyConfigFactoryVariantFor21H2 : IAudioPolicyConfigFactory {

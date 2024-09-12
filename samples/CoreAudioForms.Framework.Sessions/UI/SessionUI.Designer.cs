@@ -33,10 +33,9 @@
             // 
             // PictureBoxIcon
             // 
-            this.PictureBoxIcon.Location = new System.Drawing.Point(10, 7);
-            this.PictureBoxIcon.Margin = new System.Windows.Forms.Padding(4);
+            this.PictureBoxIcon.Location = new System.Drawing.Point(8, 6);
             this.PictureBoxIcon.Name = "PictureBoxIcon";
-            this.PictureBoxIcon.Size = new System.Drawing.Size(85, 79);
+            this.PictureBoxIcon.Size = new System.Drawing.Size(64, 64);
             this.PictureBoxIcon.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
             this.PictureBoxIcon.TabIndex = 0;
             this.PictureBoxIcon.TabStop = false;
@@ -44,19 +43,19 @@
             // LabelName
             // 
             this.LabelName.AutoSize = true;
-            this.LabelName.Location = new System.Drawing.Point(105, 4);
-            this.LabelName.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.LabelName.Location = new System.Drawing.Point(79, 3);
             this.LabelName.Name = "LabelName";
-            this.LabelName.Size = new System.Drawing.Size(96, 16);
+            this.LabelName.Size = new System.Drawing.Size(75, 13);
             this.LabelName.TabIndex = 1;
             this.LabelName.Text = "Session Name";
             // 
             // LabelSessionInfo
             // 
             this.LabelSessionInfo.AutoSize = true;
-            this.LabelSessionInfo.Location = new System.Drawing.Point(105, 20);
+            this.LabelSessionInfo.Location = new System.Drawing.Point(79, 16);
+            this.LabelSessionInfo.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.LabelSessionInfo.Name = "LabelSessionInfo";
-            this.LabelSessionInfo.Size = new System.Drawing.Size(80, 16);
+            this.LabelSessionInfo.Size = new System.Drawing.Size(65, 13);
             this.LabelSessionInfo.TabIndex = 5;
             this.LabelSessionInfo.Text = "Session Info";
             // 
@@ -85,10 +84,11 @@
         50F,
         35F,
         15F};
-            this.VUDisplay.Location = new System.Drawing.Point(107, 39);
+            this.VUDisplay.Location = new System.Drawing.Point(80, 34);
+            this.VUDisplay.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
             this.VUDisplay.Mode = CoreAudioForms.Framework.Sessions.VU.Modes.Bar;
             this.VUDisplay.Name = "VUDisplay";
-            this.VUDisplay.Size = new System.Drawing.Size(283, 25);
+            this.VUDisplay.Size = new System.Drawing.Size(212, 20);
             this.VUDisplay.TabIndex = 4;
             this.VUDisplay.Values = new int[] {
         0,
@@ -104,12 +104,11 @@
             this.TrackBarVol.Font = new System.Drawing.Font("Verdana", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.TrackBarVol.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(123)))), ((int)(((byte)(125)))), ((int)(((byte)(123)))));
             this.TrackBarVol.IndentHeight = 6;
-            this.TrackBarVol.Location = new System.Drawing.Point(107, 71);
-            this.TrackBarVol.Margin = new System.Windows.Forms.Padding(4);
+            this.TrackBarVol.Location = new System.Drawing.Point(80, 58);
             this.TrackBarVol.Maximum = 100;
             this.TrackBarVol.Minimum = 0;
             this.TrackBarVol.Name = "TrackBarVol";
-            this.TrackBarVol.Size = new System.Drawing.Size(283, 28);
+            this.TrackBarVol.Size = new System.Drawing.Size(212, 28);
             this.TrackBarVol.TabIndex = 3;
             this.TrackBarVol.TextTickStyle = System.Windows.Forms.TickStyle.None;
             this.TrackBarVol.TickColor = System.Drawing.Color.FromArgb(((int)(((byte)(148)))), ((int)(((byte)(146)))), ((int)(((byte)(148)))));
@@ -124,16 +123,15 @@
             // 
             // SessionUI
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.Controls.Add(this.LabelSessionInfo);
             this.Controls.Add(this.VUDisplay);
             this.Controls.Add(this.TrackBarVol);
             this.Controls.Add(this.LabelName);
             this.Controls.Add(this.PictureBoxIcon);
-            this.Margin = new System.Windows.Forms.Padding(4);
             this.Name = "SessionUI";
-            this.Size = new System.Drawing.Size(400, 104);
+            this.Size = new System.Drawing.Size(300, 84);
             ((System.ComponentModel.ISupportInitialize)(this.PictureBoxIcon)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();

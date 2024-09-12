@@ -16,7 +16,7 @@ namespace CoreAudio.Undocumented {
         }
     }
 
-    public static class Combase {
+    internal static class Combase {
         [DllImport("combase.dll", PreserveSig = false)]
         public static extern void RoGetActivationFactory(
             [MarshalAs(UnmanagedType.HString)] string activatableClassId,

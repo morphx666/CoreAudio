@@ -7,7 +7,7 @@ namespace CoreAudioForms.Core.Sample {
         static void Main(string[] args) {
             MMDeviceEnumerator devEnum = new MMDeviceEnumerator(Guid.NewGuid());
             MMDevice device = devEnum.GetDefaultAudioEndpoint(DataFlow.Render, Role.Multimedia);
-            
+
             foreach(var session in device.AudioSessionManager2.Sessions) {
                 if(session.State == AudioSessionState.AudioSessionStateActive) {
                     Console.CursorVisible = false;
@@ -36,7 +36,7 @@ namespace CoreAudioForms.Core.Sample {
                         Console.SetCursorPosition(0, start);
                         Console.ForegroundColor = ConsoleColor.Green;
                         for(int j = 0; j < len; j++) Console.Write("█");
-                        for(int j = 0; j < w - len; j++) Console.Write(" ");
+                        for(int j = 0; j < w - len + 1; j++) Console.Write(" ");
 
                         Console.SetCursorPosition(0, start + 1);
                         WriteLine("Mute   ", $"{vol.Mute,6}");
