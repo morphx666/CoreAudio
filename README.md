@@ -17,3 +17,5 @@ You may also refer to the [included samples](https://github.com/morphx666/CoreAu
 
 Sample application demonstrating how to handle sessions
 ![image](https://raw.githubusercontent.com/morphx666/CoreAudio/master/Assets/coreaudio-sample-sessions.png)
+
+![Alt](https://repobeats.axiom.co/api/embed/6f15cce788304cd23220af997f3a0d49c98ba11e.svg "Repobeats analytics image")
